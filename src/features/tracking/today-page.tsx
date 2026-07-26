@@ -33,18 +33,30 @@ export function TodayPage() {
   } = useTracking();
   const [date, setDate] = useState(toLocalDateKey);
   const [summaryStuck, setSummaryStuck] = useState(false);
+  const [summaryExpandedHeight, setSummaryExpandedHeight] = useState(0);
   const summaryAnchorRef = useRef<HTMLDivElement>(null);
+  const summaryCardRef = useRef<HTMLElement>(null);
+  const summaryStuckRef = useRef(false);
   const today = toLocalDateKey();
 
   useEffect(() => {
     const anchor = summaryAnchorRef.current;
     if (!anchor) return;
     const updateStuckState = () => {
-      setSummaryStuck(anchor.getBoundingClientRect().top <= 0);
+      const nextStuck = anchor.getBoundingClientRect().top <= 0;
+      if (nextStuck && !summaryStuckRef.current) {
+        const expandedHeight = summaryCardRef.current?.getBoundingClientRect().height;
+        if (expandedHeight) {
+          setSummaryExpandedHeight(expandedHeight);
+        }
+      }
+      summaryStuckRef.current = nextStuck;
+      setSummaryStuck(nextStuck);
     };
     window.addEventListener("scroll", updateStuckState, { passive: true });
     window.addEventListener("resize", updateStuckState);
     window.visualViewport?.addEventListener("resize", updateStuckState);
+    updateStuckState();
     return () => {
       window.removeEventListener("scroll", updateStuckState);
       window.removeEventListener("resize", updateStuckState);
@@ -116,33 +128,43 @@ export function TodayPage() {
         ref={summaryAnchorRef}
         aria-hidden="true"
       />
-      <section
-        className="summary-card daily-summary-card"
-        data-stuck={summaryStuck || undefined}
-        aria-labelledby="daily-summary"
+      <div
+        className="daily-summary-slot"
+        style={
+          summaryStuck && summaryExpandedHeight
+            ? { height: `${summaryExpandedHeight}px` }
+            : undefined
+        }
       >
-        <div className="summary-title-row">
-          <div>
-            <p className="eyebrow muted-on-dark">Daily target</p>
-            <h2 id="daily-summary">{dayPlanId === "climbing" ? "Climbing fuel" : "Rest day fuel"}</h2>
+        <section
+          ref={summaryCardRef}
+          className="summary-card daily-summary-card"
+          data-stuck={summaryStuck || undefined}
+          aria-labelledby="daily-summary"
+        >
+          <div className="summary-title-row">
+            <div>
+              <p className="eyebrow muted-on-dark">Daily target</p>
+              <h2 id="daily-summary">{dayPlanId === "climbing" ? "Climbing fuel" : "Rest day fuel"}</h2>
+            </div>
+            <span className="variant-pill">
+              {variantId === "default" ? "Tofu" : "Chicken"}
+            </span>
           </div>
-          <span className="variant-pill">
-            {variantId === "default" ? "Tofu" : "Chicken"}
-          </span>
-        </div>
-        <MacroRings consumed={consumedMacros} goals={totals} />
-        <div className="completion-row">
-          <span>
-            <strong>{completed} of {meals.length}</strong> meals complete
-          </span>
-          <strong>{percentage}%</strong>
-        </div>
-        <ProgressBar
-          value={percentage}
-          label={`${completed} of ${meals.length} meals complete`}
-          tone={percentage === 100 ? "success" : "accent"}
-        />
-      </section>
+          <MacroRings consumed={consumedMacros} goals={totals} />
+          <div className="completion-row">
+            <span>
+              <strong>{completed} of {meals.length}</strong> meals complete
+            </span>
+            <strong>{percentage}%</strong>
+          </div>
+          <ProgressBar
+            value={percentage}
+            label={`${completed} of ${meals.length} meals complete`}
+            tone={percentage === 100 ? "success" : "accent"}
+          />
+        </section>
+      </div>
 
       <h2 className="section-title">Today’s meals</h2>
       <div className="meal-list">

@@ -409,6 +409,7 @@ button {
   max-width: 82px;
   aspect-ratio: 1;
   place-items: center;
+  transition: max-width 180ms ease;
 }
 
 .macro-ring svg {
@@ -465,9 +466,15 @@ button {
 
 .macro-ring-unit {
   margin-top: 2px;
+  max-height: 12px;
+  overflow: hidden;
   color: color-mix(in srgb, var(--bg) 56%, transparent);
   font-size: 8px;
   font-weight: 650;
+  transition:
+    max-height 180ms ease,
+    margin 180ms ease,
+    opacity 140ms ease;
 }
 
 .progress-track {
@@ -809,10 +816,17 @@ button {
   justify-content: space-between;
   margin-bottom: 23px;
   gap: 12px;
+  transition: margin-bottom 180ms ease;
 }
 
 .summary-title-row p {
   margin: 0 0 3px;
+  max-height: 12px;
+  overflow: hidden;
+  transition:
+    max-height 180ms ease,
+    margin 180ms ease,
+    opacity 140ms ease;
 }
 
 .summary-title-row h2 {
@@ -820,6 +834,7 @@ button {
   font-size: 18px;
   font-weight: 690;
   letter-spacing: -0.025em;
+  transition: font-size 180ms ease;
 }
 
 .variant-pill {
@@ -861,10 +876,11 @@ button {
   margin-top: 17px;
 }
 
+.daily-summary-slot {
+  min-width: 0;
+}
+
 .daily-summary-card {
-  position: sticky;
-  z-index: 25;
-  top: env(safe-area-inset-top);
   margin-top: 0;
   transition:
     padding 180ms ease,
@@ -873,10 +889,16 @@ button {
 }
 
 .daily-summary-card[data-stuck="true"] {
-  margin-inline: -4px;
+  position: fixed;
+  z-index: 25;
+  top: env(safe-area-inset-top);
+  left: 50%;
+  width: min(calc(100% - 24px), calc(var(--content-width) - 24px));
+  margin-inline: 0;
   padding: 10px 13px 11px;
   border-radius: 0 0 18px 18px;
   box-shadow: 0 12px 28px rgb(18 26 20 / 20%);
+  transform: translateX(-50%);
 }
 
 .daily-summary-card[data-stuck="true"] .summary-title-row {
@@ -885,7 +907,9 @@ button {
 }
 
 .daily-summary-card[data-stuck="true"] .summary-title-row .eyebrow {
-  display: none;
+  max-height: 0;
+  margin: 0;
+  opacity: 0;
 }
 
 .daily-summary-card[data-stuck="true"] .summary-title-row h2 {
@@ -902,12 +926,12 @@ button {
 }
 
 .daily-summary-card[data-stuck="true"] .macro-ring {
-  max-width: 49px;
+  max-width: 64px;
 }
 
 .daily-summary-card[data-stuck="true"] .macro-ring-number strong {
-  max-width: 42px;
-  font-size: 12px;
+  max-width: 52px;
+  font-size: 14px;
 }
 
 .daily-summary-card[data-stuck="true"] .macro-ring-number small {
@@ -921,7 +945,9 @@ button {
 }
 
 .daily-summary-card[data-stuck="true"] .macro-ring-unit {
-  display: none;
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
 }
 
 .daily-summary-card[data-stuck="true"] .completion-row {

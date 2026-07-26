@@ -82,20 +82,29 @@ test("header scrolls away and daily summary compacts when sticky", async ({
   await page.goto(url("/"));
   const header = page.locator(".app-header");
   const summary = page.locator(".daily-summary-card");
+  const summarySlot = page.locator(".daily-summary-slot");
   const expanded = await summary.boundingBox();
+  const expandedSlot = await summarySlot.boundingBox();
   expect(expanded).not.toBeNull();
+  expect(expandedSlot).not.toBeNull();
 
   await page.evaluate(() => window.scrollTo(0, 700));
   await expect(summary).toHaveAttribute("data-stuck", "true");
+  await page.waitForTimeout(250);
 
   const scrolledHeader = await header.boundingBox();
   const compact = await summary.boundingBox();
+  const compactSlot = await summarySlot.boundingBox();
+  const scrollY = await page.evaluate(() => window.scrollY);
   expect(scrolledHeader).not.toBeNull();
   expect(compact).not.toBeNull();
+  expect(compactSlot).not.toBeNull();
   expect(scrolledHeader!.y + scrolledHeader!.height).toBeLessThanOrEqual(1);
   expect(compact!.height).toBeLessThan(expanded!.height * 0.8);
   expect(compact!.y).toBeGreaterThanOrEqual(0);
   expect(compact!.y).toBeLessThanOrEqual(1);
+  expect(compactSlot!.height).toBeCloseTo(expandedSlot!.height, 0);
+  expect(scrollY).toBeCloseTo(700, 0);
 });
 
 test("date navigation and meal expansion are touch friendly", async ({ page }) => {
