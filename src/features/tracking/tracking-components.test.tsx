@@ -19,10 +19,16 @@ describe("tracking interactions", () => {
     const checkbox = await screen.findByRole("checkbox", {
       name: /mark complete: fage, granola and banana/i
     });
+    const energyRing = screen.getByRole("progressbar", {
+      name: /energy eaten/i
+    });
+    expect(energyRing).toHaveAttribute("aria-valuenow", "0");
     await user.click(checkbox);
     expect(checkbox).toHaveAttribute("aria-checked", "true");
+    expect(energyRing).toHaveAttribute("aria-valuenow", "501");
     await user.click(checkbox);
     expect(checkbox).toHaveAttribute("aria-checked", "false");
+    expect(energyRing).toHaveAttribute("aria-valuenow", "0");
   });
 
   it("switches plan and variant and quick-adds water", async () => {

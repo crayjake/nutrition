@@ -5,6 +5,7 @@ import { MacroSummary } from "@/components/macro-summary";
 import { MealCard } from "@/components/meal-card";
 import { NutritionControls } from "@/components/nutrition-controls";
 import { getMeals, getDailyTotals } from "./selectors";
+import { ShoppingPlanner } from "./shopping-planner";
 import type { DayPlanId, VariantId } from "@/types/nutrition";
 
 export function PlanPage() {
@@ -50,6 +51,7 @@ export function PlanPage() {
             : "Chicken is shown at its supplied cooked weight."}
         </span>
       </div>
+      <ShoppingPlanner />
       <h2 className="section-title">{meals.length} meals</h2>
       <div className="meal-list">
         {meals.map((meal) => (

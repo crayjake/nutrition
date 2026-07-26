@@ -1,13 +1,14 @@
 "use client";
 
 import { ArrowLeft, ArrowRight, CalendarClock } from "lucide-react";
-import { useState } from "react";
-import { MacroSummary } from "@/components/macro-summary";
+import { useEffect, useRef, useState } from "react";
+import { MacroRings } from "@/components/macro-rings";
 import { MealCard } from "@/components/meal-card";
 import { NutritionControls } from "@/components/nutrition-controls";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import {
   completionPercentage,
+  getConsumedMacros,
   getMeals,
   getDailyTotals
 } from "@/features/nutrition/selectors";
@@ -31,7 +32,25 @@ export function TodayPage() {
     setWeight
   } = useTracking();
   const [date, setDate] = useState(toLocalDateKey);
+  const [summaryStuck, setSummaryStuck] = useState(false);
+  const summaryAnchorRef = useRef<HTMLDivElement>(null);
   const today = toLocalDateKey();
+
+  useEffect(() => {
+    const anchor = summaryAnchorRef.current;
+    if (!anchor) return;
+    const updateStuckState = () => {
+      setSummaryStuck(anchor.getBoundingClientRect().top <= 0);
+    };
+    window.addEventListener("scroll", updateStuckState, { passive: true });
+    window.addEventListener("resize", updateStuckState);
+    window.visualViewport?.addEventListener("resize", updateStuckState);
+    return () => {
+      window.removeEventListener("scroll", updateStuckState);
+      window.removeEventListener("resize", updateStuckState);
+      window.visualViewport?.removeEventListener("resize", updateStuckState);
+    };
+  }, [hydrated]);
 
   if (!hydrated) {
     return <div className="loading-card" aria-label="Loading today’s plan" />;
@@ -44,6 +63,10 @@ export function TodayPage() {
   );
   const meals = getMeals(dayPlanId, variantId);
   const totals = getDailyTotals(dayPlanId, variantId);
+  const consumedMacros = getConsumedMacros(
+    meals,
+    log?.completedMealIds ?? []
+  );
   const completed = log?.completedMealIds.filter((id) =>
     meals.some((meal) => meal.meal_instance_id === id)
   ).length ?? 0;
@@ -88,7 +111,16 @@ export function TodayPage() {
         onVariantChange={(value) => setVariant(date, value)}
       />
 
-      <section className="summary-card" aria-labelledby="daily-summary">
+      <div
+        className="summary-stick-sentinel"
+        ref={summaryAnchorRef}
+        aria-hidden="true"
+      />
+      <section
+        className="summary-card daily-summary-card"
+        data-stuck={summaryStuck || undefined}
+        aria-labelledby="daily-summary"
+      >
         <div className="summary-title-row">
           <div>
             <p className="eyebrow muted-on-dark">Daily target</p>
@@ -98,7 +130,7 @@ export function TodayPage() {
             {variantId === "default" ? "Tofu" : "Chicken"}
           </span>
         </div>
-        <MacroSummary totals={totals} />
+        <MacroRings consumed={consumedMacros} goals={totals} />
         <div className="completion-row">
           <span>
             <strong>{completed} of {meals.length}</strong> meals complete

@@ -55,3 +55,30 @@ export function completionPercentage(completed: number, total: number): number {
   if (total <= 0) return 0;
   return Math.round((Math.min(completed, total) / total) * 100);
 }
+
+const ZERO_MACROS = {
+  energy_kcal: 0,
+  protein_g: 0,
+  carbohydrate_g: 0,
+  fat_g: 0,
+  fibre_g: 0,
+  sugars_g: 0,
+  salt_g: 0
+};
+
+export function getConsumedMacros(
+  meals: DerivedMeal[],
+  completedMealIds: string[]
+) {
+  const completed = new Set(completedMealIds);
+  return meals.reduce(
+    (total, meal) => {
+      if (!completed.has(meal.meal_instance_id)) return total;
+      for (const key of Object.keys(total) as Array<keyof typeof total>) {
+        total[key] += meal.totals[key];
+      }
+      return total;
+    },
+    { ...ZERO_MACROS }
+  );
+}

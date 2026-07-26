@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   completionPercentage,
+  getConsumedMacros,
   getDailyTotals,
   getIngredientName,
   getMeal,
@@ -38,5 +39,13 @@ describe("nutrition selectors", () => {
     expect(completionPercentage(3, 6)).toBe(50);
     expect(completionPercentage(8, 6)).toBe(100);
     expect(completionPercentage(0, 0)).toBe(0);
+  });
+
+  it("sums only completed meal macros", () => {
+    const meals = getMeals("climbing", "default");
+    const consumed = getConsumedMacros(meals, ["breakfast", "evening"]);
+    expect(consumed.energy_kcal).toBeCloseTo(608.55);
+    expect(consumed.protein_g).toBeCloseTo(60.46);
+    expect(consumed.carbohydrate_g).toBeCloseTo(72.66);
   });
 });

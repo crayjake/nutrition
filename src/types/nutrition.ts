@@ -43,6 +43,22 @@ export interface Product {
   name: string;
   brand?: string;
   retailer: string;
+  pack?: {
+    quantity: number;
+    unit: string;
+    approx_items?: number;
+    wrapper_weight_g?: number;
+    bars_per_wrapper?: number;
+  } | null;
+  pack_options?: Array<{
+    quantity: number;
+    unit: string;
+    url?: string;
+  }> | null;
+  source?: {
+    url: string;
+    checked_on?: string;
+  } | null;
 }
 
 export interface NutritionPlan {

@@ -4,6 +4,10 @@ A polished, local-first nutrition and habit tracker built from the canonical
 `nutrition-plan.json`. It is a static Next.js App Router application designed
 for small phone screens and GitHub Pages.
 
+The Plan screen also builds a practical shopping list from any mix of
+climbing/rest and tofu/chicken days. Requirements are rounded up to whole tubs,
+bags, bottles, jars and packs, with copy and plain-text download actions.
+
 ## Start locally
 
 Use Node.js 22.13 or newer and npm:
@@ -95,7 +99,10 @@ After deployment, test in portrait orientation:
 - Open each tab directly and through bottom navigation; confirm the navigation
   clears the browser chrome and safe area.
 - At the Today tab, complete and undo a meal, expand ingredients, add and undo
-  water, then save/edit/remove weight.
+  water, then save/edit/remove weight. Confirm each macro ring advances
+  clockwise with completed meals.
+- On Plan, change all four shopping day counters, check that whole-pack
+  quantities update, check off an item, and copy/download the list.
 - Reload while part-way down the page and confirm data persists and no content
   shifts horizontally.
 - Visit yesterday and tomorrow, set different plans, then return to Today.
