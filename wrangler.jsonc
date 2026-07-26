@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "crux-meal-reminders",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2026-07-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "APP_ORIGIN": "https://crayjake.github.io",
+    "APP_URL": "https://crayjake.github.io/nutrition/",
+    "APP_ICON_URL": "https://crayjake.github.io/nutrition/app-icon-v5-192.png"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "REMINDER_SCHEDULERS",
+        "class_name": "ReminderScheduler"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["ReminderScheduler"]
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

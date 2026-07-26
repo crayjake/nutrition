@@ -8,11 +8,13 @@ import type { DerivedMeal } from "@/types/nutrition";
 
 export function MealCard({
   meal,
+  time,
   completed,
   onToggle,
   readOnly = false
 }: {
   meal: DerivedMeal;
+  time?: string;
   completed?: boolean;
   onToggle?: () => void;
   readOnly?: boolean;
@@ -43,6 +45,12 @@ export function MealCard({
         <div className="meal-heading">
           <h3>{meal.name}</h3>
           <p>
+            {time && (
+              <>
+                <time dateTime={time}>{time}</time>
+                <span aria-hidden="true"> · </span>
+              </>
+            )}
             {Math.round(meal.totals.energy_kcal)} kcal
             <span aria-hidden="true"> · </span>
             {formatMacro(meal.totals.protein_g)} protein

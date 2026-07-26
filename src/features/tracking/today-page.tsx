@@ -129,6 +129,10 @@ export function TodayPage() {
         {meals.map((meal) => (
           <MealCard
             meal={meal}
+            time={
+              state.settings.mealTimings[dayPlanId][meal.meal_instance_id]
+                ?.time
+            }
             completed={log?.completedMealIds.includes(meal.meal_instance_id)}
             onToggle={() =>
               toggleMeal(date, meal.meal_instance_id, dayPlanId, variantId)

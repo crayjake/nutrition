@@ -6,20 +6,25 @@
     "dev": "next dev",
     "build": "npm run validate:data && next build",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc -p worker/tsconfig.json",
+    "typecheck:worker": "tsc -p worker/tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "validate:data": "node scripts/validate-data.mjs"
+    "validate:data": "node scripts/validate-data.mjs",
+    "worker:deploy": "wrangler deploy",
+    "worker:dev": "wrangler dev"
   },
   "dependencies": {
     "lucide-react": "1.27.0",
     "next": "16.2.12",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "recharts": "^3.2.1"
+    "recharts": "^3.2.1",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260726.1",
     "@next/eslint-plugin-next": "16.2.12",
     "@playwright/test": "^1.49.1",
     "@tailwindcss/postcss": "^4.3.0",
@@ -29,13 +34,15 @@
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.3",
     "@types/react-dom": "^19.0.2",
+    "@types/web-push": "^3.6.4",
     "ajv": "^8.17.1",
     "eslint": "^9.17.0",
     "eslint-config-next": "16.2.12",
     "jsdom": "^25.0.1",
     "tailwindcss": "^4.3.0",
     "typescript": "^5.7.2",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "wrangler": "^4.114.0"
   },
   "overrides": {
     "minimatch": "10.2.5",

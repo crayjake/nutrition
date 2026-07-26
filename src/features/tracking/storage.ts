@@ -3,6 +3,10 @@ import {
   CALORIE_TARGET_LIMITS,
   DEFAULT_CALORIE_TARGETS
 } from "@/features/nutrition/calorie-targets";
+import {
+  createDefaultMealTimings,
+  MEAL_TIMING_DEFINITIONS
+} from "@/features/nutrition/meal-timings";
 import type { DayPlanId, VariantId } from "@/types/nutrition";
 import type {
   AppState,
@@ -13,6 +17,8 @@ import type {
   DailyLog,
   GymGradeColour,
   LoggedClimb,
+  MealTimings,
+  ReminderLeadMinutes,
   Settings,
   ThemePreference,
   WaterEntry
@@ -25,7 +31,8 @@ export const DEFAULT_SETTINGS: Settings = {
   colourScheme: "ember",
   waterGoalMl: 2500,
   calorieTargets: DEFAULT_CALORIE_TARGETS,
-  defaultDayPlanId: "climbing"
+  defaultDayPlanId: "climbing",
+  mealTimings: createDefaultMealTimings()
 };
 
 export function createDefaultState(): AppState {
@@ -34,7 +41,8 @@ export function createDefaultState(): AppState {
     nutritionSchemaVersion: nutritionPlan.meta.schema_version,
     settings: {
       ...DEFAULT_SETTINGS,
-      calorieTargets: { ...DEFAULT_CALORIE_TARGETS }
+      calorieTargets: { ...DEFAULT_CALORIE_TARGETS },
+      mealTimings: createDefaultMealTimings()
     },
     logsByDate: {},
     climbingSessions: []
@@ -76,11 +84,56 @@ function parseCalorieTarget(value: unknown, dayPlanId: DayPlanId): number {
     : DEFAULT_CALORIE_TARGETS[dayPlanId];
 }
 
+function isTime(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{2}:\d{2}$/.test(value)) {
+    return false;
+  }
+  const [hours, minutes] = value.split(":").map(Number);
+  return hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59;
+}
+
+function isReminderLeadMinutes(
+  value: unknown
+): value is ReminderLeadMinutes {
+  return (
+    value === 0 ||
+    value === 15 ||
+    value === 30 ||
+    value === 45 ||
+    value === 60
+  );
+}
+
+function parseMealTimings(value: unknown): MealTimings {
+  const defaults = createDefaultMealTimings();
+  const source = isRecord(value) ? value : {};
+  const parsed = createDefaultMealTimings();
+
+  for (const dayPlanId of ["climbing", "rest"] as const) {
+    const daySource = isRecord(source[dayPlanId]) ? source[dayPlanId] : {};
+    for (const definition of MEAL_TIMING_DEFINITIONS[dayPlanId]) {
+      const candidate = daySource[definition.mealId];
+      const timing = isRecord(candidate) ? candidate : {};
+      parsed[dayPlanId][definition.mealId] = {
+        time: isTime(timing.time)
+          ? timing.time
+          : defaults[dayPlanId][definition.mealId].time,
+        reminderMinutes: isReminderLeadMinutes(timing.reminderMinutes)
+          ? timing.reminderMinutes
+          : defaults[dayPlanId][definition.mealId].reminderMinutes
+      };
+    }
+  }
+
+  return parsed;
+}
+
 function parseSettings(value: unknown): Settings {
   if (!isRecord(value)) {
     return {
       ...DEFAULT_SETTINGS,
-      calorieTargets: { ...DEFAULT_CALORIE_TARGETS }
+      calorieTargets: { ...DEFAULT_CALORIE_TARGETS },
+      mealTimings: createDefaultMealTimings()
     };
   }
   const calorieTargets = isRecord(value.calorieTargets)
@@ -104,7 +157,8 @@ function parseSettings(value: unknown): Settings {
     },
     defaultDayPlanId: isDayPlan(value.defaultDayPlanId)
       ? value.defaultDayPlanId
-      : DEFAULT_SETTINGS.defaultDayPlanId
+      : DEFAULT_SETTINGS.defaultDayPlanId,
+    mealTimings: parseMealTimings(value.mealTimings)
   };
 }
 

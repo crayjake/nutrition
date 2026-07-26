@@ -294,14 +294,23 @@ test("climbing sessions persist and feed climbing progress", async ({ page }) =>
   await expect(page.getByTestId("session-length-chart")).toBeVisible();
 });
 
-test("fits 320px and 430px phone widths", async ({ page }) => {
+test("meal schedule persists and fits phone widths", async ({ page }) => {
   for (const width of [320, 430]) {
     await page.setViewportSize({ width, height: 812 });
-    await page.goto(url("/"));
+    await page.goto(url("/settings/"));
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= document.documentElement.clientWidth
       )
     ).toBe(true);
   }
+
+  await page.getByLabel("Breakfast time").fill("07:45");
+  await page.getByLabel("Breakfast reminder").selectOption("30");
+  await page.reload();
+  await expect(page.getByLabel("Breakfast time")).toHaveValue("07:45");
+  await expect(page.getByLabel("Breakfast reminder")).toHaveValue("30");
+
+  await page.goto(url("/"));
+  await expect(page.locator(".meal-card").first()).toContainText("07:45");
 });

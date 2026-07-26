@@ -23,8 +23,9 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`. No environment variables, account, database or
-external service is required.
+Open `http://localhost:3000`. Core nutrition and climbing tracking requires no
+account, database or external service. Background meal notifications are
+optional and show as unavailable unless `NEXT_PUBLIC_PUSH_API_URL` is set.
 
 Useful commands:
 
@@ -51,12 +52,15 @@ npm run test:e2e
   meals and macros.
 - `src/features/tracking` owns the versioned local repository, provider, Today
   controls and settings.
+- `src/features/notifications` owns Web Push registration, schedule syncing and
+  notification settings.
 - `src/features/progress` calculates summaries and lazy-loads Recharts.
 - `src/components` contains reusable presentation and navigation.
 - `src/types`, `src/lib` and `src/data` keep domain types, date/format helpers
   and the build-time JSON import separate.
 - `scripts/validate-data.mjs` validates the canonical JSON against
   `nutrition-plan.schema.json` with AJV.
+- `worker` and `wrangler.jsonc` contain the Cloudflare reminder scheduler.
 
 The UI never recalculates nutrition. It selects
 `day_plans.{climbing,rest}.derived.{default,chicken_pasta}` and resolves product
@@ -73,6 +77,37 @@ independently and malformed records are discarded without losing valid ones.
 Settings → Local data can export a versioned JSON backup, validate and import a
 backup, or reset everything after confirmation. Clearing site data in the
 browser also removes all check-ins.
+
+Only when background reminders are enabled, the app sends Cloudflare an
+anonymous installation token, push subscription, timezone, meal times and
+climbing/rest day selections. It does not send meal completion, water, weight
+or climbing-session data.
+
+## iPhone background notifications
+
+The installed Home Screen app registers `public/sw.js` and subscribes through
+the standard Web Push API. A SQLite-backed Cloudflare Durable Object stores one
+schedule per installation, wakes for the next reminder and sends the encrypted
+push through Apple. Settings includes a server-scheduled ten-second test.
+
+The Worker’s public URL is safe to place in `NEXT_PUBLIC_PUSH_API_URL`. These
+four values must remain Cloudflare secrets and must never be committed:
+
+- `VAPID_PUBLIC_KEY`
+- `VAPID_PRIVATE_KEY`
+- `VAPID_SUBJECT`
+- `PAIRING_CODE`
+
+Useful maintenance commands:
+
+```bash
+npm run typecheck:worker
+npm run worker:dev
+npm run worker:deploy
+```
+
+Changing the VAPID key pair invalidates existing push subscriptions. Rotate
+only the pairing code when preventing new devices from registering.
 
 ## GitHub Pages deployment
 
@@ -121,6 +156,8 @@ After deployment, test in portrait orientation:
 - Check both Progress views, including climbing length and difficulty charts.
 - Switch colour schemes plus system, light and dark modes and verify controls
   remain readable.
+- In Settings, enable notifications with the setup code and run **Send test in
+  10 seconds**. Close the app and confirm the native notification arrives.
 - If upgrading an existing home-screen installation, wait for the deployment
   to finish, remove the old Home Screen item, then add it again so iOS fetches
   the cache-versioned Sprout icon instead of retaining its generated artwork.
@@ -134,8 +171,9 @@ pass remains valuable for installed-app and safe-area behaviour.
 
 ## Current scope
 
-Settings includes separate climbing/rest calorie targets. The app adjusts only
-the plan’s explicitly scalable ingredients in practical increments, keeps every
-ingredient above zero, and carries those quantities into the Today, reference
-plan and Shopping views. There is no backend sync or service worker. Backups are
-manual and browser data is device/profile-specific.
+Settings includes separate climbing/rest calorie targets and meal schedules.
+The app adjusts only the plan’s explicitly scalable ingredients in practical
+increments, keeps every ingredient above zero, and carries those quantities
+into the Today, reference plan and Shopping views. Check-ins and backups remain
+device/profile-specific; Cloudflare receives only the minimal reminder data
+described above.

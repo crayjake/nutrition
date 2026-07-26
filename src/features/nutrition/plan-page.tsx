@@ -56,7 +56,15 @@ export function PlanPage() {
       <h2 className="section-title">{meals.length} meals</h2>
       <div className="meal-list">
         {meals.map((meal) => (
-          <MealCard readOnly meal={meal} key={meal.meal_instance_id} />
+          <MealCard
+            readOnly
+            meal={meal}
+            time={
+              state.settings.mealTimings[dayPlanId][meal.meal_instance_id]
+                ?.time
+            }
+            key={meal.meal_instance_id}
+          />
         ))}
       </div>
     </>

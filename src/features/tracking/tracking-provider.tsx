@@ -9,6 +9,7 @@ import {
   useState,
   useSyncExternalStore
 } from "react";
+import { syncPushSchedule } from "@/features/notifications/push-client";
 import { getValidMealIds } from "@/features/nutrition/selectors";
 import {
   createDefaultState,
@@ -107,6 +108,13 @@ export function TrackingProvider({ children }: { children: React.ReactNode }) {
       0
     );
     return () => window.clearTimeout(updateAvailability);
+  }, [hydrated, state]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    syncPushSchedule(state).catch(() => {
+      // Settings reports connection errors; tracking remains local-first.
+    });
   }, [hydrated, state]);
 
   useEffect(() => {

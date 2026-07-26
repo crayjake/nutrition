@@ -1,18 +1,31 @@
 "use client";
 
-import { Download, HardDrive, ShieldCheck, Trash2, Upload } from "lucide-react";
+import {
+  Download,
+  HardDrive,
+  ShieldCheck,
+  Trash2,
+  Upload
+} from "lucide-react";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { SegmentedControl } from "@/components/ui/segmented-control";
+import { NotificationSettings } from "@/features/notifications/notification-settings";
 import {
   CALORIE_TARGET_LIMITS,
   DEFAULT_CALORIE_TARGETS
 } from "@/features/nutrition/calorie-targets";
+import {
+  MEAL_TIMING_DEFINITIONS,
+  REMINDER_LEAD_OPTIONS
+} from "@/features/nutrition/meal-timings";
 import { useTracking } from "./tracking-provider";
 import { createBackup, parseBackup } from "./storage";
 import type { DayPlanId } from "@/types/nutrition";
 import type {
   AppState,
   ColourScheme,
+  MealTiming,
+  ReminderLeadMinutes,
   ThemePreference
 } from "@/types/tracking";
 
@@ -66,6 +79,8 @@ export function SettingsPage() {
     String(state.settings.calorieTargets.rest)
   );
   const [calorieError, setCalorieError] = useState("");
+  const [scheduleDayPlanId, setScheduleDayPlanId] =
+    useState<DayPlanId>("climbing");
   const [pendingImport, setPendingImport] = useState<AppState | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
   const [status, setStatus] = useState("");
@@ -117,6 +132,25 @@ export function SettingsPage() {
     setRestCalories(String(calorieTargets.rest));
     setCalorieError("");
     setStatus("Calorie targets saved. Meal quantities updated.");
+  }
+
+  function updateMealTiming(
+    dayPlanId: DayPlanId,
+    mealId: string,
+    patch: Partial<MealTiming>
+  ) {
+    const currentTiming = state.settings.mealTimings[dayPlanId][mealId];
+    if (!currentTiming) return;
+    updateSettings({
+      mealTimings: {
+        ...state.settings.mealTimings,
+        [dayPlanId]: {
+          ...state.settings.mealTimings[dayPlanId],
+          [mealId]: { ...currentTiming, ...patch }
+        }
+      }
+    });
+    setStatus("Meal schedule saved.");
   }
 
   function exportData() {
@@ -282,6 +316,79 @@ export function SettingsPage() {
             Save calorie targets
           </button>
         </form>
+      </section>
+
+      <section className="settings-section" aria-labelledby="meal-schedule-heading">
+        <div className="settings-heading">
+          <h2 id="meal-schedule-heading">Meal schedule</h2>
+          <p>Times appear beside each meal. Set a reminder lead time or turn it off.</p>
+        </div>
+        <div className="meal-schedule-switch">
+          <SegmentedControl
+            label="Meal schedule day"
+            value={scheduleDayPlanId}
+            onChange={setScheduleDayPlanId}
+            options={[
+              { value: "climbing", label: "Climbing" },
+              { value: "rest", label: "Rest" }
+            ]}
+          />
+        </div>
+        <div className="meal-schedule-list">
+          {MEAL_TIMING_DEFINITIONS[scheduleDayPlanId].map((definition) => {
+            const timing =
+              state.settings.mealTimings[scheduleDayPlanId][definition.mealId];
+            return (
+              <div className="meal-schedule-row" key={definition.mealId}>
+                <strong>{definition.label}</strong>
+                <div className="meal-schedule-controls">
+                  <label>
+                    <span className="input-label">Time</span>
+                    <input
+                      className="input meal-time-input"
+                      type="time"
+                      value={timing.time}
+                      aria-label={`${definition.label} time`}
+                      onChange={(event) =>
+                        updateMealTiming(
+                          scheduleDayPlanId,
+                          definition.mealId,
+                          { time: event.target.value }
+                        )
+                      }
+                    />
+                  </label>
+                  <label>
+                    <span className="input-label">Reminder</span>
+                    <select
+                      className="input"
+                      value={timing.reminderMinutes}
+                      aria-label={`${definition.label} reminder`}
+                      onChange={(event) =>
+                        updateMealTiming(
+                          scheduleDayPlanId,
+                          definition.mealId,
+                          {
+                            reminderMinutes: Number(
+                              event.target.value
+                            ) as ReminderLeadMinutes
+                          }
+                        )
+                      }
+                    >
+                      {REMINDER_LEAD_OPTIONS.map((option) => (
+                        <option value={option.value} key={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <NotificationSettings />
       </section>
 
       <section className="settings-section" aria-labelledby="tracking-heading">

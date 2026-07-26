@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it } from "vitest";
 import { TodayPage } from "./today-page";
@@ -29,6 +29,15 @@ describe("tracking interactions", () => {
     await user.click(checkbox);
     expect(checkbox).toHaveAttribute("aria-checked", "false");
     expect(calorieBar).toHaveAccessibleName(/calories eaten: 0 of/i);
+  });
+
+  it("shows the configured time beside each meal", async () => {
+    renderWithProvider(<TodayPage />);
+    const firstMeal = (await screen.findByRole("heading", {
+      name: /fage, granola and banana/i
+    })).closest(".meal-card");
+
+    expect(firstMeal).toHaveTextContent("08:00");
   });
 
   it("opens meal details when the meal row is tapped", async () => {
@@ -113,6 +122,27 @@ describe("tracking interactions", () => {
       expect(saved.settings.theme).toBe("dark");
       expect(saved.settings.colourScheme).toBe("ocean");
       expect(saved.settings.calorieTargets.climbing).toBe(2400);
+    });
+  });
+
+  it("persists meal times and reminder lead times", async () => {
+    renderWithProvider(<SettingsPage />);
+    await screen.findByRole("heading", { name: "Meal schedule" });
+
+    fireEvent.change(screen.getByLabelText("Breakfast time"), {
+      target: { value: "07:45" }
+    });
+    await userEvent.selectOptions(
+      screen.getByLabelText("Breakfast reminder"),
+      "30"
+    );
+
+    await waitFor(() => {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
+      expect(saved.settings.mealTimings.climbing.breakfast).toEqual({
+        time: "07:45",
+        reminderMinutes: 30
+      });
     });
   });
 });

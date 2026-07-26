@@ -2,6 +2,7 @@ import type { CalorieTargets, DayPlanId, VariantId } from "./nutrition";
 
 export type ThemePreference = "system" | "light" | "dark";
 export type ColourScheme = "ember" | "forest" | "ocean" | "berry";
+export type ReminderLeadMinutes = 0 | 15 | 30 | 45 | 60;
 export type ClimbBand = "easy" | "medium" | "hard";
 export type GymGradeColour =
   | "green"
@@ -30,12 +31,23 @@ export interface DailyLog {
   updatedAt: string;
 }
 
+export interface MealTiming {
+  time: string;
+  reminderMinutes: ReminderLeadMinutes;
+}
+
+export type MealTimings = Record<
+  DayPlanId,
+  Record<string, MealTiming>
+>;
+
 export interface Settings {
   theme: ThemePreference;
   colourScheme: ColourScheme;
   waterGoalMl: number;
   calorieTargets: CalorieTargets;
   defaultDayPlanId: DayPlanId;
+  mealTimings: MealTimings;
 }
 
 export interface LoggedClimb {

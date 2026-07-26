@@ -34,6 +34,10 @@ describe("tracking storage", () => {
       climbing: 2200,
       rest: 1900
     });
+    expect(parsed.settings.mealTimings.climbing.breakfast).toEqual({
+      time: "08:00",
+      reminderMinutes: 15
+    });
     expect(Object.keys(parsed.logsByDate)).toEqual(["2026-07-25"]);
   });
 
@@ -56,6 +60,36 @@ describe("tracking storage", () => {
     expect(parsed.settings.calorieTargets).toEqual({
       climbing: 2400,
       rest: 1900
+    });
+  });
+
+  it("preserves valid meal timings and repairs invalid values", () => {
+    const parsed = parseAppState({
+      version: 1,
+      settings: {
+        mealTimings: {
+          climbing: {
+            breakfast: {
+              time: "07:30",
+              reminderMinutes: 30
+            },
+            rice_bowl: {
+              time: "25:90",
+              reminderMinutes: 12
+            }
+          }
+        }
+      },
+      logsByDate: {}
+    });
+
+    expect(parsed.settings.mealTimings.climbing.breakfast).toEqual({
+      time: "07:30",
+      reminderMinutes: 30
+    });
+    expect(parsed.settings.mealTimings.climbing.rice_bowl).toEqual({
+      time: "12:30",
+      reminderMinutes: 30
     });
   });
 
