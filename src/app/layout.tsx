@@ -18,6 +18,16 @@ function getBasePath(): string {
 
 const basePath = getBasePath();
 
+function getAssetBase(): string {
+  if (process.env.NEXT_PUBLIC_BASE_PATH !== undefined) return basePath;
+  const [owner] = process.env.GITHUB_REPOSITORY?.split("/") ?? [];
+  return process.env.GITHUB_ACTIONS === "true" && owner
+    ? `https://${owner}.github.io${basePath}`
+    : basePath;
+}
+
+const assetBase = getAssetBase();
+
 export const metadata: Metadata = {
   title: {
     default: "Crux · Daily nutrition",
@@ -51,14 +61,25 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link
           rel="apple-touch-icon"
-          href={`${basePath}/apple-touch-icon.png`}
+          href={`${assetBase}/apple-touch-icon-v4.png`}
           sizes="180x180"
           type="image/png"
         />
         <link
           rel="apple-touch-icon-precomposed"
-          href={`${basePath}/apple-touch-icon-precomposed.png`}
+          href={`${assetBase}/apple-touch-icon-v4.png`}
           sizes="180x180"
+          type="image/png"
+        />
+        <link
+          rel="icon"
+          href={`${assetBase}/app-icon-v4-192.png`}
+          sizes="192x192"
+          type="image/png"
+        />
+        <link
+          rel="shortcut icon"
+          href={`${assetBase}/app-icon-v4-192.png`}
           type="image/png"
         />
       </head>

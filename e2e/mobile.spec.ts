@@ -190,14 +190,21 @@ test("installed app metadata uses the Crux icon", async ({ page }) => {
   await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
   await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
     "href",
-    `${basePath}/apple-touch-icon.png`
+    `${basePath}/apple-touch-icon-v4.png`
   );
   await expect(
     page.locator('link[rel="apple-touch-icon-precomposed"]')
   ).toHaveAttribute(
     "href",
-    `${basePath}/apple-touch-icon-precomposed.png`
+    `${basePath}/apple-touch-icon-v4.png`
   );
+  await expect(page.locator('link[rel="icon"][type="image/png"]')).toHaveAttribute(
+    "href",
+    `${basePath}/app-icon-v4-192.png`
+  );
+  await expect(
+    page.locator('link[rel="shortcut icon"][type="image/png"]')
+  ).toHaveAttribute("href", `${basePath}/app-icon-v4-192.png`);
   await expect(
     page.locator('meta[name="apple-mobile-web-app-capable"]')
   ).toHaveAttribute(
@@ -212,20 +219,20 @@ test("installed app metadata uses the Crux icon", async ({ page }) => {
   expect(manifest.icons).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        src: `${basePath}/app-icon-v3-192.png`,
+        src: `${basePath}/app-icon-v4-192.png`,
         sizes: "192x192"
       }),
       expect.objectContaining({
-        src: `${basePath}/app-icon-maskable-v3-512.png`,
+        src: `${basePath}/app-icon-maskable-v4-512.png`,
         purpose: "maskable"
       })
     ])
   );
 
   for (const iconPath of [
-    "/apple-touch-icon.png",
-    "/app-icon-v3-192.png",
-    "/app-icon-v3-512.png"
+    "/apple-touch-icon-v4.png",
+    "/app-icon-v4-192.png",
+    "/app-icon-v4-512.png"
   ]) {
     const iconResponse = await page.request.get(url(iconPath));
     expect(iconResponse.ok()).toBe(true);
