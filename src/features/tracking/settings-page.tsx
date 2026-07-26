@@ -3,6 +3,10 @@
 import { Download, HardDrive, ShieldCheck, Trash2, Upload } from "lucide-react";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { SegmentedControl } from "@/components/ui/segmented-control";
+import {
+  CALORIE_TARGET_LIMITS,
+  DEFAULT_CALORIE_TARGETS
+} from "@/features/nutrition/calorie-targets";
 import { useTracking } from "./tracking-provider";
 import { createBackup, parseBackup } from "./storage";
 import type { DayPlanId } from "@/types/nutrition";
@@ -55,6 +59,13 @@ export function SettingsPage() {
   } = useTracking();
   const [waterGoal, setWaterGoal] = useState(String(state.settings.waterGoalMl));
   const [goalError, setGoalError] = useState("");
+  const [climbingCalories, setClimbingCalories] = useState(
+    String(state.settings.calorieTargets.climbing)
+  );
+  const [restCalories, setRestCalories] = useState(
+    String(state.settings.calorieTargets.rest)
+  );
+  const [calorieError, setCalorieError] = useState("");
   const [pendingImport, setPendingImport] = useState<AppState | null>(null);
   const [confirmReset, setConfirmReset] = useState(false);
   const [status, setStatus] = useState("");
@@ -75,6 +86,37 @@ export function SettingsPage() {
     setWaterGoal(String(Math.round(value)));
     setGoalError("");
     setStatus("Water goal saved.");
+  }
+
+  function saveCalorieTargets(event: FormEvent) {
+    event.preventDefault();
+    const nextTargets = {
+      climbing: Number(climbingCalories),
+      rest: Number(restCalories)
+    };
+    for (const dayPlanId of ["climbing", "rest"] as const) {
+      const value = nextTargets[dayPlanId];
+      const limits = CALORIE_TARGET_LIMITS[dayPlanId];
+      if (
+        !Number.isFinite(value) ||
+        value < limits.min ||
+        value > limits.max
+      ) {
+        setCalorieError(
+          `${dayPlanId === "climbing" ? "Climbing" : "Rest"} target must be between ${limits.min.toLocaleString("en-GB")} and ${limits.max.toLocaleString("en-GB")} kcal.`
+        );
+        return;
+      }
+    }
+    const calorieTargets = {
+      climbing: Math.round(nextTargets.climbing),
+      rest: Math.round(nextTargets.rest)
+    };
+    updateSettings({ calorieTargets });
+    setClimbingCalories(String(calorieTargets.climbing));
+    setRestCalories(String(calorieTargets.rest));
+    setCalorieError("");
+    setStatus("Calorie targets saved. Meal quantities updated.");
   }
 
   function exportData() {
@@ -109,12 +151,18 @@ export function SettingsPage() {
     setPendingImport(null);
     if (fileInput.current) fileInput.current.value = "";
     setWaterGoal(String(pendingImport.settings.waterGoalMl));
+    setClimbingCalories(
+      String(pendingImport.settings.calorieTargets.climbing)
+    );
+    setRestCalories(String(pendingImport.settings.calorieTargets.rest));
     setStatus("Backup imported. Existing local data was replaced.");
   }
 
   function confirmClear() {
     resetState();
     setWaterGoal("2500");
+    setClimbingCalories(String(DEFAULT_CALORIE_TARGETS.climbing));
+    setRestCalories(String(DEFAULT_CALORIE_TARGETS.rest));
     setConfirmReset(false);
     setStatus("All tracking data and preferences were reset.");
   }
@@ -174,6 +222,66 @@ export function SettingsPage() {
             { value: "dark", label: "Dark" }
           ]}
         />
+      </section>
+
+      <section className="settings-section" aria-labelledby="nutrition-target-heading">
+        <div className="settings-heading">
+          <h2 id="nutrition-target-heading">Nutrition targets</h2>
+          <p>
+            Meal portions adjust in practical increments. Every ingredient is
+            retained.
+          </p>
+        </div>
+        <form className="calorie-target-form" onSubmit={saveCalorieTargets}>
+          <div className="calorie-target-grid">
+            <label>
+              <span className="input-label">Climbing day (kcal)</span>
+              <input
+                className="input"
+                type="number"
+                min={CALORIE_TARGET_LIMITS.climbing.min}
+                max={CALORIE_TARGET_LIMITS.climbing.max}
+                step="10"
+                inputMode="numeric"
+                value={climbingCalories}
+                aria-invalid={Boolean(calorieError)}
+                aria-describedby={
+                  calorieError ? "calorie-target-error" : "calorie-target-help"
+                }
+                onChange={(event) => setClimbingCalories(event.target.value)}
+              />
+            </label>
+            <label>
+              <span className="input-label">Rest day (kcal)</span>
+              <input
+                className="input"
+                type="number"
+                min={CALORIE_TARGET_LIMITS.rest.min}
+                max={CALORIE_TARGET_LIMITS.rest.max}
+                step="10"
+                inputMode="numeric"
+                value={restCalories}
+                aria-invalid={Boolean(calorieError)}
+                aria-describedby={
+                  calorieError ? "calorie-target-error" : "calorie-target-help"
+                }
+                onChange={(event) => setRestCalories(event.target.value)}
+              />
+            </label>
+          </div>
+          <p className="field-help" id="calorie-target-help">
+            Actual totals may land a few calories either side so quantities
+            stay easy to measure.
+          </p>
+          {calorieError && (
+            <p className="field-error" id="calorie-target-error">
+              {calorieError}
+            </p>
+          )}
+          <button className="button" type="submit">
+            Save calorie targets
+          </button>
+        </form>
       </section>
 
       <section className="settings-section" aria-labelledby="tracking-heading">

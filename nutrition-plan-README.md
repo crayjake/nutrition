@@ -9,14 +9,18 @@ This package contains:
 
 | Day | Target | Calculated | Protein | Carbohydrate | Fat |
 |---|---:|---:|---:|---:|---:|
-| Climbing | 2,200 kcal | 2199.6 kcal | 155.9 g | 245.9 g | 57.0 g |
+| Climbing | 2,200 kcal | 2197.6 kcal | 155.6 g | 245.8 g | 57.0 g |
 | Rest | 1,900 kcal | 1900.8 kcal | 141.9 g | 213.3 g | 45.6 g |
 
 ## Why the structure is split
 
 `products` is the single source of truth for label nutrition. `meal_templates` reference product IDs and define component roles, alternatives, and scaling bounds. `day_plans` reference templates and contain only day-specific overrides. `derived` is a cache for a static/mobile UI, so the site can render immediately without recalculating.
 
-For target changes, adjust components whose `scaling.mode` is `adjustable`, respecting `min`, `max`, and `step`. The supplied priority order changes rice and pasta before smaller sauce/oil/honey adjustments, while keeping protein, fruit, vegetables, and climbing fuel fixed.
+For target changes, adjust components whose `scaling.mode` is `adjustable`,
+respecting `min`, `max`, and `step`. Positive minimums ensure no ingredient is
+removed. The supplied priority order changes rice and pasta before smaller
+sauce/oil/honey adjustments, while keeping protein, fruit, vegetables, and
+climbing fuel fixed.
 
 ## Chicken caveat
 

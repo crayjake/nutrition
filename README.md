@@ -134,6 +134,8 @@ pass remains valuable for installed-app and safe-area behaviour.
 
 ## Current scope
 
-There is deliberately no calorie-target editing, automatic food-quantity
-scaling, backend sync or service worker. Backups are manual and browser data is
-device/profile-specific.
+Settings includes separate climbing/rest calorie targets. The app adjusts only
+the plan’s explicitly scalable ingredients in practical increments, keeps every
+ingredient above zero, and carries those quantities into the Today, reference
+plan and Shopping views. There is no backend sync or service worker. Backups are
+manual and browser data is device/profile-specific.

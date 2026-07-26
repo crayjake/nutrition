@@ -4,14 +4,17 @@ import { useState } from "react";
 import { MacroSummary } from "@/components/macro-summary";
 import { MealCard } from "@/components/meal-card";
 import { NutritionControls } from "@/components/nutrition-controls";
+import { useTracking } from "@/features/tracking/tracking-provider";
 import { getMeals, getDailyTotals } from "./selectors";
 import type { DayPlanId, VariantId } from "@/types/nutrition";
 
 export function PlanPage() {
   const [dayPlanId, setDayPlanId] = useState<DayPlanId>("climbing");
   const [variantId, setVariantId] = useState<VariantId>("default");
-  const meals = getMeals(dayPlanId, variantId);
-  const totals = getDailyTotals(dayPlanId, variantId);
+  const { state } = useTracking();
+  const calorieTarget = state.settings.calorieTargets[dayPlanId];
+  const meals = getMeals(dayPlanId, variantId, calorieTarget);
+  const totals = getDailyTotals(dayPlanId, variantId, calorieTarget);
 
   return (
     <>

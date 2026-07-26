@@ -1,6 +1,12 @@
 import { nutritionPlan } from "@/data/nutrition";
+import { DEFAULT_CALORIE_TARGETS } from "./calorie-targets";
 import { getMeals } from "./selectors";
-import type { DayPlanId, Product, VariantId } from "@/types/nutrition";
+import type {
+  CalorieTargets,
+  DayPlanId,
+  Product,
+  VariantId
+} from "@/types/nutrition";
 import {
   MORRISONS_PRODUCT_DETAILS,
   packKey
@@ -80,7 +86,10 @@ function normaliseCount(value: number): number {
   return Math.max(0, Math.min(99, Math.floor(value)));
 }
 
-function addRequirements(counts: ShoppingDayCounts) {
+function addRequirements(
+  counts: ShoppingDayCounts,
+  calorieTargets: CalorieTargets
+) {
   const required = new Map<string, RequiredIngredient>();
 
   for (const combination of DAY_COMBINATIONS) {
@@ -88,7 +97,8 @@ function addRequirements(counts: ShoppingDayCounts) {
     if (!days) continue;
     for (const meal of getMeals(
       combination.dayPlanId,
-      combination.variantId
+      combination.variantId,
+      calorieTargets[combination.dayPlanId]
     )) {
       for (const item of meal.items) {
         if (item.amount.value <= 0) continue;
@@ -193,9 +203,10 @@ function resolvePacks(
 }
 
 export function getShoppingList(
-  counts: ShoppingDayCounts
+  counts: ShoppingDayCounts,
+  calorieTargets: CalorieTargets = DEFAULT_CALORIE_TARGETS
 ): ShoppingItem[] {
-  return [...addRequirements(counts)].flatMap(
+  return [...addRequirements(counts, calorieTargets)].flatMap(
     ([ingredientId, requirement]) => {
       const product = nutritionPlan.products[ingredientId];
       if (!product) return [];

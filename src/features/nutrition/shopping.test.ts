@@ -75,6 +75,18 @@ describe("shopping-list calculations", () => {
     ).toEqual([{ count: 1, quantity: 1000, unit: "g" }]);
   });
 
+  it("uses customised calorie targets for shopping quantities", () => {
+    const higherTargetList = getShoppingList(DEFAULT_WEEK, {
+      climbing: 2750,
+      rest: 2550
+    });
+    expect(
+      higherTargetList.find(
+        (item) => item.ingredientId === "yutaka_sushi_rice_500g"
+      )?.quantity
+    ).toBe(2);
+  });
+
   it("returns no products for no selected days", () => {
     const empty: ShoppingDayCounts = {
       climbingTofu: 0,

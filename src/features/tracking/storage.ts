@@ -1,4 +1,8 @@
 import { nutritionPlan } from "@/data/nutrition";
+import {
+  CALORIE_TARGET_LIMITS,
+  DEFAULT_CALORIE_TARGETS
+} from "@/features/nutrition/calorie-targets";
 import type { DayPlanId, VariantId } from "@/types/nutrition";
 import type {
   AppState,
@@ -20,6 +24,7 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: "system",
   colourScheme: "ember",
   waterGoalMl: 2500,
+  calorieTargets: DEFAULT_CALORIE_TARGETS,
   defaultDayPlanId: "climbing"
 };
 
@@ -27,7 +32,10 @@ export function createDefaultState(): AppState {
   return {
     version: 1,
     nutritionSchemaVersion: nutritionPlan.meta.schema_version,
-    settings: { ...DEFAULT_SETTINGS },
+    settings: {
+      ...DEFAULT_SETTINGS,
+      calorieTargets: { ...DEFAULT_CALORIE_TARGETS }
+    },
     logsByDate: {},
     climbingSessions: []
   };
@@ -58,8 +66,26 @@ function isColourScheme(value: unknown): value is ColourScheme {
   );
 }
 
+function parseCalorieTarget(value: unknown, dayPlanId: DayPlanId): number {
+  const limits = CALORIE_TARGET_LIMITS[dayPlanId];
+  return typeof value === "number" &&
+    Number.isFinite(value) &&
+    value >= limits.min &&
+    value <= limits.max
+    ? Math.round(value)
+    : DEFAULT_CALORIE_TARGETS[dayPlanId];
+}
+
 function parseSettings(value: unknown): Settings {
-  if (!isRecord(value)) return { ...DEFAULT_SETTINGS };
+  if (!isRecord(value)) {
+    return {
+      ...DEFAULT_SETTINGS,
+      calorieTargets: { ...DEFAULT_CALORIE_TARGETS }
+    };
+  }
+  const calorieTargets = isRecord(value.calorieTargets)
+    ? value.calorieTargets
+    : {};
   return {
     theme: isTheme(value.theme) ? value.theme : DEFAULT_SETTINGS.theme,
     colourScheme: isColourScheme(value.colourScheme)
@@ -72,6 +98,10 @@ function parseSettings(value: unknown): Settings {
       value.waterGoalMl <= 10000
         ? Math.round(value.waterGoalMl)
         : DEFAULT_SETTINGS.waterGoalMl,
+    calorieTargets: {
+      climbing: parseCalorieTarget(calorieTargets.climbing, "climbing"),
+      rest: parseCalorieTarget(calorieTargets.rest, "rest")
+    },
     defaultDayPlanId: isDayPlan(value.defaultDayPlanId)
       ? value.defaultDayPlanId
       : DEFAULT_SETTINGS.defaultDayPlanId

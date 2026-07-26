@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, ArrowRight, CalendarClock } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { MacroRings } from "@/components/macro-rings";
 import { MealCard } from "@/components/meal-card";
 import { NutritionControls } from "@/components/nutrition-controls";
@@ -31,40 +31,7 @@ export function TodayPage() {
     setWeight
   } = useTracking();
   const [date, setDate] = useState(toLocalDateKey);
-  const [summaryStuck, setSummaryStuck] = useState(false);
-  const [summaryExpandedHeight, setSummaryExpandedHeight] = useState(0);
-  const summaryAnchorRef = useRef<HTMLDivElement>(null);
-  const summaryCardRef = useRef<HTMLElement>(null);
-  const summaryStuckRef = useRef(false);
   const today = toLocalDateKey();
-
-  useEffect(() => {
-    const anchor = summaryAnchorRef.current;
-    if (!anchor) return;
-    const updateStuckState = () => {
-      const stickyTop = summaryCardRef.current
-        ? Number.parseFloat(getComputedStyle(summaryCardRef.current).top) || 0
-        : 0;
-      const nextStuck = anchor.getBoundingClientRect().top <= stickyTop;
-      if (nextStuck && !summaryStuckRef.current) {
-        const expandedHeight = summaryCardRef.current?.getBoundingClientRect().height;
-        if (expandedHeight) {
-          setSummaryExpandedHeight(expandedHeight);
-        }
-      }
-      summaryStuckRef.current = nextStuck;
-      setSummaryStuck(nextStuck);
-    };
-    window.addEventListener("scroll", updateStuckState, { passive: true });
-    window.addEventListener("resize", updateStuckState);
-    window.visualViewport?.addEventListener("resize", updateStuckState);
-    updateStuckState();
-    return () => {
-      window.removeEventListener("scroll", updateStuckState);
-      window.removeEventListener("resize", updateStuckState);
-      window.visualViewport?.removeEventListener("resize", updateStuckState);
-    };
-  }, [hydrated]);
 
   if (!hydrated) {
     return <div className="loading-card" aria-label="Loading today’s plan" />;
@@ -75,8 +42,9 @@ export function TodayPage() {
     log,
     state.settings.defaultDayPlanId
   );
-  const meals = getMeals(dayPlanId, variantId);
-  const totals = getDailyTotals(dayPlanId, variantId);
+  const calorieTarget = state.settings.calorieTargets[dayPlanId];
+  const meals = getMeals(dayPlanId, variantId, calorieTarget);
+  const totals = getDailyTotals(dayPlanId, variantId, calorieTarget);
   const consumedMacros = getConsumedMacros(
     meals,
     log?.completedMealIds ?? []
@@ -126,49 +94,35 @@ export function TodayPage() {
         onVariantChange={(value) => setVariant(date, value)}
       />
 
-      <div
-        className="summary-stick-sentinel"
-        ref={summaryAnchorRef}
-        aria-hidden="true"
-      />
-      <div
-        className="daily-summary-slot"
-        style={
-          summaryStuck && summaryExpandedHeight
-            ? { height: `${summaryExpandedHeight}px` }
-            : undefined
-        }
+      <section
+        className="summary-card daily-summary-card"
+        aria-labelledby="daily-summary"
       >
-        <section
-          ref={summaryCardRef}
-          className="summary-card daily-summary-card"
-          data-stuck={summaryStuck || undefined}
-          aria-labelledby="daily-summary"
-        >
-          <div className="summary-title-row">
-            <div>
-              <p className="eyebrow muted-on-dark">Daily target</p>
-              <h2 id="daily-summary">{dayPlanId === "climbing" ? "Climbing fuel" : "Rest day fuel"}</h2>
-            </div>
-            <span className="variant-pill">
-              {variantId === "default" ? "Tofu" : "Chicken"}
-            </span>
+        <div className="summary-title-row">
+          <div>
+            <p className="eyebrow muted-on-dark">Daily target</p>
+            <h2 id="daily-summary">
+              {dayPlanId === "climbing" ? "Climbing fuel" : "Rest day fuel"}
+            </h2>
           </div>
-          <MacroRings consumed={consumedMacros} goals={totals} />
-          <div className="completion-row">
-            <span>
-              <strong>{caloriesEaten.toLocaleString("en-GB")}</strong> of{" "}
-              {calorieGoal.toLocaleString("en-GB")} kcal
-            </span>
-            <strong>{displayedCaloriePercentage}%</strong>
-          </div>
-          <ProgressBar
-            value={caloriePercentage}
-            label={`Calories eaten: ${caloriesEaten} of ${calorieGoal} kilocalories`}
-            tone={caloriePercentage >= 100 ? "success" : "accent"}
-          />
-        </section>
-      </div>
+          <span className="variant-pill">
+            {variantId === "default" ? "Tofu" : "Chicken"}
+          </span>
+        </div>
+        <MacroRings consumed={consumedMacros} goals={totals} />
+        <div className="completion-row">
+          <span>
+            <strong>{caloriesEaten.toLocaleString("en-GB")}</strong> of{" "}
+            {calorieGoal.toLocaleString("en-GB")} kcal
+          </span>
+          <strong>{displayedCaloriePercentage}%</strong>
+        </div>
+        <ProgressBar
+          value={caloriePercentage}
+          label={`Calories eaten: ${caloriesEaten} of ${calorieGoal} kilocalories`}
+          tone={caloriePercentage >= 100 ? "success" : "accent"}
+        />
+      </section>
 
       <h2 className="section-title">Today’s meals</h2>
       <div className="meal-list">

@@ -1,12 +1,19 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { TrackingProvider } from "@/features/tracking/tracking-provider";
 import { ShoppingPlanner } from "./shopping-planner";
 
 describe("shopping planner", () => {
+  beforeEach(() => localStorage.clear());
+
   it("shows whole shop quantities and updates from the day counters", async () => {
     const user = userEvent.setup();
-    render(<ShoppingPlanner />);
+    render(
+      <TrackingProvider>
+        <ShoppingPlanner />
+      </TrackingProvider>
+    );
 
     const fage = screen
       .getByRole("checkbox", { name: /check off fage/i })
@@ -43,7 +50,11 @@ describe("shopping planner", () => {
 
   it("lets a shopper check off an item", async () => {
     const user = userEvent.setup();
-    render(<ShoppingPlanner />);
+    render(
+      <TrackingProvider>
+        <ShoppingPlanner />
+      </TrackingProvider>
+    );
     const checkbox = screen.getByRole("checkbox", {
       name: /check off fage/i
     });

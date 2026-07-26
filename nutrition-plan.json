@@ -555,7 +555,7 @@
           "role": "carbohydrate",
           "scaling": {
             "mode": "adjustable",
-            "min": 0,
+            "min": 5,
             "max": 20,
             "step": 5,
             "weight": 0.4
@@ -641,7 +641,7 @@
           "role": "fat",
           "scaling": {
             "mode": "adjustable",
-            "min": 0,
+            "min": 1,
             "max": 10,
             "step": 1,
             "weight": 0.3
@@ -836,13 +836,13 @@
           "id": "honey",
           "ingredient_id": "m_organic_clear_honey_340g",
           "amount": {
-            "value": 0,
+            "value": 10,
             "unit": "g"
           },
           "role": "carbohydrate",
           "scaling": {
             "mode": "adjustable",
-            "min": 0,
+            "min": 5,
             "max": 15,
             "step": 5,
             "weight": 0.3
@@ -869,7 +869,7 @@
           "overrides": {
             "rice": {
               "amount": {
-                "value": 55,
+                "value": 50,
                 "unit": "g",
                 "state": "dry_uncooked"
               }
@@ -1027,17 +1027,17 @@
                   "component_id": "rice",
                   "ingredient_id": "yutaka_sushi_rice_500g",
                   "amount": {
-                    "value": 55,
+                    "value": 50,
                     "unit": "g",
                     "state": "dry_uncooked"
                   },
                   "macros": {
-                    "energy_kcal": 191.4,
-                    "protein_g": 3.46,
-                    "carbohydrate_g": 43.45,
-                    "fat_g": 0.28,
-                    "fibre_g": 0.55,
-                    "sugars_g": 0.39,
+                    "energy_kcal": 174.0,
+                    "protein_g": 3.15,
+                    "carbohydrate_g": 39.5,
+                    "fat_g": 0.25,
+                    "fibre_g": 0.5,
+                    "sugars_g": 0.35,
                     "salt_g": 0.01
                   }
                 },
@@ -1111,12 +1111,12 @@
                 }
               ],
               "totals": {
-                "energy_kcal": 626.35,
-                "protein_g": 43.42,
-                "carbohydrate_g": 57.94,
-                "fat_g": 20.73,
-                "fibre_g": 12.85,
-                "sugars_g": 8.32,
+                "energy_kcal": 608.95,
+                "protein_g": 43.11,
+                "carbohydrate_g": 53.99,
+                "fat_g": 20.7,
+                "fibre_g": 12.8,
+                "sugars_g": 8.28,
                 "salt_g": 1.62
               }
             },
@@ -1314,41 +1314,41 @@
                   "component_id": "honey",
                   "ingredient_id": "m_organic_clear_honey_340g",
                   "amount": {
-                    "value": 0,
+                    "value": 5,
                     "unit": "g"
                   },
                   "macros": {
-                    "energy_kcal": 0.0,
-                    "protein_g": 0.0,
-                    "carbohydrate_g": 0.0,
+                    "energy_kcal": 15.35,
+                    "protein_g": 0.02,
+                    "carbohydrate_g": 3.82,
                     "fat_g": 0.0,
                     "fibre_g": 0.0,
-                    "sugars_g": 0.0,
+                    "sugars_g": 3.82,
                     "salt_g": 0.0
                   }
                 }
               ],
               "totals": {
-                "energy_kcal": 108.0,
-                "protein_g": 20.6,
-                "carbohydrate_g": 6.0,
+                "energy_kcal": 123.35,
+                "protein_g": 20.62,
+                "carbohydrate_g": 9.82,
                 "fat_g": 0.0,
                 "fibre_g": 0.0,
-                "sugars_g": 6.0,
+                "sugars_g": 9.82,
                 "salt_g": 0.2
               }
             }
           ],
           "totals": {
-            "energy_kcal": 2199.6,
-            "protein_g": 155.91,
-            "carbohydrate_g": 245.95,
-            "fat_g": 57.0,
-            "fibre_g": 33.03,
-            "sugars_g": 85.56,
+            "energy_kcal": 2197.55,
+            "protein_g": 155.62,
+            "carbohydrate_g": 245.82,
+            "fat_g": 56.97,
+            "fibre_g": 32.98,
+            "sugars_g": 89.34,
             "salt_g": 2.98
           },
-          "difference_from_target_kcal": -0.4
+          "difference_from_target_kcal": -2.45
         },
         "chicken_pasta": {
           "variant": "chicken_pasta",
@@ -1446,17 +1446,17 @@
                   "component_id": "rice",
                   "ingredient_id": "yutaka_sushi_rice_500g",
                   "amount": {
-                    "value": 55,
+                    "value": 50,
                     "unit": "g",
                     "state": "dry_uncooked"
                   },
                   "macros": {
-                    "energy_kcal": 191.4,
-                    "protein_g": 3.46,
-                    "carbohydrate_g": 43.45,
-                    "fat_g": 0.28,
-                    "fibre_g": 0.55,
-                    "sugars_g": 0.39,
+                    "energy_kcal": 174.0,
+                    "protein_g": 3.15,
+                    "carbohydrate_g": 39.5,
+                    "fat_g": 0.25,
+                    "fibre_g": 0.5,
+                    "sugars_g": 0.35,
                     "salt_g": 0.01
                   }
                 },
@@ -1530,12 +1530,12 @@
                 }
               ],
               "totals": {
-                "energy_kcal": 626.35,
-                "protein_g": 43.42,
-                "carbohydrate_g": 57.94,
-                "fat_g": 20.73,
-                "fibre_g": 12.85,
-                "sugars_g": 8.32,
+                "energy_kcal": 608.95,
+                "protein_g": 43.11,
+                "carbohydrate_g": 53.99,
+                "fat_g": 20.7,
+                "fibre_g": 12.8,
+                "sugars_g": 8.28,
                 "salt_g": 1.62
               }
             },
@@ -1625,7 +1625,7 @@
             {
               "meal_instance_id": "dinner",
               "template_id": "tofu_pesto_pasta",
-              "name": "Tofu pesto pasta",
+              "name": "Chicken pesto pasta",
               "items": [
                 {
                   "component_id": "penne",
@@ -1734,41 +1734,41 @@
                   "component_id": "honey",
                   "ingredient_id": "m_organic_clear_honey_340g",
                   "amount": {
-                    "value": 0,
+                    "value": 5,
                     "unit": "g"
                   },
                   "macros": {
-                    "energy_kcal": 0.0,
-                    "protein_g": 0.0,
-                    "carbohydrate_g": 0.0,
+                    "energy_kcal": 15.35,
+                    "protein_g": 0.02,
+                    "carbohydrate_g": 3.82,
                     "fat_g": 0.0,
                     "fibre_g": 0.0,
-                    "sugars_g": 0.0,
+                    "sugars_g": 3.82,
                     "salt_g": 0.0
                   }
                 }
               ],
               "totals": {
-                "energy_kcal": 108.0,
-                "protein_g": 20.6,
-                "carbohydrate_g": 6.0,
+                "energy_kcal": 123.35,
+                "protein_g": 20.62,
+                "carbohydrate_g": 9.82,
                 "fat_g": 0.0,
                 "fibre_g": 0.0,
-                "sugars_g": 6.0,
+                "sugars_g": 9.82,
                 "salt_g": 0.2
               }
             }
           ],
           "totals": {
-            "energy_kcal": 2199.47,
-            "protein_g": 171.21,
-            "carbohydrate_g": 261.14,
-            "fat_g": 43.96,
-            "fibre_g": 30.96,
-            "sugars_g": 86.29,
+            "energy_kcal": 2197.42,
+            "protein_g": 170.92,
+            "carbohydrate_g": 261.01,
+            "fat_g": 43.93,
+            "fibre_g": 30.91,
+            "sugars_g": 90.07,
             "salt_g": 3.01
           },
-          "difference_from_target_kcal": -0.53
+          "difference_from_target_kcal": -2.58
         }
       }
     },
@@ -2503,7 +2503,7 @@
             {
               "meal_instance_id": "dinner",
               "template_id": "tofu_pesto_pasta",
-              "name": "Tofu pesto pasta",
+              "name": "Chicken pesto pasta",
               "items": [
                 {
                   "component_id": "penne",
@@ -2688,7 +2688,7 @@
       {
         "ingredient_id": "m_organic_clear_honey_340g",
         "required": {
-          "value": 120,
+          "value": 140,
           "unit": "g"
         },
         "recommended_packs": [
@@ -2717,7 +2717,7 @@
       {
         "ingredient_id": "yutaka_sushi_rice_500g",
         "required": {
-          "value": 400,
+          "value": 380,
           "unit": "g"
         },
         "recommended_packs": [

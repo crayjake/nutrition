@@ -1,4 +1,5 @@
 import { nutritionPlan } from "@/data/nutrition";
+import { adjustPlanToCalories } from "./calorie-targets";
 import type {
   DayPlanId,
   DerivedMeal,
@@ -9,24 +10,29 @@ import type {
 
 export function resolveDayPlan(
   dayPlanId: DayPlanId,
-  variantId: VariantId
+  variantId: VariantId,
+  calorieTarget?: number
 ): DerivedPlan {
-  return nutritionPlan.day_plans[dayPlanId].derived[variantId];
+  return calorieTarget === undefined
+    ? nutritionPlan.day_plans[dayPlanId].derived[variantId]
+    : adjustPlanToCalories(dayPlanId, variantId, calorieTarget);
 }
 
 export function getMeals(
   dayPlanId: DayPlanId,
-  variantId: VariantId
+  variantId: VariantId,
+  calorieTarget?: number
 ): DerivedMeal[] {
-  return resolveDayPlan(dayPlanId, variantId).meals;
+  return resolveDayPlan(dayPlanId, variantId, calorieTarget).meals;
 }
 
 export function getMeal(
   dayPlanId: DayPlanId,
   variantId: VariantId,
-  mealId: string
+  mealId: string,
+  calorieTarget?: number
 ): DerivedMeal | undefined {
-  return getMeals(dayPlanId, variantId).find(
+  return getMeals(dayPlanId, variantId, calorieTarget).find(
     (meal) => meal.meal_instance_id === mealId
   );
 }
@@ -37,9 +43,10 @@ export function getIngredientName(item: DerivedMealItem): string {
 
 export function getDailyTotals(
   dayPlanId: DayPlanId,
-  variantId: VariantId
+  variantId: VariantId,
+  calorieTarget?: number
 ) {
-  return resolveDayPlan(dayPlanId, variantId).totals;
+  return resolveDayPlan(dayPlanId, variantId, calorieTarget).totals;
 }
 
 export function getValidMealIds(

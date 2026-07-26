@@ -1,4 +1,4 @@
-import type { DayPlanId, VariantId } from "./nutrition";
+import type { CalorieTargets, DayPlanId, VariantId } from "./nutrition";
 
 export type ThemePreference = "system" | "light" | "dark";
 export type ColourScheme = "ember" | "forest" | "ocean" | "berry";
@@ -34,6 +34,7 @@ export interface Settings {
   theme: ThemePreference;
   colourScheme: ColourScheme;
   waterGoalMl: number;
+  calorieTargets: CalorieTargets;
   defaultDayPlanId: DayPlanId;
 }
 

@@ -92,47 +92,37 @@ test("shopping list calculates whole packs and supports check-off", async ({
   ).toHaveAttribute("aria-checked", "true");
 });
 
-test("header scrolls away and daily summary compacts when sticky", async ({
+test("header and daily summary scroll naturally with the page", async ({
   page
 }) => {
   await page.goto(url("/"));
   const header = page.locator(".app-header");
   const summary = page.locator(".daily-summary-card");
-  const summarySlot = page.locator(".daily-summary-slot");
-  const expanded = await summary.boundingBox();
-  const expandedSlot = await summarySlot.boundingBox();
-  expect(expanded).not.toBeNull();
-  expect(expandedSlot).not.toBeNull();
-
-  await page.evaluate(() => window.scrollTo(0, 700));
-  await expect(summary).toHaveAttribute("data-stuck", "true");
-  await page.waitForTimeout(250);
-
-  const scrolledHeader = await header.boundingBox();
-  const compact = await summary.boundingBox();
-  const compactSlot = await summarySlot.boundingBox();
-  const scrollY = await page.evaluate(() => window.scrollY);
-  const stickyTop = await summary.evaluate((card) =>
-    Number.parseFloat(getComputedStyle(card).top)
-  );
+  await expect(summary.locator(".macro-ring")).toHaveCount(3);
   const ringBoxes = await summary.locator(".macro-ring").evaluateAll((rings) =>
     rings.map((ring) => {
       const { x, width } = ring.getBoundingClientRect();
       return { x, width };
     })
   );
-  expect(scrolledHeader).not.toBeNull();
-  expect(compact).not.toBeNull();
-  expect(compactSlot).not.toBeNull();
   expect(ringBoxes).toHaveLength(3);
   expect(new Set(ringBoxes.map(({ width }) => Math.round(width))).size).toBe(1);
   expect(ringBoxes[0].x + ringBoxes[0].width).toBeLessThanOrEqual(ringBoxes[1].x);
   expect(ringBoxes[1].x + ringBoxes[1].width).toBeLessThanOrEqual(ringBoxes[2].x);
+  await expect(summary).not.toHaveAttribute("data-stuck");
+  expect(
+    await summary.evaluate((card) => getComputedStyle(card).position)
+  ).toBe("static");
+
+  await page.evaluate(() => window.scrollTo(0, 700));
+  const scrolledHeader = await header.boundingBox();
+  const scrolledSummary = await summary.boundingBox();
+  const scrollY = await page.evaluate(() => window.scrollY);
+
+  expect(scrolledHeader).not.toBeNull();
+  expect(scrolledSummary).not.toBeNull();
   expect(scrolledHeader!.y + scrolledHeader!.height).toBeLessThanOrEqual(1);
-  expect(compact!.height).toBeLessThan(expanded!.height * 0.8);
-  expect(compact!.height).toBeLessThan(145);
-  expect(compact!.y).toBeCloseTo(stickyTop, 0);
-  expect(compactSlot!.height).toBeCloseTo(expandedSlot!.height, 0);
+  expect(scrolledSummary!.y + scrolledSummary!.height).toBeLessThanOrEqual(1);
   expect(scrollY).toBeCloseTo(700, 0);
 });
 
@@ -168,6 +158,30 @@ test("theme and bottom navigation remain usable", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("link", { name: "Progress" }).click();
   await expect(page).toHaveURL(new RegExp(`${basePath}/progress/?$`));
+});
+
+test("calorie targets adjust the daily plan without removing ingredients", async ({
+  page
+}) => {
+  await page.goto(url("/settings/"));
+  await page.getByLabel("Climbing day (kcal)").fill("2400");
+  await page.getByRole("button", { name: "Save calorie targets" }).click();
+  await expect(page.getByText("Calorie targets saved. Meal quantities updated."))
+    .toBeVisible();
+
+  await page.goto(url("/"));
+  await expect(
+    page.getByRole("progressbar", {
+      name: "Calories eaten: 0 of 2400 kilocalories"
+    })
+  ).toBeVisible();
+  const evening = page
+    .locator(".meal-card")
+    .filter({ has: page.getByRole("heading", { name: "Evening FAGE" }) });
+  await evening.locator(".meal-heading").click();
+  await expect(
+    evening.getByText("M Organic Squeezy Pure Clear Honey")
+  ).toBeVisible();
 });
 
 test("bottom navigation stays docked as browser chrome changes", async ({

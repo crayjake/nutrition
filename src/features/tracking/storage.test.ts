@@ -30,7 +30,33 @@ describe("tracking storage", () => {
     });
     expect(parsed.settings.theme).toBe("dark");
     expect(parsed.settings.colourScheme).toBe("ember");
+    expect(parsed.settings.calorieTargets).toEqual({
+      climbing: 2200,
+      rest: 1900
+    });
     expect(Object.keys(parsed.logsByDate)).toEqual(["2026-07-25"]);
+  });
+
+  it("validates calorie targets independently", () => {
+    const parsed = parseAppState({
+      version: 1,
+      settings: {
+        theme: "system",
+        colourScheme: "forest",
+        waterGoalMl: 2500,
+        defaultDayPlanId: "climbing",
+        calorieTargets: {
+          climbing: 2400,
+          rest: 9999
+        }
+      },
+      logsByDate: {}
+    });
+
+    expect(parsed.settings.calorieTargets).toEqual({
+      climbing: 2400,
+      rest: 1900
+    });
   });
 
   it("preserves valid climbing sessions and drops corrupt entries", () => {

@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { useTracking } from "@/features/tracking/tracking-provider";
 import {
   estimatedShoppingTotal,
   formatPackSize,
@@ -55,10 +56,15 @@ const COUNTERS: Array<{
 ];
 
 export function ShoppingPlanner() {
+  const { state } = useTracking();
+  const calorieTargets = state.settings.calorieTargets;
   const [counts, setCounts] = useState<ShoppingDayCounts>(DEFAULT_COUNTS);
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [status, setStatus] = useState("");
-  const items = useMemo(() => getShoppingList(counts), [counts]);
+  const items = useMemo(
+    () => getShoppingList(counts, calorieTargets),
+    [calorieTargets, counts]
+  );
   const days = totalShoppingDays(counts);
   const estimatedTotal = estimatedShoppingTotal(items);
   const priceCheckedOn = items.find((item) => item.priceCheckedOn)?.priceCheckedOn;
