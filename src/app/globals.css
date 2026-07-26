@@ -55,42 +55,90 @@
 }
 
 :root[data-colour-scheme="forest"] {
+  --bg: #eef3ed;
+  --surface: #fbfdfb;
+  --surface-subtle: #e2ebe3;
+  --surface-strong: #1d2b21;
+  --border: #d3dfd4;
+  --text: #19231c;
+  --muted: #627068;
   --accent: #3b8558;
   --accent-strong: #25643e;
   --accent-soft: #dcecdf;
   --ring-energy: #63ad78;
+  --chart-grid: #d3dfd4;
 }
 
 :root[data-colour-scheme="ocean"] {
+  --bg: #edf4f7;
+  --surface: #fbfdfe;
+  --surface-subtle: #dfeaf0;
+  --surface-strong: #1a2a33;
+  --border: #cfdee6;
+  --text: #18242b;
+  --muted: #60717a;
   --accent: #347fa8;
   --accent-strong: #1f668b;
   --accent-soft: #dcebf2;
   --ring-energy: #61a9ca;
+  --chart-grid: #cfdee6;
 }
 
 :root[data-colour-scheme="berry"] {
+  --bg: #f6eff4;
+  --surface: #fffafd;
+  --surface-subtle: #eee0e9;
+  --surface-strong: #30222b;
+  --border: #e2d2dc;
+  --text: #281f25;
+  --muted: #776873;
   --accent: #a05282;
   --accent-strong: #7f3c66;
   --accent-soft: #f0ddea;
   --ring-energy: #c378a8;
+  --chart-grid: #e2d2dc;
 }
 
 :root[data-theme="dark"][data-colour-scheme="forest"] {
+  --bg: #111915;
+  --surface: #19221c;
+  --surface-subtle: #253129;
+  --surface-strong: #edf4ee;
+  --border: #344238;
+  --text: #edf3ee;
+  --muted: #9eaca2;
   --accent: #62b982;
   --accent-strong: #83d29e;
   --accent-soft: #203a2a;
+  --chart-grid: #344238;
 }
 
 :root[data-theme="dark"][data-colour-scheme="ocean"] {
+  --bg: #10191e;
+  --surface: #18232a;
+  --surface-subtle: #23313a;
+  --surface-strong: #edf4f7;
+  --border: #31414b;
+  --text: #eef3f5;
+  --muted: #9dabb3;
   --accent: #67b4d8;
   --accent-strong: #8bceeb;
   --accent-soft: #203642;
+  --chart-grid: #31414b;
 }
 
 :root[data-theme="dark"][data-colour-scheme="berry"] {
+  --bg: #1a1318;
+  --surface: #251b22;
+  --surface-subtle: #33262f;
+  --surface-strong: #f6edf3;
+  --border: #463642;
+  --text: #f4eef2;
+  --muted: #b2a2ad;
   --accent: #ce7eaf;
   --accent-strong: #e6a0ca;
   --accent-soft: #41273a;
+  --chart-grid: #463642;
 }
 
 * {
@@ -1904,12 +1952,16 @@ button {
 .session-field-grid {
   display: grid;
   gap: 12px;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.session-field-grid label,
-.grade-select-label {
+.session-field-grid label {
   min-width: 0;
+}
+
+.session-field-grid .input {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .session-field-grid .input-label,
@@ -2103,9 +2155,84 @@ button {
   color: var(--muted);
 }
 
-.grade-select-label {
-  display: block;
+.grade-colour-field {
+  min-width: 0;
   margin-bottom: 10px;
+  padding: 0;
+  border: 0;
+}
+
+.grade-colour-field .input-label {
+  padding: 0;
+}
+
+.grade-colour-options {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.grade-colour-option {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 3px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: var(--grade-colour);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 18%);
+  color: var(--grade-text);
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.grade-colour-option span {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 780;
+  text-overflow: ellipsis;
+}
+
+.grade-colour-option small {
+  margin-top: 4px;
+  font-size: 7px;
+  font-weight: 720;
+  opacity: 0.84;
+  white-space: nowrap;
+}
+
+.grade-colour-option i {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--grade-text);
+  color: var(--grade-colour);
+  font-style: normal;
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+.grade-colour-option[data-active="true"] {
+  border-color: var(--surface);
+  box-shadow:
+    0 0 0 3px var(--text),
+    inset 0 0 0 1px rgb(255 255 255 / 18%);
+}
+
+.grade-colour-option[data-active="true"] i {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .logged-climb-card .segmented-control {
@@ -2333,6 +2460,10 @@ button {
 
   .tracker-stack {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .session-field-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   }
 
   .stat-grid {

@@ -21,7 +21,7 @@ describe("climbing log", () => {
     await user.clear(length);
     await user.type(length, "75");
     await user.click(screen.getByRole("button", { name: "Add" }));
-    await user.selectOptions(screen.getByLabelText("Hold colour"), "blue");
+    await user.click(screen.getByRole("radio", { name: /blue/i }));
     await user.click(
       screen.getByRole("radio", {
         name: "Hard"

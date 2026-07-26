@@ -20,11 +20,7 @@ import {
   gradeLabel,
   gradeRangeLabel
 } from "./grading";
-import type {
-  ClimbBand,
-  GymGradeColour,
-  LoggedClimb
-} from "@/types/tracking";
+import type { ClimbBand, LoggedClimb } from "@/types/tracking";
 
 function uniqueDraftId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -267,24 +263,43 @@ export function ClimbingPage() {
                         <X aria-hidden="true" size={17} />
                       </button>
                     </div>
-                    <label className="grade-select-label">
-                      <span className="input-label">Hold colour</span>
-                      <select
-                        className="input"
-                        value={climb.gradeColour}
-                        onChange={(event) =>
-                          updateClimb(climb.id, {
-                            gradeColour: event.target.value as GymGradeColour
-                          })
-                        }
+                    <fieldset className="grade-colour-field">
+                      <legend className="input-label">Hold colour</legend>
+                      <div
+                        className="grade-colour-options"
+                        role="radiogroup"
+                        aria-label={`Hold colour for climb ${index + 1}`}
                       >
                         {GYM_GRADES.map((option) => (
-                          <option key={option.id} value={option.id}>
-                            {option.label} · {gradeRangeLabel(option)}
-                          </option>
+                          <button
+                            className="grade-colour-option"
+                            data-active={climb.gradeColour === option.id}
+                            role="radio"
+                            aria-checked={climb.gradeColour === option.id}
+                            aria-label={`${option.label}, grades ${gradeRangeLabel(option)}`}
+                            key={option.id}
+                            type="button"
+                            style={
+                              {
+                                "--grade-colour": option.colour,
+                                "--grade-text": option.textColour
+                              } as React.CSSProperties
+                            }
+                            onClick={() =>
+                              updateClimb(climb.id, {
+                                gradeColour: option.id
+                              })
+                            }
+                          >
+                            <span>{option.label}</span>
+                            <small>{gradeRangeLabel(option)}</small>
+                            <i aria-hidden="true">
+                              <Check size={11} strokeWidth={3} />
+                            </i>
+                          </button>
                         ))}
-                      </select>
-                    </label>
+                      </div>
+                    </fieldset>
                     <SegmentedControl
                       label={`Difficulty for climb ${index + 1}`}
                       value={climb.band}

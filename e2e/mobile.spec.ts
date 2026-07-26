@@ -148,11 +148,18 @@ test("date navigation and meal expansion are touch friendly", async ({ page }) =
 
 test("theme and bottom navigation remain usable", async ({ page }) => {
   await page.goto(url("/settings/"));
+  const emberBackground = await page.evaluate(
+    () => getComputedStyle(document.body).backgroundColor
+  );
   await page.getByRole("button", { name: /ocean/i }).click();
   await expect(page.locator("html")).toHaveAttribute(
     "data-colour-scheme",
     "ocean"
   );
+  const oceanBackground = await page.evaluate(
+    () => getComputedStyle(document.body).backgroundColor
+  );
+  expect(oceanBackground).not.toBe(emberBackground);
   await page.getByRole("radio", { name: "Dark" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("link", { name: "Progress" }).click();
@@ -206,10 +213,17 @@ test("installed app metadata uses the Crux icon", async ({ page }) => {
 
 test("climbing sessions persist and feed climbing progress", async ({ page }) => {
   await page.goto(url("/climbing/"));
+  const dateBounds = await page.getByLabel("Date").boundingBox();
+  const lengthBounds = await page.getByLabel("Length (minutes)").boundingBox();
+  expect(dateBounds).not.toBeNull();
+  expect(lengthBounds).not.toBeNull();
+  expect(dateBounds!.y + dateBounds!.height).toBeLessThanOrEqual(
+    lengthBounds!.y
+  );
   await page.getByLabel("Length (minutes)").fill("75");
   await page.getByLabel("Session difficulty").fill("8");
   await page.getByRole("button", { name: "Add" }).click();
-  await page.getByLabel("Hold colour").selectOption("blue");
+  await page.getByRole("radio", { name: /blue/i }).click();
   await page.getByRole("radio", { name: "Hard" }).click();
   await page.getByRole("checkbox", { name: /sent/i }).check();
   await page.getByRole("button", { name: "Save session" }).click();
