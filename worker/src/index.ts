@@ -327,9 +327,18 @@ export class ReminderScheduler {
     ].filter((value): value is number => typeof value === "number");
     if (timestamps.length === 0) {
       await this.state.storage.deleteAlarm();
+      console.log(JSON.stringify({ event: "alarm.cleared" }));
       return;
     }
-    await this.state.storage.setAlarm(Math.min(...timestamps));
+    const scheduledAt = Math.min(...timestamps);
+    await this.state.storage.setAlarm(scheduledAt);
+    console.log(
+      JSON.stringify({
+        event: "alarm.scheduled",
+        scheduledAt,
+        confirmedAt: await this.state.storage.getAlarm()
+      })
+    );
   }
 
   private async save(registration: StoredRegistration): Promise<void> {
@@ -395,22 +404,46 @@ export class ReminderScheduler {
   private async send(
     subscription: SerializedPushSubscription,
     message: PushMessage,
-    topic: string
+    notificationType: string
   ): Promise<boolean> {
     try {
-      await webPush.sendNotification(subscription, JSON.stringify(message), {
-        vapidDetails: {
-          subject: this.env.VAPID_SUBJECT,
-          publicKey: this.env.VAPID_PUBLIC_KEY,
-          privateKey: this.env.VAPID_PRIVATE_KEY
-        },
-        TTL: 3600,
-        urgency: "high",
-        topic
-      });
+      const response = await webPush.sendNotification(
+        subscription,
+        JSON.stringify(message),
+        {
+          vapidDetails: {
+            subject: this.env.VAPID_SUBJECT,
+            publicKey: this.env.VAPID_PUBLIC_KEY,
+            privateKey: this.env.VAPID_PRIVATE_KEY
+          },
+          TTL: 3600,
+          urgency: "high"
+        }
+      );
+      console.log(
+        JSON.stringify({
+          event: "push.accepted",
+          notificationType,
+          statusCode: response.statusCode
+        })
+      );
       return true;
     } catch (error) {
       const statusCode = isRecord(error) ? error.statusCode : undefined;
+      const responseBody =
+        isRecord(error) && typeof error.body === "string"
+          ? error.body.slice(0, 500)
+          : undefined;
+      console.error(
+        JSON.stringify({
+          event: "push.failed",
+          notificationType,
+          statusCode:
+            typeof statusCode === "number" ? statusCode : undefined,
+          message: error instanceof Error ? error.message : "Unknown error",
+          responseBody
+        })
+      );
       if (statusCode === 404 || statusCode === 410) return false;
       throw error;
     }
@@ -420,6 +453,14 @@ export class ReminderScheduler {
     const registration = await this.getRegistration();
     if (!registration) return;
     const now = Date.now();
+    console.log(
+      JSON.stringify({
+        event: "alarm.started",
+        now,
+        testAt: registration.testAt,
+        nextMealAt: registration.nextMeal?.runAt
+      })
+    );
 
     if (registration.testAt && registration.testAt <= now + 1_000) {
       const delivered = await this.send(
