@@ -3,7 +3,12 @@ import type { DayPlanId, VariantId } from "@/types/nutrition";
 import type {
   AppState,
   BackupFile,
+  ClimbBand,
+  ClimbingSession,
+  ColourScheme,
   DailyLog,
+  GymGradeColour,
+  LoggedClimb,
   Settings,
   ThemePreference,
   WaterEntry
@@ -13,6 +18,7 @@ export const STORAGE_KEY = "nutrition-tracker:v1";
 
 export const DEFAULT_SETTINGS: Settings = {
   theme: "system",
+  colourScheme: "ember",
   waterGoalMl: 2500,
   defaultDayPlanId: "climbing"
 };
@@ -22,7 +28,8 @@ export function createDefaultState(): AppState {
     version: 1,
     nutritionSchemaVersion: nutritionPlan.meta.schema_version,
     settings: { ...DEFAULT_SETTINGS },
-    logsByDate: {}
+    logsByDate: {},
+    climbingSessions: []
   };
 }
 
@@ -42,10 +49,22 @@ function isTheme(value: unknown): value is ThemePreference {
   return value === "system" || value === "light" || value === "dark";
 }
 
+function isColourScheme(value: unknown): value is ColourScheme {
+  return (
+    value === "ember" ||
+    value === "forest" ||
+    value === "ocean" ||
+    value === "berry"
+  );
+}
+
 function parseSettings(value: unknown): Settings {
   if (!isRecord(value)) return { ...DEFAULT_SETTINGS };
   return {
     theme: isTheme(value.theme) ? value.theme : DEFAULT_SETTINGS.theme,
+    colourScheme: isColourScheme(value.colourScheme)
+      ? value.colourScheme
+      : DEFAULT_SETTINGS.colourScheme,
     waterGoalMl:
       typeof value.waterGoalMl === "number" &&
       Number.isFinite(value.waterGoalMl) &&
@@ -57,6 +76,84 @@ function parseSettings(value: unknown): Settings {
       ? value.defaultDayPlanId
       : DEFAULT_SETTINGS.defaultDayPlanId
   };
+}
+
+function isClimbBand(value: unknown): value is ClimbBand {
+  return value === "easy" || value === "medium" || value === "hard";
+}
+
+function isGymGradeColour(value: unknown): value is GymGradeColour {
+  return (
+    value === "green" ||
+    value === "orange" ||
+    value === "yellow" ||
+    value === "pink" ||
+    value === "black" ||
+    value === "blue" ||
+    value === "purple" ||
+    value === "mint"
+  );
+}
+
+function parseClimbs(value: unknown): LoggedClimb[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((climb) => {
+    if (
+      !isRecord(climb) ||
+      typeof climb.id !== "string" ||
+      !isGymGradeColour(climb.gradeColour) ||
+      !isClimbBand(climb.band) ||
+      typeof climb.sent !== "boolean"
+    ) {
+      return [];
+    }
+    return [
+      {
+        id: climb.id,
+        gradeColour: climb.gradeColour,
+        band: climb.band,
+        sent: climb.sent
+      }
+    ];
+  });
+}
+
+function parseClimbingSessions(value: unknown): ClimbingSession[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((session) => {
+    if (
+      !isRecord(session) ||
+      typeof session.id !== "string" ||
+      typeof session.date !== "string" ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(session.date) ||
+      typeof session.durationMinutes !== "number" ||
+      !Number.isFinite(session.durationMinutes) ||
+      session.durationMinutes < 1 ||
+      session.durationMinutes > 1440 ||
+      typeof session.difficulty !== "number" ||
+      !Number.isFinite(session.difficulty) ||
+      session.difficulty < 0 ||
+      session.difficulty > 10 ||
+      typeof session.createdAt !== "string"
+    ) {
+      return [];
+    }
+    const notes =
+      typeof session.notes === "string"
+        ? session.notes.trim().slice(0, 1000)
+        : "";
+    return [
+      {
+        id: session.id,
+        date: session.date,
+        durationMinutes: Math.round(session.durationMinutes),
+        difficulty: Math.round(session.difficulty * 10) / 10,
+        climbs: parseClimbs(session.climbs),
+        ...(notes ? { notes } : {}),
+        createdAt: session.createdAt
+      }
+    ];
+  });
 }
 
 function parseWaterEntries(value: unknown): WaterEntry[] {
@@ -155,7 +252,8 @@ export function parseAppState(input: string | unknown): AppState {
         ? migrated.nutritionSchemaVersion
         : nutritionPlan.meta.schema_version,
     settings: parseSettings(migrated.settings),
-    logsByDate
+    logsByDate,
+    climbingSessions: parseClimbingSessions(migrated.climbingSessions)
   };
 }
 

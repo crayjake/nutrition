@@ -3,6 +3,7 @@
 import {
   BarChart3,
   CalendarDays,
+  Mountain,
   Settings2,
   ShoppingBasket
 } from "lucide-react";
@@ -12,6 +13,7 @@ import { usePathname } from "next/navigation";
 const links = [
   { href: "/", label: "Today", icon: CalendarDays },
   { href: "/shopping", label: "Shopping", icon: ShoppingBasket },
+  { href: "/climbing", label: "Climb", icon: Mountain },
   { href: "/progress", label: "Progress", icon: BarChart3 },
   { href: "/settings", label: "Settings", icon: Settings2 }
 ];

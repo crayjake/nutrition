@@ -19,8 +19,9 @@ import {
 import type { DayPlanId, VariantId } from "@/types/nutrition";
 import type {
   AppState,
+  ClimbingSession,
   DailyLog,
-  Settings,
+  Settings
 } from "@/types/tracking";
 
 interface TrackingContextValue {
@@ -49,6 +50,10 @@ interface TrackingContextValue {
     fallbackVariant: VariantId
   ) => void;
   updateSettings: (patch: Partial<Settings>) => void;
+  addClimbingSession: (
+    session: Omit<ClimbingSession, "id" | "createdAt">
+  ) => void;
+  removeClimbingSession: (id: string) => void;
   replaceState: (state: AppState) => void;
   resetState: () => void;
 }
@@ -117,6 +122,7 @@ export function TrackingProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const root = document.documentElement;
     const preference = state.settings.theme;
+    root.dataset.colourScheme = state.settings.colourScheme;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const apply = () => {
       const dark = preference === "dark" || (preference === "system" && media.matches);
@@ -126,7 +132,7 @@ export function TrackingProvider({ children }: { children: React.ReactNode }) {
     apply();
     media.addEventListener("change", apply);
     return () => media.removeEventListener("change", apply);
-  }, [state.settings.theme]);
+  }, [state.settings.colourScheme, state.settings.theme]);
 
   const updateLog = useCallback(
     (
@@ -227,6 +233,25 @@ export function TrackingProvider({ children }: { children: React.ReactNode }) {
         setState((current) => ({
           ...current,
           settings: { ...current.settings, ...patch }
+        })),
+      addClimbingSession: (session) =>
+        setState((current) => ({
+          ...current,
+          climbingSessions: [
+            ...current.climbingSessions,
+            {
+              ...session,
+              id: uniqueId(),
+              createdAt: new Date().toISOString()
+            }
+          ]
+        })),
+      removeClimbingSession: (id) =>
+        setState((current) => ({
+          ...current,
+          climbingSessions: current.climbingSessions.filter(
+            (session) => session.id !== id
+          )
         })),
       replaceState: setState,
       resetState: () => setState(createDefaultState())

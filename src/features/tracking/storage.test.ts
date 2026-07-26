@@ -29,7 +29,51 @@ describe("tracking storage", () => {
       }
     });
     expect(parsed.settings.theme).toBe("dark");
+    expect(parsed.settings.colourScheme).toBe("ember");
     expect(Object.keys(parsed.logsByDate)).toEqual(["2026-07-25"]);
+  });
+
+  it("preserves valid climbing sessions and drops corrupt entries", () => {
+    const parsed = parseAppState({
+      version: 1,
+      settings: {
+        theme: "light",
+        colourScheme: "ocean",
+        waterGoalMl: 2500,
+        defaultDayPlanId: "climbing"
+      },
+      logsByDate: {},
+      climbingSessions: [
+        {
+          id: "session-1",
+          date: "2026-07-25",
+          durationMinutes: 90,
+          difficulty: 7,
+          createdAt: "2026-07-25T20:00:00.000Z",
+          climbs: [
+            {
+              id: "climb-1",
+              gradeColour: "blue",
+              band: "hard",
+              sent: true
+            }
+          ]
+        },
+        {
+          id: "bad-session",
+          date: "yesterday",
+          durationMinutes: -1
+        }
+      ]
+    });
+
+    expect(parsed.settings.colourScheme).toBe("ocean");
+    expect(parsed.climbingSessions).toHaveLength(1);
+    expect(parsed.climbingSessions[0].climbs[0]).toMatchObject({
+      gradeColour: "blue",
+      band: "hard",
+      sent: true
+    });
   });
 
   it("migrates version zero preferences", () => {

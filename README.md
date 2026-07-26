@@ -1,13 +1,18 @@
 # Crux nutrition tracker
 
-A polished, local-first nutrition and habit tracker built from the canonical
-`nutrition-plan.json`. It is a static Next.js App Router application designed
-for small phone screens and GitHub Pages.
+A polished, local-first nutrition, habit and climbing tracker built from the
+canonical `nutrition-plan.json`. It is a static Next.js App Router application
+designed for small phone screens and GitHub Pages.
 
 The Shopping screen builds a practical shopping list from any mix of
 climbing/rest and tofu/chicken days. Requirements are rounded up to whole tubs,
 bags, bottles, jars and packs, with estimated Morrisons pricing, official
 product imagery, and copy/plain-text download actions.
+
+The Climb screen records session length and perceived difficulty without
+requiring every boulder to be logged. Optional climb detail follows The
+Climbing Lab’s Green-to-Mint hold-colour scale, with Easy/Medium/Hard bands and
+a sent toggle. Progress has separate Nutrition and Climbing views.
 
 ## Start locally
 
@@ -38,8 +43,10 @@ npm run test:e2e
 
 ## Structure
 
-- `src/app` contains the four primary routes, the legacy nutrition reference,
+- `src/app` contains the five primary routes, the legacy nutrition reference,
   install metadata and shared shell.
+- `src/features/climbing` contains The Climbing Lab grade table, session logger
+  and climbing summaries.
 - `src/features/nutrition` contains typed selectors over precomputed derived
   meals and macros.
 - `src/features/tracking` owns the versioned local repository, provider, Today
@@ -59,9 +66,9 @@ names from `products`. Tofu remains the default.
 
 Tracking state is stored only in this browser under `nutrition-tracker:v1`.
 It uses local `YYYY-MM-DD` keys, stores water as individual undoable entries,
-and keeps an optional daily weight. Parsing is defensive: malformed settings
-fall back independently and malformed day logs are discarded without losing
-valid ones.
+keeps an optional daily weight, and stores climbing sessions with optional
+individual climbs. Parsing is defensive: malformed settings fall back
+independently and malformed records are discarded without losing valid ones.
 
 Settings → Local data can export a versioned JSON backup, validate and import a
 backup, or reset everything after confirmation. Clearing site data in the
@@ -106,11 +113,17 @@ After deployment, test in portrait orientation:
 - On Shopping, change all four shopping day counters, check that whole-pack
   quantities and estimated prices update, check off an item, and copy/download
   the list.
+- On Climb, save a session with only length/effort, then another with hold
+  colour, Easy/Medium/Hard and sent detail. Confirm both survive a reload.
 - Reload while part-way down the page and confirm data persists and no content
   shifts horizontally.
 - Visit yesterday and tomorrow, set different plans, then return to Today.
-- Check Progress tooltips and axis labels after recording at least two weights.
-- Switch system, light and dark themes and verify controls remain readable.
+- Check both Progress views, including climbing length and difficulty charts.
+- Switch colour schemes plus system, light and dark modes and verify controls
+  remain readable.
+- If upgrading an existing home-screen installation, remove it and add it
+  again once so iOS fetches the versioned Sprout icon instead of its cached
+  artwork.
 - Export a backup, import it, cancel once, then confirm; verify reset has a
   separate strong confirmation.
 - Rotate once, return to portrait, and confirm there is no horizontal overflow

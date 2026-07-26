@@ -59,10 +59,12 @@ describe("tracking interactions", () => {
     const user = userEvent.setup();
     renderWithProvider(<SettingsPage />);
     await screen.findByRole("heading", { name: "Settings" });
+    await user.click(screen.getByRole("button", { name: /ocean/i }));
     await user.click(screen.getByRole("radio", { name: "Dark" }));
     await waitFor(() => {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
       expect(saved.settings.theme).toBe("dark");
+      expect(saved.settings.colourScheme).toBe("ocean");
     });
   });
 });

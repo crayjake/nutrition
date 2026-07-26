@@ -18,31 +18,49 @@ function getBasePath(): string {
 export default function manifest(): MetadataRoute.Manifest {
   const basePath = getBasePath();
   return {
-    name: "Crux · Daily nutrition",
+    id: `${basePath}/`,
+    name: "Crux · Nutrition & climbing",
     short_name: "Crux",
-    description: "A calm, local-first climbing nutrition and habit tracker.",
+    description:
+      "A calm, local-first nutrition, habit and climbing session tracker.",
     start_url: `${basePath}/`,
     scope: `${basePath}/`,
     display: "standalone",
+    orientation: "portrait",
     background_color: "#f4f3ee",
     theme_color: "#f4f3ee",
+    categories: ["health", "fitness", "lifestyle"],
     icons: [
       {
-        src: `${basePath}/icon-192.png`,
+        src: `${basePath}/icon-192.png?v=2`,
         sizes: "192x192",
         type: "image/png"
       },
       {
-        src: `${basePath}/icon-512.png`,
+        src: `${basePath}/icon-512.png?v=2`,
         sizes: "512x512",
         type: "image/png",
         purpose: "any"
       },
       {
-        src: `${basePath}/icon-maskable-512.png`,
+        src: `${basePath}/icon-maskable-512.png?v=2`,
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable"
+      }
+    ],
+    shortcuts: [
+      {
+        name: "Log climbing",
+        short_name: "Climb",
+        url: `${basePath}/climbing/`,
+        icons: [
+          {
+            src: `${basePath}/icon-192.png?v=2`,
+            sizes: "192x192",
+            type: "image/png"
+          }
+        ]
       }
     ]
   };

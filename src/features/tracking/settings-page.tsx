@@ -6,7 +6,43 @@ import { SegmentedControl } from "@/components/ui/segmented-control";
 import { useTracking } from "./tracking-provider";
 import { createBackup, parseBackup } from "./storage";
 import type { DayPlanId } from "@/types/nutrition";
-import type { AppState, ThemePreference } from "@/types/tracking";
+import type {
+  AppState,
+  ColourScheme,
+  ThemePreference
+} from "@/types/tracking";
+
+const COLOUR_SCHEMES: Array<{
+  value: ColourScheme;
+  label: string;
+  description: string;
+  colours: [string, string, string];
+}> = [
+  {
+    value: "ember",
+    label: "Ember",
+    description: "Warm terracotta",
+    colours: ["#dd5e38", "#73c79d", "#71bde0"]
+  },
+  {
+    value: "forest",
+    label: "Forest",
+    description: "Calm climbing green",
+    colours: ["#3b8558", "#e6bb58", "#71bde0"]
+  },
+  {
+    value: "ocean",
+    label: "Ocean",
+    description: "Cool, clear blue",
+    colours: ["#347fa8", "#73c79d", "#e6bb58"]
+  },
+  {
+    value: "berry",
+    label: "Berry",
+    description: "Soft purple rose",
+    colours: ["#a05282", "#71bde0", "#e6bb58"]
+  }
+];
 
 export function SettingsPage() {
   const {
@@ -102,10 +138,34 @@ export function SettingsPage() {
       <section className="settings-section" aria-labelledby="appearance-heading">
         <div className="settings-heading">
           <h2 id="appearance-heading">Appearance</h2>
-          <p>Choose a theme or follow your device.</p>
+          <p>Pick an accent palette, then choose light or dark mode.</p>
+        </div>
+        <div className="colour-scheme-grid" aria-label="Colour scheme">
+          {COLOUR_SCHEMES.map((scheme) => (
+            <button
+              className="colour-scheme-option"
+              data-active={state.settings.colourScheme === scheme.value}
+              aria-pressed={state.settings.colourScheme === scheme.value}
+              key={scheme.value}
+              type="button"
+              onClick={() =>
+                updateSettings({ colourScheme: scheme.value })
+              }
+            >
+              <span className="colour-scheme-swatch" aria-hidden="true">
+                {scheme.colours.map((colour) => (
+                  <span key={colour} style={{ backgroundColor: colour }} />
+                ))}
+              </span>
+              <span>
+                <strong>{scheme.label}</strong>
+                <small>{scheme.description}</small>
+              </span>
+            </button>
+          ))}
         </div>
         <SegmentedControl
-          label="Colour theme"
+          label="Brightness"
           value={state.settings.theme}
           onChange={(theme: ThemePreference) => updateSettings({ theme })}
           options={[

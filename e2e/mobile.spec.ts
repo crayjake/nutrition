@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const routes = ["/", "/shopping/", "/progress/", "/settings/"];
+const routes = ["/", "/shopping/", "/climbing/", "/progress/", "/settings/"];
 const url = (route: string) => `${basePath}${route}` || "/";
 
 test.beforeEach(async ({ page }) => {
@@ -148,6 +148,11 @@ test("date navigation and meal expansion are touch friendly", async ({ page }) =
 
 test("theme and bottom navigation remain usable", async ({ page }) => {
   await page.goto(url("/settings/"));
+  await page.getByRole("button", { name: /ocean/i }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-colour-scheme",
+    "ocean"
+  );
   await page.getByRole("radio", { name: "Dark" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("link", { name: "Progress" }).click();
@@ -176,6 +181,10 @@ test("bottom navigation stays docked as browser chrome changes", async ({
 test("installed app metadata uses the Crux icon", async ({ page }) => {
   await page.goto(url("/"));
   await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    "href",
+    `${basePath}/apple-touch-icon-v2.png`
+  );
 
   const response = await page.request.get(url("/manifest.webmanifest"));
   expect(response.ok()).toBe(true);
@@ -184,15 +193,35 @@ test("installed app metadata uses the Crux icon", async ({ page }) => {
   expect(manifest.icons).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        src: `${basePath}/icon-192.png`,
+        src: `${basePath}/icon-192.png?v=2`,
         sizes: "192x192"
       }),
       expect.objectContaining({
-        src: `${basePath}/icon-maskable-512.png`,
+        src: `${basePath}/icon-maskable-512.png?v=2`,
         purpose: "maskable"
       })
     ])
   );
+});
+
+test("climbing sessions persist and feed climbing progress", async ({ page }) => {
+  await page.goto(url("/climbing/"));
+  await page.getByLabel("Length (minutes)").fill("75");
+  await page.getByLabel("Session difficulty").fill("8");
+  await page.getByRole("button", { name: "Add" }).click();
+  await page.getByLabel("Hold colour").selectOption("blue");
+  await page.getByRole("radio", { name: "Hard" }).click();
+  await page.getByRole("checkbox", { name: /sent/i }).check();
+  await page.getByRole("button", { name: "Save session" }).click();
+  await expect(page.getByText("Climbing session saved.")).toBeVisible();
+  await expect(page.getByText(/75 min · 8\/10 hard/i)).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByText(/75 min · 8\/10 hard/i)).toBeVisible();
+  await page.getByRole("link", { name: "Progress" }).click();
+  await page.getByRole("radio", { name: "Climbing", exact: true }).click();
+  await expect(page.getByText("Blue · Hard · 6").first()).toBeVisible();
+  await expect(page.getByTestId("session-length-chart")).toBeVisible();
 });
 
 test("fits 320px and 430px phone widths", async ({ page }) => {
