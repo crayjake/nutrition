@@ -121,9 +121,9 @@ After deployment, test in portrait orientation:
 - Check both Progress views, including climbing length and difficulty charts.
 - Switch colour schemes plus system, light and dark modes and verify controls
   remain readable.
-- If upgrading an existing home-screen installation, remove it and add it
-  again once so iOS fetches the versioned Sprout icon instead of its cached
-  artwork.
+- If upgrading an existing home-screen installation, wait for the deployment
+  to finish, remove the old Home Screen item, then add it again so iOS fetches
+  the cache-versioned Sprout icon instead of retaining its generated artwork.
 - Export a backup, import it, cancel once, then confirm; verify reset has a
   separate strong confirmation.
 - Rotate once, return to portrait, and confirm there is no horizontal overflow

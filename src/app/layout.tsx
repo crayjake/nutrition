@@ -27,6 +27,7 @@ function getAssetBase(): string {
 }
 
 const assetBase = getAssetBase();
+const iconVersion = "v5";
 
 export const metadata: Metadata = {
   title: {
@@ -61,25 +62,25 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link
           rel="apple-touch-icon"
-          href={`${assetBase}/apple-touch-icon-v4.png`}
+          href={`${assetBase}/apple-touch-icon-${iconVersion}.png`}
           sizes="180x180"
           type="image/png"
         />
         <link
           rel="apple-touch-icon-precomposed"
-          href={`${assetBase}/apple-touch-icon-v4.png`}
+          href={`${assetBase}/apple-touch-icon-${iconVersion}.png`}
           sizes="180x180"
           type="image/png"
         />
         <link
           rel="icon"
-          href={`${assetBase}/app-icon-v4-192.png`}
+          href={`${assetBase}/app-icon-${iconVersion}-192.png`}
           sizes="192x192"
           type="image/png"
         />
         <link
           rel="shortcut icon"
-          href={`${assetBase}/app-icon-v4-192.png`}
+          href={`${assetBase}/app-icon-${iconVersion}-192.png`}
           type="image/png"
         />
       </head>
