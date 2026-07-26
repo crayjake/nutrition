@@ -111,7 +111,7 @@ export function ShoppingPlanner() {
         </div>
         <div>
           <p className="eyebrow">Pack calculator</p>
-          <h2 id="shopping-heading">Shopping list</h2>
+          <h1 id="shopping-heading">Shopping list</h1>
           <p>Choose your days. Quantities round up to whole shop packs.</p>
         </div>
       </div>

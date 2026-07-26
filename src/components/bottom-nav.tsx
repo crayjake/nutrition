@@ -1,12 +1,17 @@
 "use client";
 
-import { BarChart3, CalendarDays, Settings2, Utensils } from "lucide-react";
+import {
+  BarChart3,
+  CalendarDays,
+  Settings2,
+  ShoppingBasket
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/", label: "Today", icon: CalendarDays },
-  { href: "/plan", label: "Plan", icon: Utensils },
+  { href: "/shopping", label: "Shopping", icon: ShoppingBasket },
   { href: "/progress", label: "Progress", icon: BarChart3 },
   { href: "/settings", label: "Settings", icon: Settings2 }
 ];

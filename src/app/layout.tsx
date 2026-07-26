@@ -9,7 +9,12 @@ export const metadata: Metadata = {
     template: "%s · Crux"
   },
   description: "A calm, local-first climbing nutrition and habit tracker.",
-  applicationName: "Crux"
+  applicationName: "Crux",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Crux"
+  }
 };
 
 export const viewport: Viewport = {

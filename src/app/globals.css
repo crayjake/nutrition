@@ -174,16 +174,29 @@ button {
 .bottom-nav {
   position: fixed;
   z-index: 30;
-  bottom: 0;
+  bottom: -1px;
   left: 50%;
   width: min(100%, var(--content-width));
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   border-top: 1px solid var(--border);
   background: var(--surface);
   box-shadow: var(--shadow-nav);
   padding: 7px max(8px, env(safe-area-inset-right))
     max(7px, env(safe-area-inset-bottom))
     max(8px, env(safe-area-inset-left));
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.bottom-nav::after {
+  position: absolute;
+  top: calc(100% - 1px);
+  right: 0;
+  left: 0;
+  height: 64px;
+  background: var(--surface);
+  content: "";
+  pointer-events: none;
 }
 
 .bottom-nav-inner {
@@ -868,6 +881,7 @@ button {
 }
 
 .daily-summary-card {
+  top: calc(env(safe-area-inset-top) + 9px);
   margin-top: 0;
   transition:
     padding 180ms ease,
@@ -878,19 +892,18 @@ button {
 .daily-summary-card[data-stuck="true"] {
   position: fixed;
   z-index: 25;
-  top: env(safe-area-inset-top);
   left: 50%;
   width: min(calc(100% - 24px), calc(var(--content-width) - 24px));
   margin-inline: 0;
-  padding: 10px 13px 11px;
-  border-radius: 0 0 18px 18px;
+  padding: 7px 11px 8px;
+  border-radius: 18px;
   box-shadow: 0 12px 28px rgb(18 26 20 / 20%);
   transform: translateX(-50%);
 }
 
 .daily-summary-card[data-stuck="true"] .summary-title-row {
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 }
 
 .daily-summary-card[data-stuck="true"] .summary-title-row .eyebrow {
@@ -900,7 +913,7 @@ button {
 }
 
 .daily-summary-card[data-stuck="true"] .summary-title-row h2 {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .daily-summary-card[data-stuck="true"] .variant-pill {
@@ -912,9 +925,13 @@ button {
   gap: 6px;
 }
 
+.daily-summary-card[data-stuck="true"] .macro-ring {
+  width: min(64px, 100%);
+}
+
 .daily-summary-card[data-stuck="true"] .macro-ring-number strong {
   max-width: 58px;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .daily-summary-card[data-stuck="true"] .macro-ring-number small {
@@ -923,17 +940,17 @@ button {
 }
 
 .daily-summary-card[data-stuck="true"] .macro-ring-item dt {
-  margin-top: 3px;
+  margin-top: 2px;
   font-size: 8px;
 }
 
 .daily-summary-card[data-stuck="true"] .completion-row {
-  margin: 6px 0 4px;
+  margin: 3px 0;
   font-size: 9px;
 }
 
 .daily-summary-card[data-stuck="true"] .progress-track {
-  height: 5px;
+  height: 4px;
 }
 
 .tracker-stack,
@@ -1072,7 +1089,7 @@ button {
 
 .shopping-planner {
   min-width: 0;
-  margin-top: 30px;
+  margin-top: 0;
   padding: 18px;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -1099,11 +1116,12 @@ button {
   color: var(--accent-strong);
 }
 
-.shopping-heading h2 {
+.shopping-heading h1 {
   margin: 2px 0 0;
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 720;
   letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .shopping-heading p {

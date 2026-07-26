@@ -4,7 +4,7 @@ A polished, local-first nutrition and habit tracker built from the canonical
 `nutrition-plan.json`. It is a static Next.js App Router application designed
 for small phone screens and GitHub Pages.
 
-The Plan screen also builds a practical shopping list from any mix of
+The Shopping screen builds a practical shopping list from any mix of
 climbing/rest and tofu/chicken days. Requirements are rounded up to whole tubs,
 bags, bottles, jars and packs, with estimated Morrisons pricing, official
 product imagery, and copy/plain-text download actions.
@@ -38,7 +38,8 @@ npm run test:e2e
 
 ## Structure
 
-- `src/app` contains the four static routes and shared shell.
+- `src/app` contains the four primary routes, the legacy nutrition reference,
+  install metadata and shared shell.
 - `src/features/nutrition` contains typed selectors over precomputed derived
   meals and macros.
 - `src/features/tracking` owns the versioned local repository, provider, Today
@@ -90,10 +91,10 @@ Actions builds. A project repository gets `basePath: "/repository-name"`;
 NEXT_PUBLIC_BASE_PATH=/preview npm run test:e2e
 ```
 
-The app uses trailing-slash routes so direct requests such as `/plan/` map to
+The app uses trailing-slash routes so direct requests such as `/shopping/` map to
 static `index.html` files.
 
-## Actual iPhone 13 mini / Firefox QA
+## Installed iPhone 13 Mini QA
 
 After deployment, test in portrait orientation:
 
@@ -102,7 +103,7 @@ After deployment, test in portrait orientation:
 - At the Today tab, complete and undo a meal, expand ingredients, add and undo
   water, then save/edit/remove weight. Confirm each macro ring advances
   clockwise with completed meals.
-- On Plan, change all four shopping day counters, check that whole-pack
+- On Shopping, change all four shopping day counters, check that whole-pack
   quantities and estimated prices update, check off an item, and copy/download
   the list.
 - Reload while part-way down the page and confirm data persists and no content
@@ -115,9 +116,8 @@ After deployment, test in portrait orientation:
 - Rotate once, return to portrait, and confirm there is no horizontal overflow
   at 320, 375 or 430 CSS-pixel widths.
 
-Firefox on iOS uses Apple’s WebKit engine, so the automated mobile WebKit suite
-is the closest CI analogue; an actual-device pass remains valuable for browser
-chrome and safe-area behaviour.
+The automated mobile WebKit suite is the closest CI analogue; an actual-device
+pass remains valuable for installed-app and safe-area behaviour.
 
 ## Current scope
 

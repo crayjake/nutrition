@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const routes = ["/", "/plan/", "/progress/", "/settings/"];
+const routes = ["/", "/shopping/", "/progress/", "/settings/"];
 const url = (route: string) => `${basePath}${route}` || "/";
 
 test.beforeEach(async ({ page }) => {
@@ -43,7 +43,7 @@ test("daily interactions persist across reload", async ({ page }) => {
 test("shopping list calculates whole packs and supports check-off", async ({
   page
 }) => {
-  await page.goto(url("/plan/"));
+  await page.goto(url("/shopping/"));
   const decreaseClimbing = page.getByRole("button", {
     name: "Decrease Climbing · Tofu days"
   });
@@ -112,6 +112,9 @@ test("header scrolls away and daily summary compacts when sticky", async ({
   const compact = await summary.boundingBox();
   const compactSlot = await summarySlot.boundingBox();
   const scrollY = await page.evaluate(() => window.scrollY);
+  const stickyTop = await summary.evaluate((card) =>
+    Number.parseFloat(getComputedStyle(card).top)
+  );
   const ringBoxes = await summary.locator(".macro-ring").evaluateAll((rings) =>
     rings.map((ring) => {
       const { x, width } = ring.getBoundingClientRect();
@@ -127,8 +130,8 @@ test("header scrolls away and daily summary compacts when sticky", async ({
   expect(ringBoxes[1].x + ringBoxes[1].width).toBeLessThanOrEqual(ringBoxes[2].x);
   expect(scrolledHeader!.y + scrolledHeader!.height).toBeLessThanOrEqual(1);
   expect(compact!.height).toBeLessThan(expanded!.height * 0.8);
-  expect(compact!.y).toBeGreaterThanOrEqual(0);
-  expect(compact!.y).toBeLessThanOrEqual(1);
+  expect(compact!.height).toBeLessThan(145);
+  expect(compact!.y).toBeCloseTo(stickyTop, 0);
   expect(compactSlot!.height).toBeCloseTo(expandedSlot!.height, 0);
   expect(scrollY).toBeCloseTo(700, 0);
 });
@@ -149,6 +152,47 @@ test("theme and bottom navigation remain usable", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("link", { name: "Progress" }).click();
   await expect(page).toHaveURL(new RegExp(`${basePath}/progress/?$`));
+});
+
+test("bottom navigation stays docked as browser chrome changes", async ({
+  page
+}) => {
+  await page.goto(url("/shopping/"));
+  await page.evaluate(() => window.scrollTo(0, 700));
+  const navigation = page.getByRole("navigation", { name: "Primary" });
+
+  for (const height of [700, 812]) {
+    await page.setViewportSize({ width: 375, height });
+    const bounds = await navigation.boundingBox();
+    const visibleHeight = await page.evaluate(
+      () => window.visualViewport?.height ?? window.innerHeight
+    );
+    expect(bounds).not.toBeNull();
+    expect(bounds!.y + bounds!.height).toBeGreaterThanOrEqual(visibleHeight);
+    expect(bounds!.y).toBeLessThan(visibleHeight);
+  }
+});
+
+test("installed app metadata uses the Crux icon", async ({ page }) => {
+  await page.goto(url("/"));
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+
+  const response = await page.request.get(url("/manifest.webmanifest"));
+  expect(response.ok()).toBe(true);
+  const manifest = await response.json();
+  expect(manifest.display).toBe("standalone");
+  expect(manifest.icons).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        src: `${basePath}/icon-192.png`,
+        sizes: "192x192"
+      }),
+      expect.objectContaining({
+        src: `${basePath}/icon-maskable-512.png`,
+        purpose: "maskable"
+      })
+    ])
+  );
 });
 
 test("fits 320px and 430px phone widths", async ({ page }) => {

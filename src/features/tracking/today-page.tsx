@@ -42,7 +42,10 @@ export function TodayPage() {
     const anchor = summaryAnchorRef.current;
     if (!anchor) return;
     const updateStuckState = () => {
-      const nextStuck = anchor.getBoundingClientRect().top <= 0;
+      const stickyTop = summaryCardRef.current
+        ? Number.parseFloat(getComputedStyle(summaryCardRef.current).top) || 0
+        : 0;
+      const nextStuck = anchor.getBoundingClientRect().top <= stickyTop;
       if (nextStuck && !summaryStuckRef.current) {
         const expandedHeight = summaryCardRef.current?.getBoundingClientRect().height;
         if (expandedHeight) {
