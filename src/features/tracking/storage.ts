@@ -114,9 +114,15 @@ function parseMealTimings(value: unknown): MealTimings {
     for (const definition of MEAL_TIMING_DEFINITIONS[dayPlanId]) {
       const candidate = daySource[definition.mealId];
       const timing = isRecord(candidate) ? candidate : {};
+      const savedTime =
+        dayPlanId === "climbing" &&
+        definition.mealId === "dinner" &&
+        timing.time === "21:00"
+          ? undefined
+          : timing.time;
       parsed[dayPlanId][definition.mealId] = {
-        time: isTime(timing.time)
-          ? timing.time
+        time: isTime(savedTime)
+          ? savedTime
           : defaults[dayPlanId][definition.mealId].time,
         reminderMinutes: isReminderLeadMinutes(timing.reminderMinutes)
           ? timing.reminderMinutes

@@ -305,6 +305,10 @@ test("meal schedule persists and fits phone widths", async ({ page }) => {
     ).toBe(true);
   }
 
+  await expect(page.getByLabel("Pasta dinner time")).toHaveValue("19:00");
+  await expect(page.getByLabel("Pre-climbing meal time")).toHaveCount(0);
+  await expect(page.getByLabel("During climbing time")).toHaveCount(0);
+
   await page.getByLabel("Breakfast time").fill("07:45");
   await page.getByLabel("Breakfast reminder").selectOption("30");
   await page.reload();

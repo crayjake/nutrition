@@ -93,6 +93,42 @@ describe("tracking storage", () => {
     });
   });
 
+  it("migrates the old climbing schedule and leaves fuel snacks unscheduled", () => {
+    const parsed = parseAppState({
+      version: 1,
+      settings: {
+        mealTimings: {
+          climbing: {
+            pre_climbing: {
+              time: "17:15",
+              reminderMinutes: 15
+            },
+            during_climbing: {
+              time: "19:00",
+              reminderMinutes: 15
+            },
+            dinner: {
+              time: "21:00",
+              reminderMinutes: 30
+            }
+          }
+        }
+      },
+      logsByDate: {}
+    });
+
+    expect(parsed.settings.mealTimings.climbing.dinner).toEqual({
+      time: "19:00",
+      reminderMinutes: 30
+    });
+    expect(parsed.settings.mealTimings.climbing).not.toHaveProperty(
+      "pre_climbing"
+    );
+    expect(parsed.settings.mealTimings.climbing).not.toHaveProperty(
+      "during_climbing"
+    );
+  });
+
   it("preserves valid climbing sessions and drops corrupt entries", () => {
     const parsed = parseAppState({
       version: 1,

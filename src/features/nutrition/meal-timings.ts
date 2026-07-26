@@ -29,21 +29,9 @@ export const MEAL_TIMING_DEFINITIONS: Record<
       defaultReminderMinutes: 30
     },
     {
-      mealId: "pre_climbing",
-      label: "Pre-climbing meal",
-      defaultTime: "17:15",
-      defaultReminderMinutes: 15
-    },
-    {
-      mealId: "during_climbing",
-      label: "During climbing",
-      defaultTime: "19:00",
-      defaultReminderMinutes: 15
-    },
-    {
       mealId: "dinner",
       label: "Pasta dinner",
-      defaultTime: "21:00",
+      defaultTime: "19:00",
       defaultReminderMinutes: 30
     },
     {
