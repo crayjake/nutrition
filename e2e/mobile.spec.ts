@@ -142,8 +142,12 @@ test("date navigation and meal expansion are touch friendly", async ({ page }) =
   const firstDate = await heading.textContent();
   await page.getByRole("button", { name: "Previous day" }).click();
   await expect(heading).not.toHaveText(firstDate ?? "");
-  await page.getByRole("button", { name: /show ingredients/i }).first().click();
+  const firstMeal = page.locator(".meal-card").first();
+  await firstMeal.locator(".meal-heading").click();
   await expect(page.getByText("Meal total").first()).toBeVisible();
+  await expect(
+    firstMeal.getByRole("checkbox", { name: /mark complete/i })
+  ).toHaveAttribute("aria-checked", "false");
 });
 
 test("theme and bottom navigation remain usable", async ({ page }) => {

@@ -19,18 +19,22 @@ export function MealCard({
 }) {
   const [expanded, setExpanded] = useState(false);
   const detailsId = `meal-${meal.meal_instance_id}-${meal.template_id}`;
+  const toggleExpanded = () => setExpanded((value) => !value);
 
   return (
     <article className="meal-card" data-completed={completed || undefined}>
-      <div className="meal-card-top">
+      <div className="meal-card-top" onClick={toggleExpanded}>
         {!readOnly && (
           <button
             className="check-button"
-            data-checked={completed}
-            onClick={onToggle}
+            data-checked={Boolean(completed)}
+            onClick={(event) => {
+              event.stopPropagation();
+              onToggle?.();
+            }}
             type="button"
             role="checkbox"
-            aria-checked={completed}
+            aria-checked={Boolean(completed)}
             aria-label={`${completed ? "Mark incomplete" : "Mark complete"}: ${meal.name}`}
           >
             <Check aria-hidden="true" size={19} strokeWidth={3} />
@@ -50,7 +54,10 @@ export function MealCard({
           aria-expanded={expanded}
           aria-controls={detailsId}
           aria-label={`${expanded ? "Hide" : "Show"} ingredients for ${meal.name}`}
-          onClick={() => setExpanded((value) => !value)}
+          onClick={(event) => {
+            event.stopPropagation();
+            toggleExpanded();
+          }}
         >
           <ChevronDown aria-hidden="true" size={20} />
         </button>

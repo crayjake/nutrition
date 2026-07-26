@@ -31,6 +31,24 @@ describe("tracking interactions", () => {
     expect(calorieBar).toHaveAccessibleName(/calories eaten: 0 of/i);
   });
 
+  it("opens meal details when the meal row is tapped", async () => {
+    const user = userEvent.setup();
+    renderWithProvider(<TodayPage />);
+    const heading = await screen.findByRole("heading", {
+      name: /fage, granola and banana/i
+    });
+    const checkbox = screen.getByRole("checkbox", {
+      name: /mark complete: fage, granola and banana/i
+    });
+
+    await user.click(heading);
+    expect(screen.getByText("Meal total")).toBeInTheDocument();
+    expect(checkbox).toHaveAttribute("aria-checked", "false");
+
+    await user.click(heading);
+    expect(screen.queryByText("Meal total")).not.toBeInTheDocument();
+  });
+
   it("switches plan and variant and quick-adds water", async () => {
     const user = userEvent.setup();
     renderWithProvider(<TodayPage />);
