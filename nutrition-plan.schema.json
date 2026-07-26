@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nutrition-plan.schema.json",
+  "title": "Nutrition Plan",
+  "type": "object",
+  "required": [
+    "meta",
+    "products",
+    "meal_templates",
+    "day_plans",
+    "weekly_shopping"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "nutrition_data_checked_on"
+      ]
+    },
+    "nutrient_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "products": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "name",
+          "retailer",
+          "nutrition_basis",
+          "nutrition"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "retailer": {
+            "type": "string"
+          },
+          "pack": {
+            "type": "object"
+          },
+          "pack_options": {
+            "type": "array"
+          },
+          "nutrition_basis": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "nutrition": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "energy_kcal",
+                  "protein_g",
+                  "carbohydrate_g",
+                  "fat_g",
+                  "fibre_g",
+                  "sugars_g",
+                  "salt_g"
+                ],
+                "properties": {
+                  "energy_kcal": {
+                    "type": "number"
+                  },
+                  "protein_g": {
+                    "type": "number"
+                  },
+                  "carbohydrate_g": {
+                    "type": "number"
+                  },
+                  "fat_g": {
+                    "type": "number"
+                  },
+                  "fibre_g": {
+                    "type": "number"
+                  },
+                  "sugars_g": {
+                    "type": "number"
+                  },
+                  "salt_g": {
+                    "type": "number"
+                  }
+                }
+              }
+            ]
+          },
+          "source": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "meal_templates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "name",
+          "components"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "ingredient_id",
+                "amount",
+                "role",
+                "scaling"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "ingredient_id": {
+                  "type": "string"
+                },
+                "amount": {
+                  "$ref": "#/$defs/amount"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "scaling": {
+                  "type": "object"
+                },
+                "alternatives": {
+                  "type": "array"
+                }
+              }
+            }
+          },
+          "extras": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "day_plans": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "name",
+          "target",
+          "meal_instances",
+          "derived"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "target": {
+            "type": "object"
+          },
+          "meal_instances": {
+            "type": "array"
+          },
+          "target_adjustment": {
+            "type": "object"
+          },
+          "variants": {
+            "type": "object"
+          },
+          "derived": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "weekly_shopping": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "amount": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "to_taste",
+                "free"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

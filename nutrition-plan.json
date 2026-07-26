@@ -1,0 +1,2910 @@
+{
+  "$schema": "./nutrition-plan.schema.json",
+  "meta": {
+    "schema_version": "1.0.0",
+    "title": "Climbing and rest-day nutrition plan",
+    "locale": "en-GB",
+    "currency": "GBP",
+    "nutrition_data_checked_on": "2026-07-26",
+    "source_policy": "Nutrition values are taken from Morrisons UK product pages for the named products.",
+    "calculation_policy": "Macros scale linearly from each product's nutrition_basis. Derived values are cached for static rendering but should be regenerated after edits.",
+    "important_notes": [
+      "Raisins are removed. The climbing-day during-session item is one 42g Nature Valley Oats & Honey wrapper (two bars).",
+      "Tofu is the default pasta protein. Chicken is retained only as an optional variant.",
+      "Product labels and availability can change; check packaging when accuracy matters.",
+      "This is data modelling and arithmetic, not personalised medical or dietetic advice."
+    ]
+  },
+  "nutrient_fields": [
+    "energy_kcal",
+    "protein_g",
+    "carbohydrate_g",
+    "fat_g",
+    "fibre_g",
+    "sugars_g",
+    "salt_g"
+  ],
+  "products": {
+    "fage_total_0_950g": {
+      "name": "FAGE Total 0% Fat Strained Yoghurt",
+      "brand": "FAGE",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 950,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "as_sold"
+      },
+      "nutrition": {
+        "energy_kcal": 54,
+        "protein_g": 10.3,
+        "carbohydrate_g": 3.0,
+        "fat_g": 0.0,
+        "fibre_g": 0.0,
+        "sugars_g": 3.0,
+        "salt_g": 0.1
+      },
+      "dietary": [
+        "vegetarian",
+        "gluten_free"
+      ],
+      "allergens": [
+        "milk"
+      ],
+      "source": {
+        "url": "https://groceries.morrisons.com/products/fage-total-0-fat-strained-yoghurt-950g/112364378",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "fuel10k_chocolate_granola_400g": {
+      "name": "FUEL10K Chocolate Chunks Protein Granola",
+      "brand": "FUEL10K",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 400,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "as_sold"
+      },
+      "nutrition": {
+        "energy_kcal": 441,
+        "protein_g": 15.8,
+        "carbohydrate_g": 60.4,
+        "fat_g": 13.7,
+        "fibre_g": 6.4,
+        "sugars_g": 17.5,
+        "salt_g": 0.03
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/fuel10k-chocolate-chunks-protein-granola-breakfast-cereal-400g/109120006",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "m_organic_clear_honey_340g": {
+      "name": "M Organic Squeezy Pure Clear Honey",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 340,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "as_sold"
+      },
+      "nutrition": {
+        "energy_kcal": 307,
+        "protein_g": 0.4,
+        "carbohydrate_g": 76.4,
+        "fat_g": 0.0,
+        "fibre_g": 0.0,
+        "sugars_g": 76.4,
+        "salt_g": 0.03
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/m-organic-squeezy-pure-clear-honey-340g/104406291",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "fyffes_medium_banana": {
+      "name": "Fyffes Premium Banana",
+      "brand": "Fyffes",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 8,
+        "unit": "item"
+      },
+      "nutrition_basis": {
+        "quantity": 1,
+        "unit": "medium_banana",
+        "state": "edible_portion",
+        "approx_weight_g": 80
+      },
+      "nutrition": {
+        "energy_kcal": 72,
+        "protein_g": 1.0,
+        "carbohydrate_g": 16.0,
+        "fat_g": 0.3,
+        "fibre_g": 1.1,
+        "sugars_g": 14.0,
+        "salt_g": 0.05
+      },
+      "approximate_fields": {
+        "fat_g": "Morrisons label reports <0.5g; 0.3g used for calculation.",
+        "salt_g": "Morrisons label reports <0.1g; 0.05g used for calculation."
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-fyffes-premium-bananas-ripen-at-home/113997003",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "yutaka_sushi_rice_500g": {
+      "name": "Yutaka Sushi Rice",
+      "brand": "Yutaka",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 500,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "dry_uncooked"
+      },
+      "nutrition": {
+        "energy_kcal": 348,
+        "protein_g": 6.3,
+        "carbohydrate_g": 79.0,
+        "fat_g": 0.5,
+        "fibre_g": 1.0,
+        "sugars_g": 0.7,
+        "salt_g": 0.01
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/yutaka-sushi-rice/105189399",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "tofoo_naked_tofu_280g": {
+      "name": "The Tofoo Co. Naked Tofu",
+      "brand": "The Tofoo Co.",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 280,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "as_sold"
+      },
+      "nutrition": {
+        "energy_kcal": 145,
+        "protein_g": 16.5,
+        "carbohydrate_g": 1.1,
+        "fat_g": 7.8,
+        "fibre_g": 1.9,
+        "sugars_g": 0.05,
+        "salt_g": 0.06
+      },
+      "approximate_fields": {
+        "sugars_g": "Morrisons label reports <0.1g; 0.05g used for calculation."
+      },
+      "dietary": [
+        "vegan",
+        "vegetarian",
+        "organic",
+        "gluten_free"
+      ],
+      "allergens": [
+        "soya"
+      ],
+      "source": {
+        "url": "https://groceries.morrisons.com/products/the-tofoo-co-naked-tofu-280g/111461045",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "morrisons_country_mix_1kg": {
+      "name": "Morrisons Country Mix",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 1000,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "as_sold_frozen"
+      },
+      "nutrition": {
+        "energy_kcal": 35,
+        "protein_g": 2.2,
+        "carbohydrate_g": 4.5,
+        "fat_g": 0.1,
+        "fibre_g": 3.4,
+        "sugars_g": 2.9,
+        "salt_g": 0.05
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-country-mix-1kg/115848466",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "kikkoman_less_salt_soy_150ml": {
+      "name": "Kikkoman Less Salt Soy Sauce",
+      "brand": "Kikkoman",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 150,
+        "unit": "ml"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "ml",
+        "state": "as_sold"
+      },
+      "nutrition": {
+        "energy_kcal": 107,
+        "protein_g": 9.7,
+        "carbohydrate_g": 6.9,
+        "fat_g": 0.0,
+        "fibre_g": 0.0,
+        "sugars_g": 3.9,
+        "salt_g": 9.1
+      },
+      "allergens": [
+        "soya",
+        "wheat"
+      ],
+      "source": {
+        "url": "https://groceries.morrisons.com/products/kikkoman-less-salt-soy-sauce/113741331",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "morrisons_sunflower_oil_1l": {
+      "name": "Morrisons Organic Sunflower Oil",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 1000,
+        "unit": "ml"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "ml",
+        "state": "as_sold"
+      },
+      "nutrition": {
+        "energy_kcal": 828,
+        "protein_g": 0.0,
+        "carbohydrate_g": 0.0,
+        "fat_g": 92.0,
+        "fibre_g": 0.0,
+        "sugars_g": 0.0,
+        "salt_g": 0.0
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-organic-sunflower-oil-1l/114775701",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "morrisons_lightly_salted_rice_cake": {
+      "name": "Morrisons Lightly Salted Rice Cake",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 100,
+        "unit": "g",
+        "approx_items": 12.5
+      },
+      "nutrition_basis": {
+        "quantity": 1,
+        "unit": "rice_cake",
+        "state": "as_sold",
+        "approx_weight_g": 8
+      },
+      "nutrition": {
+        "energy_kcal": 30,
+        "protein_g": 0.6,
+        "carbohydrate_g": 6.1,
+        "fat_g": 0.2,
+        "fibre_g": 0.3,
+        "sugars_g": 0.1,
+        "salt_g": 0.06
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-lightly-salted-rice-cakes/105404968",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "nature_valley_oats_honey_wrapper": {
+      "name": "Nature Valley Crunchy Oats & Honey Cereal Bars",
+      "brand": "Nature Valley",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 5,
+        "unit": "wrapper",
+        "wrapper_weight_g": 42,
+        "bars_per_wrapper": 2
+      },
+      "nutrition_basis": {
+        "quantity": 1,
+        "unit": "wrapper",
+        "state": "as_sold",
+        "weight_g": 42
+      },
+      "nutrition": {
+        "energy_kcal": 196,
+        "protein_g": 3.6,
+        "carbohydrate_g": 27.0,
+        "fat_g": 7.6,
+        "fibre_g": 2.7,
+        "sugars_g": 11.3,
+        "salt_g": 0.36
+      },
+      "dietary": [
+        "vegetarian"
+      ],
+      "allergens": [
+        "oats"
+      ],
+      "source": {
+        "url": "https://groceries.morrisons.com/products/nature-valley-crunchy-oats-honey-cereal-bars/105852082",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "morrisons_penne_500g": {
+      "name": "Morrisons Penne",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 500,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 75,
+        "unit": "g",
+        "state": "dry_uncooked",
+        "source_equivalent": {
+          "quantity": 180,
+          "unit": "g",
+          "state": "cooked"
+        }
+      },
+      "nutrition": {
+        "energy_kcal": 280,
+        "protein_g": 8.8,
+        "carbohydrate_g": 56.2,
+        "fat_g": 1.5,
+        "fibre_g": 3.2,
+        "sugars_g": 2.2,
+        "salt_g": 0.0
+      },
+      "source_note": "Morrisons gives nutrition for 180g cooked pasta, stated as approximately 75g dry.",
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-penne/104555641",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "morrisons_green_pesto_190g": {
+      "name": "Morrisons Green Pesto",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 190,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "as_sold"
+      },
+      "nutrition": {
+        "energy_kcal": 367,
+        "protein_g": 5.6,
+        "carbohydrate_g": 12.6,
+        "fat_g": 32.3,
+        "fibre_g": 2.3,
+        "sugars_g": 1.1,
+        "salt_g": 0.86
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-green-pesto/104557735",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "morrisons_whole_leaf_spinach_950g": {
+      "name": "Morrisons Whole Leaf Spinach",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack": {
+        "quantity": 950,
+        "unit": "g"
+      },
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "as_sold_frozen"
+      },
+      "nutrition": {
+        "energy_kcal": 24,
+        "protein_g": 3.1,
+        "carbohydrate_g": 0.4,
+        "fat_g": 0.4,
+        "fibre_g": 3.4,
+        "sugars_g": 0.1,
+        "salt_g": 0.05
+      },
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-whole-leaf-spinach-950g/115846655",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "morrisons_chicken_breast": {
+      "name": "Morrisons British Chicken Breast Fillets",
+      "brand": "Morrisons",
+      "retailer": "Morrisons UK",
+      "pack_options": [
+        {
+          "quantity": 630,
+          "unit": "g",
+          "url": "https://groceries.morrisons.com/products/morrisons-british-chicken-breast-fillets-630g/108444754"
+        },
+        {
+          "quantity": 1000,
+          "unit": "g",
+          "url": "https://groceries.morrisons.com/products/morrisons-british-chicken-breast-fillets-1kg/108444711"
+        }
+      ],
+      "nutrition_basis": {
+        "quantity": 100,
+        "unit": "g",
+        "state": "cooked_as_consumed"
+      },
+      "nutrition": {
+        "energy_kcal": 136,
+        "protein_g": 30.4,
+        "carbohydrate_g": 0.1,
+        "fat_g": 1.4,
+        "fibre_g": 0.5,
+        "sugars_g": 0.1,
+        "salt_g": 0.1
+      },
+      "source_note": "The Morrisons label is 'as consumed'. Meal alternatives therefore use cooked weight; 150g cooked is estimated as about 200g raw for shopping.",
+      "source": {
+        "url": "https://groceries.morrisons.com/products/morrisons-british-chicken-breast-fillets-630g/108444754",
+        "checked_on": "2026-07-26"
+      }
+    },
+    "garlic_granules": {
+      "name": "Garlic Granules",
+      "retailer": "Morrisons UK",
+      "nutrition_basis": null,
+      "nutrition": null,
+      "source_note": "Seasoning amount is 'to taste' and excluded from calculated macros."
+    },
+    "ginger_paste": {
+      "name": "Ginger Paste",
+      "retailer": "Morrisons UK",
+      "nutrition_basis": null,
+      "nutrition": null,
+      "source_note": "Seasoning amount is 'to taste' and excluded from calculated macros."
+    },
+    "chilli_flakes": {
+      "name": "Chilli Flakes",
+      "retailer": "Morrisons UK",
+      "nutrition_basis": null,
+      "nutrition": null,
+      "source_note": "Seasoning amount is 'to taste' and excluded from calculated macros."
+    },
+    "water_or_no_added_sugar_squash": {
+      "name": "Water or No-Added-Sugar Squash",
+      "retailer": "Morrisons UK",
+      "nutrition_basis": null,
+      "nutrition": null,
+      "source_note": "Hydration item; excluded from calculated macros because the exact squash product and dilution are unspecified."
+    }
+  },
+  "meal_templates": {
+    "yoghurt_granola_breakfast": {
+      "name": "FAGE, granola and banana",
+      "components": [
+        {
+          "id": "yoghurt",
+          "ingredient_id": "fage_total_0_950g",
+          "amount": {
+            "value": 300,
+            "unit": "g"
+          },
+          "role": "protein",
+          "scaling": {
+            "mode": "fixed"
+          }
+        },
+        {
+          "id": "granola",
+          "ingredient_id": "fuel10k_chocolate_granola_400g",
+          "amount": {
+            "value": 50,
+            "unit": "g"
+          },
+          "role": "carbohydrate",
+          "scaling": {
+            "mode": "adjustable",
+            "min": 30,
+            "max": 70,
+            "step": 5,
+            "weight": 0.8
+          }
+        },
+        {
+          "id": "honey",
+          "ingredient_id": "m_organic_clear_honey_340g",
+          "amount": {
+            "value": 15,
+            "unit": "g"
+          },
+          "role": "carbohydrate",
+          "scaling": {
+            "mode": "adjustable",
+            "min": 0,
+            "max": 20,
+            "step": 5,
+            "weight": 0.4
+          }
+        },
+        {
+          "id": "banana",
+          "ingredient_id": "fyffes_medium_banana",
+          "amount": {
+            "value": 1,
+            "unit": "medium_banana"
+          },
+          "role": "fruit",
+          "scaling": {
+            "mode": "fixed_discrete"
+          }
+        }
+      ]
+    },
+    "tofu_rice_bowl": {
+      "name": "Tofu rice bowl",
+      "components": [
+        {
+          "id": "rice",
+          "ingredient_id": "yutaka_sushi_rice_500g",
+          "amount": {
+            "value": 60,
+            "unit": "g",
+            "state": "dry_uncooked"
+          },
+          "role": "carbohydrate",
+          "scaling": {
+            "mode": "adjustable",
+            "min": 40,
+            "max": 120,
+            "step": 5,
+            "weight": 1.0
+          }
+        },
+        {
+          "id": "tofu",
+          "ingredient_id": "tofoo_naked_tofu_280g",
+          "amount": {
+            "value": 200,
+            "unit": "g"
+          },
+          "role": "protein",
+          "scaling": {
+            "mode": "fixed"
+          }
+        },
+        {
+          "id": "vegetables",
+          "ingredient_id": "morrisons_country_mix_1kg",
+          "amount": {
+            "value": 250,
+            "unit": "g"
+          },
+          "role": "vegetable",
+          "scaling": {
+            "mode": "fixed"
+          }
+        },
+        {
+          "id": "soy_sauce",
+          "ingredient_id": "kikkoman_less_salt_soy_150ml",
+          "amount": {
+            "value": 15,
+            "unit": "ml"
+          },
+          "role": "seasoning",
+          "scaling": {
+            "mode": "fixed"
+          }
+        },
+        {
+          "id": "oil",
+          "ingredient_id": "morrisons_sunflower_oil_1l",
+          "amount": {
+            "value": 5,
+            "unit": "ml"
+          },
+          "role": "fat",
+          "scaling": {
+            "mode": "adjustable",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "weight": 0.3
+          }
+        }
+      ],
+      "extras": [
+        {
+          "ingredient_id": "garlic_granules",
+          "amount": {
+            "kind": "to_taste"
+          },
+          "include_in_nutrition": false
+        },
+        {
+          "ingredient_id": "ginger_paste",
+          "amount": {
+            "kind": "to_taste"
+          },
+          "include_in_nutrition": false
+        },
+        {
+          "ingredient_id": "chilli_flakes",
+          "amount": {
+            "kind": "to_taste"
+          },
+          "include_in_nutrition": false
+        }
+      ]
+    },
+    "banana_rice_cakes": {
+      "name": "Banana and rice cakes",
+      "components": [
+        {
+          "id": "rice_cakes",
+          "ingredient_id": "morrisons_lightly_salted_rice_cake",
+          "amount": {
+            "value": 2,
+            "unit": "rice_cake"
+          },
+          "role": "carbohydrate",
+          "scaling": {
+            "mode": "fixed_discrete"
+          }
+        },
+        {
+          "id": "banana",
+          "ingredient_id": "fyffes_medium_banana",
+          "amount": {
+            "value": 1,
+            "unit": "medium_banana"
+          },
+          "role": "fruit",
+          "scaling": {
+            "mode": "fixed_discrete"
+          }
+        }
+      ]
+    },
+    "during_climbing_bar": {
+      "name": "During-climbing cereal bar",
+      "components": [
+        {
+          "id": "cereal_bar",
+          "ingredient_id": "nature_valley_oats_honey_wrapper",
+          "amount": {
+            "value": 1,
+            "unit": "wrapper"
+          },
+          "role": "performance_carbohydrate",
+          "scaling": {
+            "mode": "fixed_discrete"
+          }
+        }
+      ],
+      "extras": [
+        {
+          "ingredient_id": "water_or_no_added_sugar_squash",
+          "amount": {
+            "kind": "free"
+          },
+          "include_in_nutrition": false
+        }
+      ]
+    },
+    "tofu_pesto_pasta": {
+      "name": "Tofu pesto pasta",
+      "components": [
+        {
+          "id": "penne",
+          "ingredient_id": "morrisons_penne_500g",
+          "amount": {
+            "value": 75,
+            "unit": "g",
+            "state": "dry_uncooked"
+          },
+          "role": "carbohydrate",
+          "scaling": {
+            "mode": "adjustable",
+            "min": 50,
+            "max": 120,
+            "step": 5,
+            "weight": 1.0
+          }
+        },
+        {
+          "id": "protein",
+          "ingredient_id": "tofoo_naked_tofu_280g",
+          "amount": {
+            "value": 200,
+            "unit": "g"
+          },
+          "role": "protein",
+          "scaling": {
+            "mode": "fixed"
+          },
+          "alternatives": [
+            {
+              "ingredient_id": "morrisons_chicken_breast",
+              "amount": {
+                "value": 150,
+                "unit": "g",
+                "state": "cooked_as_consumed"
+              },
+              "shopping_raw_equivalent_g": 200,
+              "note": "Optional replacement; not the default."
+            }
+          ]
+        },
+        {
+          "id": "pesto",
+          "ingredient_id": "morrisons_green_pesto_190g",
+          "amount": {
+            "value": 10,
+            "unit": "g"
+          },
+          "role": "fat_sauce",
+          "scaling": {
+            "mode": "adjustable",
+            "min": 5,
+            "max": 30,
+            "step": 5,
+            "weight": 0.4
+          }
+        },
+        {
+          "id": "spinach",
+          "ingredient_id": "morrisons_whole_leaf_spinach_950g",
+          "amount": {
+            "value": 125,
+            "unit": "g"
+          },
+          "role": "vegetable",
+          "scaling": {
+            "mode": "fixed"
+          }
+        }
+      ],
+      "extras": [
+        {
+          "ingredient_id": "garlic_granules",
+          "amount": {
+            "kind": "to_taste"
+          },
+          "include_in_nutrition": false
+        },
+        {
+          "ingredient_id": "chilli_flakes",
+          "amount": {
+            "kind": "to_taste"
+          },
+          "include_in_nutrition": false
+        }
+      ]
+    },
+    "evening_yoghurt": {
+      "name": "Evening FAGE",
+      "components": [
+        {
+          "id": "yoghurt",
+          "ingredient_id": "fage_total_0_950g",
+          "amount": {
+            "value": 200,
+            "unit": "g"
+          },
+          "role": "protein",
+          "scaling": {
+            "mode": "fixed"
+          }
+        },
+        {
+          "id": "honey",
+          "ingredient_id": "m_organic_clear_honey_340g",
+          "amount": {
+            "value": 0,
+            "unit": "g"
+          },
+          "role": "carbohydrate",
+          "scaling": {
+            "mode": "adjustable",
+            "min": 0,
+            "max": 15,
+            "step": 5,
+            "weight": 0.3
+          }
+        }
+      ]
+    }
+  },
+  "day_plans": {
+    "climbing": {
+      "name": "Climbing day",
+      "target": {
+        "energy_kcal": 2200,
+        "tolerance_kcal": 25
+      },
+      "meal_instances": [
+        {
+          "id": "breakfast",
+          "template_id": "yoghurt_granola_breakfast"
+        },
+        {
+          "id": "rice_bowl",
+          "template_id": "tofu_rice_bowl",
+          "overrides": {
+            "rice": {
+              "amount": {
+                "value": 55,
+                "unit": "g",
+                "state": "dry_uncooked"
+              }
+            }
+          }
+        },
+        {
+          "id": "pre_climbing",
+          "template_id": "banana_rice_cakes"
+        },
+        {
+          "id": "during_climbing",
+          "template_id": "during_climbing_bar"
+        },
+        {
+          "id": "dinner",
+          "template_id": "tofu_pesto_pasta"
+        },
+        {
+          "id": "evening",
+          "template_id": "evening_yoghurt"
+        }
+      ],
+      "target_adjustment": {
+        "method": "bounded_discrete_weighted",
+        "objective": "minimise absolute calorie error while preserving fixed protein, fruit, vegetables and climbing-fuel items",
+        "adjustable_order": [
+          "rice_bowl.rice",
+          "dinner.penne",
+          "breakfast.granola",
+          "dinner.pesto",
+          "rice_bowl.oil",
+          "breakfast.honey",
+          "evening.honey"
+        ]
+      },
+      "variants": {
+        "chicken_pasta": {
+          "description": "Replace dinner tofu with 150g cooked chicken and raise penne to 98g to keep the day near 2,200 kcal.",
+          "overrides": {
+            "dinner": {
+              "penne": {
+                "amount": {
+                  "value": 98,
+                  "unit": "g",
+                  "state": "dry_uncooked"
+                }
+              },
+              "protein": {
+                "ingredient_id": "morrisons_chicken_breast",
+                "amount": {
+                  "value": 150,
+                  "unit": "g",
+                  "state": "cooked_as_consumed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "derived": {
+        "default": {
+          "variant": "default",
+          "meals": [
+            {
+              "meal_instance_id": "breakfast",
+              "template_id": "yoghurt_granola_breakfast",
+              "name": "FAGE, granola and banana",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 300,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 162.0,
+                    "protein_g": 30.9,
+                    "carbohydrate_g": 9.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 9.0,
+                    "salt_g": 0.3
+                  }
+                },
+                {
+                  "component_id": "granola",
+                  "ingredient_id": "fuel10k_chocolate_granola_400g",
+                  "amount": {
+                    "value": 50,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 220.5,
+                    "protein_g": 7.9,
+                    "carbohydrate_g": 30.2,
+                    "fat_g": 6.85,
+                    "fibre_g": 3.2,
+                    "sugars_g": 8.75,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 15,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 46.05,
+                    "protein_g": 0.06,
+                    "carbohydrate_g": 11.46,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 11.46,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 500.55,
+                "protein_g": 39.86,
+                "carbohydrate_g": 66.66,
+                "fat_g": 7.15,
+                "fibre_g": 4.3,
+                "sugars_g": 43.21,
+                "salt_g": 0.37
+              }
+            },
+            {
+              "meal_instance_id": "rice_bowl",
+              "template_id": "tofu_rice_bowl",
+              "name": "Tofu rice bowl",
+              "items": [
+                {
+                  "component_id": "rice",
+                  "ingredient_id": "yutaka_sushi_rice_500g",
+                  "amount": {
+                    "value": 55,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 191.4,
+                    "protein_g": 3.46,
+                    "carbohydrate_g": 43.45,
+                    "fat_g": 0.28,
+                    "fibre_g": 0.55,
+                    "sugars_g": 0.39,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "tofu",
+                  "ingredient_id": "tofoo_naked_tofu_280g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 290.0,
+                    "protein_g": 33.0,
+                    "carbohydrate_g": 2.2,
+                    "fat_g": 15.6,
+                    "fibre_g": 3.8,
+                    "sugars_g": 0.1,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "vegetables",
+                  "ingredient_id": "morrisons_country_mix_1kg",
+                  "amount": {
+                    "value": 250,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 87.5,
+                    "protein_g": 5.5,
+                    "carbohydrate_g": 11.25,
+                    "fat_g": 0.25,
+                    "fibre_g": 8.5,
+                    "sugars_g": 7.25,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "soy_sauce",
+                  "ingredient_id": "kikkoman_less_salt_soy_150ml",
+                  "amount": {
+                    "value": 15,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 16.05,
+                    "protein_g": 1.46,
+                    "carbohydrate_g": 1.03,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.58,
+                    "salt_g": 1.36
+                  }
+                },
+                {
+                  "component_id": "oil",
+                  "ingredient_id": "morrisons_sunflower_oil_1l",
+                  "amount": {
+                    "value": 5,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 41.4,
+                    "protein_g": 0.0,
+                    "carbohydrate_g": 0.0,
+                    "fat_g": 4.6,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.0,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 626.35,
+                "protein_g": 43.42,
+                "carbohydrate_g": 57.94,
+                "fat_g": 20.73,
+                "fibre_g": 12.85,
+                "sugars_g": 8.32,
+                "salt_g": 1.62
+              }
+            },
+            {
+              "meal_instance_id": "pre_climbing",
+              "template_id": "banana_rice_cakes",
+              "name": "Banana and rice cakes",
+              "items": [
+                {
+                  "component_id": "rice_cakes",
+                  "ingredient_id": "morrisons_lightly_salted_rice_cake",
+                  "amount": {
+                    "value": 2,
+                    "unit": "rice_cake"
+                  },
+                  "macros": {
+                    "energy_kcal": 60.0,
+                    "protein_g": 1.2,
+                    "carbohydrate_g": 12.2,
+                    "fat_g": 0.4,
+                    "fibre_g": 0.6,
+                    "sugars_g": 0.2,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 132.0,
+                "protein_g": 2.2,
+                "carbohydrate_g": 28.2,
+                "fat_g": 0.7,
+                "fibre_g": 1.7,
+                "sugars_g": 14.2,
+                "salt_g": 0.17
+              }
+            },
+            {
+              "meal_instance_id": "during_climbing",
+              "template_id": "during_climbing_bar",
+              "name": "During-climbing cereal bar",
+              "items": [
+                {
+                  "component_id": "cereal_bar",
+                  "ingredient_id": "nature_valley_oats_honey_wrapper",
+                  "amount": {
+                    "value": 1,
+                    "unit": "wrapper"
+                  },
+                  "macros": {
+                    "energy_kcal": 196.0,
+                    "protein_g": 3.6,
+                    "carbohydrate_g": 27.0,
+                    "fat_g": 7.6,
+                    "fibre_g": 2.7,
+                    "sugars_g": 11.3,
+                    "salt_g": 0.36
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 196.0,
+                "protein_g": 3.6,
+                "carbohydrate_g": 27.0,
+                "fat_g": 7.6,
+                "fibre_g": 2.7,
+                "sugars_g": 11.3,
+                "salt_g": 0.36
+              }
+            },
+            {
+              "meal_instance_id": "dinner",
+              "template_id": "tofu_pesto_pasta",
+              "name": "Tofu pesto pasta",
+              "items": [
+                {
+                  "component_id": "penne",
+                  "ingredient_id": "morrisons_penne_500g",
+                  "amount": {
+                    "value": 75,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 280.0,
+                    "protein_g": 8.8,
+                    "carbohydrate_g": 56.2,
+                    "fat_g": 1.5,
+                    "fibre_g": 3.2,
+                    "sugars_g": 2.2,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "protein",
+                  "ingredient_id": "tofoo_naked_tofu_280g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 290.0,
+                    "protein_g": 33.0,
+                    "carbohydrate_g": 2.2,
+                    "fat_g": 15.6,
+                    "fibre_g": 3.8,
+                    "sugars_g": 0.1,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "pesto",
+                  "ingredient_id": "morrisons_green_pesto_190g",
+                  "amount": {
+                    "value": 10,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 36.7,
+                    "protein_g": 0.56,
+                    "carbohydrate_g": 1.26,
+                    "fat_g": 3.23,
+                    "fibre_g": 0.23,
+                    "sugars_g": 0.11,
+                    "salt_g": 0.09
+                  }
+                },
+                {
+                  "component_id": "spinach",
+                  "ingredient_id": "morrisons_whole_leaf_spinach_950g",
+                  "amount": {
+                    "value": 125,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 30.0,
+                    "protein_g": 3.88,
+                    "carbohydrate_g": 0.5,
+                    "fat_g": 0.5,
+                    "fibre_g": 4.25,
+                    "sugars_g": 0.12,
+                    "salt_g": 0.06
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 636.7,
+                "protein_g": 46.23,
+                "carbohydrate_g": 60.16,
+                "fat_g": 20.83,
+                "fibre_g": 11.48,
+                "sugars_g": 2.54,
+                "salt_g": 0.27
+              }
+            },
+            {
+              "meal_instance_id": "evening",
+              "template_id": "evening_yoghurt",
+              "name": "Evening FAGE",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 108.0,
+                    "protein_g": 20.6,
+                    "carbohydrate_g": 6.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 6.0,
+                    "salt_g": 0.2
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 0,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 0.0,
+                    "protein_g": 0.0,
+                    "carbohydrate_g": 0.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.0,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 108.0,
+                "protein_g": 20.6,
+                "carbohydrate_g": 6.0,
+                "fat_g": 0.0,
+                "fibre_g": 0.0,
+                "sugars_g": 6.0,
+                "salt_g": 0.2
+              }
+            }
+          ],
+          "totals": {
+            "energy_kcal": 2199.6,
+            "protein_g": 155.91,
+            "carbohydrate_g": 245.95,
+            "fat_g": 57.0,
+            "fibre_g": 33.03,
+            "sugars_g": 85.56,
+            "salt_g": 2.98
+          },
+          "difference_from_target_kcal": -0.4
+        },
+        "chicken_pasta": {
+          "variant": "chicken_pasta",
+          "meals": [
+            {
+              "meal_instance_id": "breakfast",
+              "template_id": "yoghurt_granola_breakfast",
+              "name": "FAGE, granola and banana",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 300,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 162.0,
+                    "protein_g": 30.9,
+                    "carbohydrate_g": 9.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 9.0,
+                    "salt_g": 0.3
+                  }
+                },
+                {
+                  "component_id": "granola",
+                  "ingredient_id": "fuel10k_chocolate_granola_400g",
+                  "amount": {
+                    "value": 50,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 220.5,
+                    "protein_g": 7.9,
+                    "carbohydrate_g": 30.2,
+                    "fat_g": 6.85,
+                    "fibre_g": 3.2,
+                    "sugars_g": 8.75,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 15,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 46.05,
+                    "protein_g": 0.06,
+                    "carbohydrate_g": 11.46,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 11.46,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 500.55,
+                "protein_g": 39.86,
+                "carbohydrate_g": 66.66,
+                "fat_g": 7.15,
+                "fibre_g": 4.3,
+                "sugars_g": 43.21,
+                "salt_g": 0.37
+              }
+            },
+            {
+              "meal_instance_id": "rice_bowl",
+              "template_id": "tofu_rice_bowl",
+              "name": "Tofu rice bowl",
+              "items": [
+                {
+                  "component_id": "rice",
+                  "ingredient_id": "yutaka_sushi_rice_500g",
+                  "amount": {
+                    "value": 55,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 191.4,
+                    "protein_g": 3.46,
+                    "carbohydrate_g": 43.45,
+                    "fat_g": 0.28,
+                    "fibre_g": 0.55,
+                    "sugars_g": 0.39,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "tofu",
+                  "ingredient_id": "tofoo_naked_tofu_280g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 290.0,
+                    "protein_g": 33.0,
+                    "carbohydrate_g": 2.2,
+                    "fat_g": 15.6,
+                    "fibre_g": 3.8,
+                    "sugars_g": 0.1,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "vegetables",
+                  "ingredient_id": "morrisons_country_mix_1kg",
+                  "amount": {
+                    "value": 250,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 87.5,
+                    "protein_g": 5.5,
+                    "carbohydrate_g": 11.25,
+                    "fat_g": 0.25,
+                    "fibre_g": 8.5,
+                    "sugars_g": 7.25,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "soy_sauce",
+                  "ingredient_id": "kikkoman_less_salt_soy_150ml",
+                  "amount": {
+                    "value": 15,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 16.05,
+                    "protein_g": 1.46,
+                    "carbohydrate_g": 1.03,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.58,
+                    "salt_g": 1.36
+                  }
+                },
+                {
+                  "component_id": "oil",
+                  "ingredient_id": "morrisons_sunflower_oil_1l",
+                  "amount": {
+                    "value": 5,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 41.4,
+                    "protein_g": 0.0,
+                    "carbohydrate_g": 0.0,
+                    "fat_g": 4.6,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.0,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 626.35,
+                "protein_g": 43.42,
+                "carbohydrate_g": 57.94,
+                "fat_g": 20.73,
+                "fibre_g": 12.85,
+                "sugars_g": 8.32,
+                "salt_g": 1.62
+              }
+            },
+            {
+              "meal_instance_id": "pre_climbing",
+              "template_id": "banana_rice_cakes",
+              "name": "Banana and rice cakes",
+              "items": [
+                {
+                  "component_id": "rice_cakes",
+                  "ingredient_id": "morrisons_lightly_salted_rice_cake",
+                  "amount": {
+                    "value": 2,
+                    "unit": "rice_cake"
+                  },
+                  "macros": {
+                    "energy_kcal": 60.0,
+                    "protein_g": 1.2,
+                    "carbohydrate_g": 12.2,
+                    "fat_g": 0.4,
+                    "fibre_g": 0.6,
+                    "sugars_g": 0.2,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 132.0,
+                "protein_g": 2.2,
+                "carbohydrate_g": 28.2,
+                "fat_g": 0.7,
+                "fibre_g": 1.7,
+                "sugars_g": 14.2,
+                "salt_g": 0.17
+              }
+            },
+            {
+              "meal_instance_id": "during_climbing",
+              "template_id": "during_climbing_bar",
+              "name": "During-climbing cereal bar",
+              "items": [
+                {
+                  "component_id": "cereal_bar",
+                  "ingredient_id": "nature_valley_oats_honey_wrapper",
+                  "amount": {
+                    "value": 1,
+                    "unit": "wrapper"
+                  },
+                  "macros": {
+                    "energy_kcal": 196.0,
+                    "protein_g": 3.6,
+                    "carbohydrate_g": 27.0,
+                    "fat_g": 7.6,
+                    "fibre_g": 2.7,
+                    "sugars_g": 11.3,
+                    "salt_g": 0.36
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 196.0,
+                "protein_g": 3.6,
+                "carbohydrate_g": 27.0,
+                "fat_g": 7.6,
+                "fibre_g": 2.7,
+                "sugars_g": 11.3,
+                "salt_g": 0.36
+              }
+            },
+            {
+              "meal_instance_id": "dinner",
+              "template_id": "tofu_pesto_pasta",
+              "name": "Tofu pesto pasta",
+              "items": [
+                {
+                  "component_id": "penne",
+                  "ingredient_id": "morrisons_penne_500g",
+                  "amount": {
+                    "value": 98,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 365.87,
+                    "protein_g": 11.5,
+                    "carbohydrate_g": 73.43,
+                    "fat_g": 1.96,
+                    "fibre_g": 4.18,
+                    "sugars_g": 2.87,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "protein",
+                  "ingredient_id": "morrisons_chicken_breast",
+                  "amount": {
+                    "value": 150,
+                    "unit": "g",
+                    "state": "cooked_as_consumed"
+                  },
+                  "macros": {
+                    "energy_kcal": 204.0,
+                    "protein_g": 45.6,
+                    "carbohydrate_g": 0.15,
+                    "fat_g": 2.1,
+                    "fibre_g": 0.75,
+                    "sugars_g": 0.15,
+                    "salt_g": 0.15
+                  }
+                },
+                {
+                  "component_id": "pesto",
+                  "ingredient_id": "morrisons_green_pesto_190g",
+                  "amount": {
+                    "value": 10,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 36.7,
+                    "protein_g": 0.56,
+                    "carbohydrate_g": 1.26,
+                    "fat_g": 3.23,
+                    "fibre_g": 0.23,
+                    "sugars_g": 0.11,
+                    "salt_g": 0.09
+                  }
+                },
+                {
+                  "component_id": "spinach",
+                  "ingredient_id": "morrisons_whole_leaf_spinach_950g",
+                  "amount": {
+                    "value": 125,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 30.0,
+                    "protein_g": 3.88,
+                    "carbohydrate_g": 0.5,
+                    "fat_g": 0.5,
+                    "fibre_g": 4.25,
+                    "sugars_g": 0.12,
+                    "salt_g": 0.06
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 636.57,
+                "protein_g": 61.53,
+                "carbohydrate_g": 75.34,
+                "fat_g": 7.79,
+                "fibre_g": 9.41,
+                "sugars_g": 3.26,
+                "salt_g": 0.3
+              }
+            },
+            {
+              "meal_instance_id": "evening",
+              "template_id": "evening_yoghurt",
+              "name": "Evening FAGE",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 108.0,
+                    "protein_g": 20.6,
+                    "carbohydrate_g": 6.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 6.0,
+                    "salt_g": 0.2
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 0,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 0.0,
+                    "protein_g": 0.0,
+                    "carbohydrate_g": 0.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.0,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 108.0,
+                "protein_g": 20.6,
+                "carbohydrate_g": 6.0,
+                "fat_g": 0.0,
+                "fibre_g": 0.0,
+                "sugars_g": 6.0,
+                "salt_g": 0.2
+              }
+            }
+          ],
+          "totals": {
+            "energy_kcal": 2199.47,
+            "protein_g": 171.21,
+            "carbohydrate_g": 261.14,
+            "fat_g": 43.96,
+            "fibre_g": 30.96,
+            "sugars_g": 86.29,
+            "salt_g": 3.01
+          },
+          "difference_from_target_kcal": -0.53
+        }
+      }
+    },
+    "rest": {
+      "name": "Rest day",
+      "target": {
+        "energy_kcal": 1900,
+        "tolerance_kcal": 25
+      },
+      "meal_instances": [
+        {
+          "id": "breakfast",
+          "template_id": "yoghurt_granola_breakfast",
+          "overrides": {
+            "granola": {
+              "amount": {
+                "value": 40,
+                "unit": "g"
+              }
+            }
+          }
+        },
+        {
+          "id": "rice_bowl",
+          "template_id": "tofu_rice_bowl"
+        },
+        {
+          "id": "snack",
+          "template_id": "banana_rice_cakes"
+        },
+        {
+          "id": "dinner",
+          "template_id": "tofu_pesto_pasta",
+          "overrides": {
+            "penne": {
+              "amount": {
+                "value": 65,
+                "unit": "g",
+                "state": "dry_uncooked"
+              }
+            },
+            "protein": {
+              "amount": {
+                "value": 150,
+                "unit": "g"
+              }
+            },
+            "pesto": {
+              "amount": {
+                "value": 15,
+                "unit": "g"
+              }
+            }
+          }
+        },
+        {
+          "id": "evening",
+          "template_id": "evening_yoghurt",
+          "overrides": {
+            "honey": {
+              "amount": {
+                "value": 5,
+                "unit": "g"
+              }
+            }
+          }
+        }
+      ],
+      "target_adjustment": {
+        "method": "bounded_discrete_weighted",
+        "objective": "minimise absolute calorie error while preserving fixed protein, fruit and vegetables",
+        "adjustable_order": [
+          "rice_bowl.rice",
+          "dinner.penne",
+          "breakfast.granola",
+          "dinner.pesto",
+          "rice_bowl.oil",
+          "breakfast.honey",
+          "evening.honey"
+        ]
+      },
+      "variants": {
+        "chicken_pasta": {
+          "description": "Replace dinner tofu with 150g cooked chicken and raise penne to 69g to keep the day near 1,900 kcal.",
+          "overrides": {
+            "dinner": {
+              "penne": {
+                "amount": {
+                  "value": 69,
+                  "unit": "g",
+                  "state": "dry_uncooked"
+                }
+              },
+              "protein": {
+                "ingredient_id": "morrisons_chicken_breast",
+                "amount": {
+                  "value": 150,
+                  "unit": "g",
+                  "state": "cooked_as_consumed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "derived": {
+        "default": {
+          "variant": "default",
+          "meals": [
+            {
+              "meal_instance_id": "breakfast",
+              "template_id": "yoghurt_granola_breakfast",
+              "name": "FAGE, granola and banana",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 300,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 162.0,
+                    "protein_g": 30.9,
+                    "carbohydrate_g": 9.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 9.0,
+                    "salt_g": 0.3
+                  }
+                },
+                {
+                  "component_id": "granola",
+                  "ingredient_id": "fuel10k_chocolate_granola_400g",
+                  "amount": {
+                    "value": 40,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 176.4,
+                    "protein_g": 6.32,
+                    "carbohydrate_g": 24.16,
+                    "fat_g": 5.48,
+                    "fibre_g": 2.56,
+                    "sugars_g": 7.0,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 15,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 46.05,
+                    "protein_g": 0.06,
+                    "carbohydrate_g": 11.46,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 11.46,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 456.45,
+                "protein_g": 38.28,
+                "carbohydrate_g": 60.62,
+                "fat_g": 5.78,
+                "fibre_g": 3.66,
+                "sugars_g": 41.46,
+                "salt_g": 0.37
+              }
+            },
+            {
+              "meal_instance_id": "rice_bowl",
+              "template_id": "tofu_rice_bowl",
+              "name": "Tofu rice bowl",
+              "items": [
+                {
+                  "component_id": "rice",
+                  "ingredient_id": "yutaka_sushi_rice_500g",
+                  "amount": {
+                    "value": 60,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 208.8,
+                    "protein_g": 3.78,
+                    "carbohydrate_g": 47.4,
+                    "fat_g": 0.3,
+                    "fibre_g": 0.6,
+                    "sugars_g": 0.42,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "tofu",
+                  "ingredient_id": "tofoo_naked_tofu_280g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 290.0,
+                    "protein_g": 33.0,
+                    "carbohydrate_g": 2.2,
+                    "fat_g": 15.6,
+                    "fibre_g": 3.8,
+                    "sugars_g": 0.1,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "vegetables",
+                  "ingredient_id": "morrisons_country_mix_1kg",
+                  "amount": {
+                    "value": 250,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 87.5,
+                    "protein_g": 5.5,
+                    "carbohydrate_g": 11.25,
+                    "fat_g": 0.25,
+                    "fibre_g": 8.5,
+                    "sugars_g": 7.25,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "soy_sauce",
+                  "ingredient_id": "kikkoman_less_salt_soy_150ml",
+                  "amount": {
+                    "value": 15,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 16.05,
+                    "protein_g": 1.46,
+                    "carbohydrate_g": 1.03,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.58,
+                    "salt_g": 1.36
+                  }
+                },
+                {
+                  "component_id": "oil",
+                  "ingredient_id": "morrisons_sunflower_oil_1l",
+                  "amount": {
+                    "value": 5,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 41.4,
+                    "protein_g": 0.0,
+                    "carbohydrate_g": 0.0,
+                    "fat_g": 4.6,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.0,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 643.75,
+                "protein_g": 43.73,
+                "carbohydrate_g": 61.88,
+                "fat_g": 20.75,
+                "fibre_g": 12.9,
+                "sugars_g": 8.36,
+                "salt_g": 1.62
+              }
+            },
+            {
+              "meal_instance_id": "snack",
+              "template_id": "banana_rice_cakes",
+              "name": "Banana and rice cakes",
+              "items": [
+                {
+                  "component_id": "rice_cakes",
+                  "ingredient_id": "morrisons_lightly_salted_rice_cake",
+                  "amount": {
+                    "value": 2,
+                    "unit": "rice_cake"
+                  },
+                  "macros": {
+                    "energy_kcal": 60.0,
+                    "protein_g": 1.2,
+                    "carbohydrate_g": 12.2,
+                    "fat_g": 0.4,
+                    "fibre_g": 0.6,
+                    "sugars_g": 0.2,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 132.0,
+                "protein_g": 2.2,
+                "carbohydrate_g": 28.2,
+                "fat_g": 0.7,
+                "fibre_g": 1.7,
+                "sugars_g": 14.2,
+                "salt_g": 0.17
+              }
+            },
+            {
+              "meal_instance_id": "dinner",
+              "template_id": "tofu_pesto_pasta",
+              "name": "Tofu pesto pasta",
+              "items": [
+                {
+                  "component_id": "penne",
+                  "ingredient_id": "morrisons_penne_500g",
+                  "amount": {
+                    "value": 65,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 242.67,
+                    "protein_g": 7.63,
+                    "carbohydrate_g": 48.71,
+                    "fat_g": 1.3,
+                    "fibre_g": 2.77,
+                    "sugars_g": 1.91,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "protein",
+                  "ingredient_id": "tofoo_naked_tofu_280g",
+                  "amount": {
+                    "value": 150,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 217.5,
+                    "protein_g": 24.75,
+                    "carbohydrate_g": 1.65,
+                    "fat_g": 11.7,
+                    "fibre_g": 2.85,
+                    "sugars_g": 0.07,
+                    "salt_g": 0.09
+                  }
+                },
+                {
+                  "component_id": "pesto",
+                  "ingredient_id": "morrisons_green_pesto_190g",
+                  "amount": {
+                    "value": 15,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 55.05,
+                    "protein_g": 0.84,
+                    "carbohydrate_g": 1.89,
+                    "fat_g": 4.84,
+                    "fibre_g": 0.34,
+                    "sugars_g": 0.17,
+                    "salt_g": 0.13
+                  }
+                },
+                {
+                  "component_id": "spinach",
+                  "ingredient_id": "morrisons_whole_leaf_spinach_950g",
+                  "amount": {
+                    "value": 125,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 30.0,
+                    "protein_g": 3.88,
+                    "carbohydrate_g": 0.5,
+                    "fat_g": 0.5,
+                    "fibre_g": 4.25,
+                    "sugars_g": 0.12,
+                    "salt_g": 0.06
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 545.22,
+                "protein_g": 37.09,
+                "carbohydrate_g": 52.75,
+                "fat_g": 18.34,
+                "fibre_g": 10.22,
+                "sugars_g": 2.27,
+                "salt_g": 0.28
+              }
+            },
+            {
+              "meal_instance_id": "evening",
+              "template_id": "evening_yoghurt",
+              "name": "Evening FAGE",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 108.0,
+                    "protein_g": 20.6,
+                    "carbohydrate_g": 6.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 6.0,
+                    "salt_g": 0.2
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 5,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 15.35,
+                    "protein_g": 0.02,
+                    "carbohydrate_g": 3.82,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 3.82,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 123.35,
+                "protein_g": 20.62,
+                "carbohydrate_g": 9.82,
+                "fat_g": 0.0,
+                "fibre_g": 0.0,
+                "sugars_g": 9.82,
+                "salt_g": 0.2
+              }
+            }
+          ],
+          "totals": {
+            "energy_kcal": 1900.77,
+            "protein_g": 141.93,
+            "carbohydrate_g": 213.27,
+            "fat_g": 45.58,
+            "fibre_g": 28.48,
+            "sugars_g": 76.11,
+            "salt_g": 2.64
+          },
+          "difference_from_target_kcal": 0.77
+        },
+        "chicken_pasta": {
+          "variant": "chicken_pasta",
+          "meals": [
+            {
+              "meal_instance_id": "breakfast",
+              "template_id": "yoghurt_granola_breakfast",
+              "name": "FAGE, granola and banana",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 300,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 162.0,
+                    "protein_g": 30.9,
+                    "carbohydrate_g": 9.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 9.0,
+                    "salt_g": 0.3
+                  }
+                },
+                {
+                  "component_id": "granola",
+                  "ingredient_id": "fuel10k_chocolate_granola_400g",
+                  "amount": {
+                    "value": 40,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 176.4,
+                    "protein_g": 6.32,
+                    "carbohydrate_g": 24.16,
+                    "fat_g": 5.48,
+                    "fibre_g": 2.56,
+                    "sugars_g": 7.0,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 15,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 46.05,
+                    "protein_g": 0.06,
+                    "carbohydrate_g": 11.46,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 11.46,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 456.45,
+                "protein_g": 38.28,
+                "carbohydrate_g": 60.62,
+                "fat_g": 5.78,
+                "fibre_g": 3.66,
+                "sugars_g": 41.46,
+                "salt_g": 0.37
+              }
+            },
+            {
+              "meal_instance_id": "rice_bowl",
+              "template_id": "tofu_rice_bowl",
+              "name": "Tofu rice bowl",
+              "items": [
+                {
+                  "component_id": "rice",
+                  "ingredient_id": "yutaka_sushi_rice_500g",
+                  "amount": {
+                    "value": 60,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 208.8,
+                    "protein_g": 3.78,
+                    "carbohydrate_g": 47.4,
+                    "fat_g": 0.3,
+                    "fibre_g": 0.6,
+                    "sugars_g": 0.42,
+                    "salt_g": 0.01
+                  }
+                },
+                {
+                  "component_id": "tofu",
+                  "ingredient_id": "tofoo_naked_tofu_280g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 290.0,
+                    "protein_g": 33.0,
+                    "carbohydrate_g": 2.2,
+                    "fat_g": 15.6,
+                    "fibre_g": 3.8,
+                    "sugars_g": 0.1,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "vegetables",
+                  "ingredient_id": "morrisons_country_mix_1kg",
+                  "amount": {
+                    "value": 250,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 87.5,
+                    "protein_g": 5.5,
+                    "carbohydrate_g": 11.25,
+                    "fat_g": 0.25,
+                    "fibre_g": 8.5,
+                    "sugars_g": 7.25,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "soy_sauce",
+                  "ingredient_id": "kikkoman_less_salt_soy_150ml",
+                  "amount": {
+                    "value": 15,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 16.05,
+                    "protein_g": 1.46,
+                    "carbohydrate_g": 1.03,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.58,
+                    "salt_g": 1.36
+                  }
+                },
+                {
+                  "component_id": "oil",
+                  "ingredient_id": "morrisons_sunflower_oil_1l",
+                  "amount": {
+                    "value": 5,
+                    "unit": "ml"
+                  },
+                  "macros": {
+                    "energy_kcal": 41.4,
+                    "protein_g": 0.0,
+                    "carbohydrate_g": 0.0,
+                    "fat_g": 4.6,
+                    "fibre_g": 0.0,
+                    "sugars_g": 0.0,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 643.75,
+                "protein_g": 43.73,
+                "carbohydrate_g": 61.88,
+                "fat_g": 20.75,
+                "fibre_g": 12.9,
+                "sugars_g": 8.36,
+                "salt_g": 1.62
+              }
+            },
+            {
+              "meal_instance_id": "snack",
+              "template_id": "banana_rice_cakes",
+              "name": "Banana and rice cakes",
+              "items": [
+                {
+                  "component_id": "rice_cakes",
+                  "ingredient_id": "morrisons_lightly_salted_rice_cake",
+                  "amount": {
+                    "value": 2,
+                    "unit": "rice_cake"
+                  },
+                  "macros": {
+                    "energy_kcal": 60.0,
+                    "protein_g": 1.2,
+                    "carbohydrate_g": 12.2,
+                    "fat_g": 0.4,
+                    "fibre_g": 0.6,
+                    "sugars_g": 0.2,
+                    "salt_g": 0.12
+                  }
+                },
+                {
+                  "component_id": "banana",
+                  "ingredient_id": "fyffes_medium_banana",
+                  "amount": {
+                    "value": 1,
+                    "unit": "medium_banana"
+                  },
+                  "macros": {
+                    "energy_kcal": 72.0,
+                    "protein_g": 1.0,
+                    "carbohydrate_g": 16.0,
+                    "fat_g": 0.3,
+                    "fibre_g": 1.1,
+                    "sugars_g": 14.0,
+                    "salt_g": 0.05
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 132.0,
+                "protein_g": 2.2,
+                "carbohydrate_g": 28.2,
+                "fat_g": 0.7,
+                "fibre_g": 1.7,
+                "sugars_g": 14.2,
+                "salt_g": 0.17
+              }
+            },
+            {
+              "meal_instance_id": "dinner",
+              "template_id": "tofu_pesto_pasta",
+              "name": "Tofu pesto pasta",
+              "items": [
+                {
+                  "component_id": "penne",
+                  "ingredient_id": "morrisons_penne_500g",
+                  "amount": {
+                    "value": 69,
+                    "unit": "g",
+                    "state": "dry_uncooked"
+                  },
+                  "macros": {
+                    "energy_kcal": 257.6,
+                    "protein_g": 8.1,
+                    "carbohydrate_g": 51.7,
+                    "fat_g": 1.38,
+                    "fibre_g": 2.94,
+                    "sugars_g": 2.02,
+                    "salt_g": 0.0
+                  }
+                },
+                {
+                  "component_id": "protein",
+                  "ingredient_id": "morrisons_chicken_breast",
+                  "amount": {
+                    "value": 150,
+                    "unit": "g",
+                    "state": "cooked_as_consumed"
+                  },
+                  "macros": {
+                    "energy_kcal": 204.0,
+                    "protein_g": 45.6,
+                    "carbohydrate_g": 0.15,
+                    "fat_g": 2.1,
+                    "fibre_g": 0.75,
+                    "sugars_g": 0.15,
+                    "salt_g": 0.15
+                  }
+                },
+                {
+                  "component_id": "pesto",
+                  "ingredient_id": "morrisons_green_pesto_190g",
+                  "amount": {
+                    "value": 15,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 55.05,
+                    "protein_g": 0.84,
+                    "carbohydrate_g": 1.89,
+                    "fat_g": 4.84,
+                    "fibre_g": 0.34,
+                    "sugars_g": 0.17,
+                    "salt_g": 0.13
+                  }
+                },
+                {
+                  "component_id": "spinach",
+                  "ingredient_id": "morrisons_whole_leaf_spinach_950g",
+                  "amount": {
+                    "value": 125,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 30.0,
+                    "protein_g": 3.88,
+                    "carbohydrate_g": 0.5,
+                    "fat_g": 0.5,
+                    "fibre_g": 4.25,
+                    "sugars_g": 0.12,
+                    "salt_g": 0.06
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 546.65,
+                "protein_g": 58.41,
+                "carbohydrate_g": 54.24,
+                "fat_g": 8.82,
+                "fibre_g": 8.29,
+                "sugars_g": 2.46,
+                "salt_g": 0.34
+              }
+            },
+            {
+              "meal_instance_id": "evening",
+              "template_id": "evening_yoghurt",
+              "name": "Evening FAGE",
+              "items": [
+                {
+                  "component_id": "yoghurt",
+                  "ingredient_id": "fage_total_0_950g",
+                  "amount": {
+                    "value": 200,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 108.0,
+                    "protein_g": 20.6,
+                    "carbohydrate_g": 6.0,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 6.0,
+                    "salt_g": 0.2
+                  }
+                },
+                {
+                  "component_id": "honey",
+                  "ingredient_id": "m_organic_clear_honey_340g",
+                  "amount": {
+                    "value": 5,
+                    "unit": "g"
+                  },
+                  "macros": {
+                    "energy_kcal": 15.35,
+                    "protein_g": 0.02,
+                    "carbohydrate_g": 3.82,
+                    "fat_g": 0.0,
+                    "fibre_g": 0.0,
+                    "sugars_g": 3.82,
+                    "salt_g": 0.0
+                  }
+                }
+              ],
+              "totals": {
+                "energy_kcal": 123.35,
+                "protein_g": 20.62,
+                "carbohydrate_g": 9.82,
+                "fat_g": 0.0,
+                "fibre_g": 0.0,
+                "sugars_g": 9.82,
+                "salt_g": 0.2
+              }
+            }
+          ],
+          "totals": {
+            "energy_kcal": 1902.2,
+            "protein_g": 163.25,
+            "carbohydrate_g": 214.77,
+            "fat_g": 36.05,
+            "fibre_g": 26.55,
+            "sugars_g": 76.3,
+            "salt_g": 2.7
+          },
+          "difference_from_target_kcal": 2.2
+        }
+      }
+    }
+  },
+  "weekly_shopping": {
+    "schedule": {
+      "climbing": 4,
+      "rest": 3
+    },
+    "default_tofu_plan": [
+      {
+        "ingredient_id": "fage_total_0_950g",
+        "required": {
+          "value": 3500,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 4,
+            "pack_quantity": 950,
+            "unit": "g"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "fuel10k_chocolate_granola_400g",
+        "required": {
+          "value": 320,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 400,
+            "unit": "g"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "m_organic_clear_honey_340g",
+        "required": {
+          "value": 120,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 340,
+            "unit": "g"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "fyffes_medium_banana",
+        "required": {
+          "value": 14,
+          "unit": "medium_banana"
+        },
+        "recommended_packs": [
+          {
+            "count": 14,
+            "pack_quantity": 1,
+            "unit": "item"
+          }
+        ],
+        "note": "Buy 14 loose, or two 8-banana packs."
+      },
+      {
+        "ingredient_id": "yutaka_sushi_rice_500g",
+        "required": {
+          "value": 400,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 500,
+            "unit": "g"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "tofoo_naked_tofu_280g",
+        "required": {
+          "value": 2650,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 10,
+            "pack_quantity": 280,
+            "unit": "g"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "morrisons_country_mix_1kg",
+        "required": {
+          "value": 1750,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 2,
+            "pack_quantity": 1000,
+            "unit": "g"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "kikkoman_less_salt_soy_150ml",
+        "required": {
+          "value": 105,
+          "unit": "ml"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 150,
+            "unit": "ml"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "morrisons_sunflower_oil_1l",
+        "required": {
+          "value": 35,
+          "unit": "ml"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 1000,
+            "unit": "ml"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "morrisons_lightly_salted_rice_cake",
+        "required": {
+          "value": 14,
+          "unit": "rice_cake"
+        },
+        "recommended_packs": [
+          {
+            "count": 2,
+            "pack_quantity": 100,
+            "unit": "g"
+          }
+        ],
+        "note": "One 100g pack is about 12-13 cakes; two packs cover 14 cakes."
+      },
+      {
+        "ingredient_id": "nature_valley_oats_honey_wrapper",
+        "required": {
+          "value": 4,
+          "unit": "wrapper"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 5,
+            "unit": "wrapper"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "morrisons_penne_500g",
+        "required": {
+          "value": 495,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 500,
+            "unit": "g"
+          }
+        ],
+        "note": "Required amount is 495g, so this leaves almost no buffer."
+      },
+      {
+        "ingredient_id": "morrisons_green_pesto_190g",
+        "required": {
+          "value": 85,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 190,
+            "unit": "g"
+          }
+        ]
+      },
+      {
+        "ingredient_id": "morrisons_whole_leaf_spinach_950g",
+        "required": {
+          "value": 875,
+          "unit": "g"
+        },
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 950,
+            "unit": "g"
+          }
+        ]
+      }
+    ],
+    "pantry_and_unquantified": [
+      {
+        "ingredient_id": "garlic_granules",
+        "recommended_packs": 1
+      },
+      {
+        "ingredient_id": "ginger_paste",
+        "recommended_packs": 1
+      },
+      {
+        "ingredient_id": "chilli_flakes",
+        "recommended_packs": 1
+      },
+      {
+        "ingredient_id": "water_or_no_added_sugar_squash",
+        "recommended_packs": 1
+      }
+    ],
+    "all_chicken_pasta_variant": {
+      "description": "Use chicken for all seven pasta dinners; tofu remains in all rice bowls.",
+      "tofu_required": {
+        "value": 1400,
+        "unit": "g",
+        "recommended_packs": [
+          {
+            "count": 5,
+            "pack_quantity": 280,
+            "unit": "g"
+          }
+        ]
+      },
+      "chicken_required_raw_estimate": {
+        "value": 1400,
+        "unit": "g",
+        "recommended_packs": [
+          {
+            "count": 1,
+            "pack_quantity": 1000,
+            "unit": "g"
+          },
+          {
+            "count": 1,
+            "pack_quantity": 400,
+            "unit": "g"
+          }
+        ]
+      },
+      "note": "Chicken macros use cooked weight. The shopping estimate assumes 150g cooked ≈ 200g raw."
+    }
+  }
+}

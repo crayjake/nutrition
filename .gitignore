@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+
+# Next.js output
+/.next
+/out
+
+# tests
+/coverage
+/playwright-report
+/test-results
+
+# local files
+.DS_Store
+*.log
