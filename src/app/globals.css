@@ -1959,9 +1959,27 @@ button {
   min-width: 0;
 }
 
+.session-field-grid .session-date-field {
+  width: min(100%, 240px);
+  overflow: hidden;
+}
+
 .session-field-grid .input {
+  display: block;
+  width: 100%;
   min-width: 0;
   max-width: 100%;
+}
+
+.session-field-grid input[type="date"] {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overflow: hidden;
+}
+
+.session-field-grid input[type="date"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
 }
 
 .session-field-grid .input-label,

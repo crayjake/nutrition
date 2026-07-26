@@ -29,15 +29,6 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "default",
     title: "Crux"
-  },
-  icons: {
-    apple: [
-      {
-        url: `${basePath}/apple-touch-icon-v2.png`,
-        sizes: "180x180",
-        type: "image/png"
-      }
-    ]
   }
 };
 
@@ -56,6 +47,21 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link
+          rel="apple-touch-icon"
+          href={`${basePath}/apple-touch-icon.png`}
+          sizes="180x180"
+          type="image/png"
+        />
+        <link
+          rel="apple-touch-icon-precomposed"
+          href={`${basePath}/apple-touch-icon-precomposed.png`}
+          sizes="180x180"
+          type="image/png"
+        />
+      </head>
       <body>
         <TrackingProvider>
           <AppShell>{children}</AppShell>

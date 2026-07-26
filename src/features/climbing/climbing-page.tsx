@@ -149,7 +149,7 @@ export function ClimbingPage() {
           </div>
 
           <div className="session-field-grid">
-            <label>
+            <label className="session-date-field">
               <span className="input-label">
                 <CalendarDays aria-hidden="true" size={14} />
                 Date

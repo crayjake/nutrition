@@ -32,18 +32,18 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["health", "fitness", "lifestyle"],
     icons: [
       {
-        src: `${basePath}/icon-192.png?v=2`,
+        src: `${basePath}/app-icon-v3-192.png`,
         sizes: "192x192",
         type: "image/png"
       },
       {
-        src: `${basePath}/icon-512.png?v=2`,
+        src: `${basePath}/app-icon-v3-512.png`,
         sizes: "512x512",
         type: "image/png",
         purpose: "any"
       },
       {
-        src: `${basePath}/icon-maskable-512.png?v=2`,
+        src: `${basePath}/app-icon-maskable-v3-512.png`,
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable"
@@ -56,7 +56,7 @@ export default function manifest(): MetadataRoute.Manifest {
         url: `${basePath}/climbing/`,
         icons: [
           {
-            src: `${basePath}/icon-192.png?v=2`,
+            src: `${basePath}/app-icon-v3-192.png`,
             sizes: "192x192",
             type: "image/png"
           }

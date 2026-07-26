@@ -190,7 +190,19 @@ test("installed app metadata uses the Crux icon", async ({ page }) => {
   await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
   await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
     "href",
-    `${basePath}/apple-touch-icon-v2.png`
+    `${basePath}/apple-touch-icon.png`
+  );
+  await expect(
+    page.locator('link[rel="apple-touch-icon-precomposed"]')
+  ).toHaveAttribute(
+    "href",
+    `${basePath}/apple-touch-icon-precomposed.png`
+  );
+  await expect(
+    page.locator('meta[name="apple-mobile-web-app-capable"]')
+  ).toHaveAttribute(
+    "content",
+    "yes"
   );
 
   const response = await page.request.get(url("/manifest.webmanifest"));
@@ -200,15 +212,25 @@ test("installed app metadata uses the Crux icon", async ({ page }) => {
   expect(manifest.icons).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        src: `${basePath}/icon-192.png?v=2`,
+        src: `${basePath}/app-icon-v3-192.png`,
         sizes: "192x192"
       }),
       expect.objectContaining({
-        src: `${basePath}/icon-maskable-512.png?v=2`,
+        src: `${basePath}/app-icon-maskable-v3-512.png`,
         purpose: "maskable"
       })
     ])
   );
+
+  for (const iconPath of [
+    "/apple-touch-icon.png",
+    "/app-icon-v3-192.png",
+    "/app-icon-v3-512.png"
+  ]) {
+    const iconResponse = await page.request.get(url(iconPath));
+    expect(iconResponse.ok()).toBe(true);
+    expect(iconResponse.headers()["content-type"]).toContain("image/png");
+  }
 });
 
 test("climbing sessions persist and feed climbing progress", async ({ page }) => {
@@ -217,6 +239,7 @@ test("climbing sessions persist and feed climbing progress", async ({ page }) =>
   const lengthBounds = await page.getByLabel("Length (minutes)").boundingBox();
   expect(dateBounds).not.toBeNull();
   expect(lengthBounds).not.toBeNull();
+  expect(dateBounds!.width).toBeLessThanOrEqual(241);
   expect(dateBounds!.y + dateBounds!.height).toBeLessThanOrEqual(
     lengthBounds!.y
   );
