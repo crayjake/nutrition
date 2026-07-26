@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  estimatedShoppingTotal,
   getShoppingList,
   shoppingListText,
   totalShoppingDays,
@@ -31,6 +32,15 @@ describe("shopping-list calculations", () => {
       findItem(DEFAULT_WEEK, "morrisons_lightly_salted_rice_cake")?.quantity
     ).toBe(2);
     expect(findItem(DEFAULT_WEEK, "morrisons_penne_500g")?.quantity).toBe(1);
+    expect(
+      findItem(DEFAULT_WEEK, "fage_total_0_950g")?.estimatedPricePence
+    ).toBe(2360);
+    expect(
+      findItem(DEFAULT_WEEK, "fage_total_0_950g")?.imageUrl
+    ).toContain("groceries.morrisons.com/images-v3/");
+    expect(estimatedShoppingTotal(getShoppingList(DEFAULT_WEEK))).toBeGreaterThan(
+      0
+    );
   });
 
   it("uses the supplied chicken raw-weight conversion and pack options", () => {
@@ -46,6 +56,10 @@ describe("shopping-list calculations", () => {
       { count: 1, quantity: 630, unit: "g" },
       { count: 1, quantity: 1000, unit: "g" }
     ]);
+    expect(chicken?.estimatedPricePence).toBe(1184);
+    expect(chicken?.packPriceLabel).toBe(
+      "£4.85 per 630 g · £6.99 per 1 kg"
+    );
     expect(findItem(counts, "tofoo_naked_tofu_280g")?.quantity).toBe(5);
   });
 
@@ -76,6 +90,8 @@ describe("shopping-list calculations", () => {
     const text = shoppingListText(DEFAULT_WEEK, getShoppingList(DEFAULT_WEEK));
     expect(text).toContain("4 tubs — FAGE");
     expect(text).toContain("(4 × 950 g)");
+    expect(text).toContain("· £23.60");
+    expect(text).toContain("Estimated Morrisons total:");
     expect(text).not.toContain("3500");
   });
 });

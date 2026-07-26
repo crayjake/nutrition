@@ -4,14 +4,16 @@ import {
   Check,
   Copy,
   Download,
-  ExternalLink,
   Minus,
   Plus,
   ShoppingBasket
 } from "lucide-react";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import {
+  estimatedShoppingTotal,
   formatPackSize,
+  formatPrice,
   getShoppingList,
   shoppingListText,
   totalShoppingDays,
@@ -58,6 +60,8 @@ export function ShoppingPlanner() {
   const [status, setStatus] = useState("");
   const items = useMemo(() => getShoppingList(counts), [counts]);
   const days = totalShoppingDays(counts);
+  const estimatedTotal = estimatedShoppingTotal(items);
+  const priceCheckedOn = items.find((item) => item.priceCheckedOn)?.priceCheckedOn;
 
   function updateCount(key: keyof ShoppingDayCounts, value: number) {
     const next = Number.isFinite(value)
@@ -185,6 +189,26 @@ export function ShoppingPlanner() {
               Download
             </button>
           </div>
+          <div className="shopping-estimate">
+            <div>
+              <span>Estimated Morrisons total</span>
+              <small>
+                Online prices checked{" "}
+                {priceCheckedOn
+                  ? new Date(`${priceCheckedOn}T00:00:00Z`).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                        timeZone: "UTC"
+                      }
+                    )
+                  : "recently"}
+              </small>
+            </div>
+            <strong>{formatPrice(estimatedTotal)}</strong>
+          </div>
           <div className="shopping-list">
             {items.map((item) => {
               const isChecked = checked.has(item.ingredientId);
@@ -204,6 +228,37 @@ export function ShoppingPlanner() {
                   >
                     <Check aria-hidden="true" size={17} strokeWidth={3} />
                   </button>
+                  {item.sourceUrl ? (
+                    <a
+                      className="shopping-product-image"
+                      href={item.sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Open ${item.name} on Morrisons`}
+                    >
+                      {item.imageUrl ? (
+                        <Image
+                          src={item.imageUrl}
+                          alt=""
+                          width="500"
+                          height="500"
+                          loading="lazy"
+                          decoding="async"
+                          referrerPolicy="no-referrer"
+                          unoptimized
+                        />
+                      ) : (
+                        <ShoppingBasket aria-hidden="true" size={20} />
+                      )}
+                    </a>
+                  ) : (
+                    <div
+                      className="shopping-product-image"
+                      aria-hidden="true"
+                    >
+                      <ShoppingBasket size={20} />
+                    </div>
+                  )}
                   <div className="shopping-item-main">
                     <strong>{item.name}</strong>
                     <span>
@@ -217,23 +272,20 @@ export function ShoppingPlanner() {
                         )
                         .join(" + ")}
                     </span>
+                    {item.estimatedPricePence !== undefined && (
+                      <span className="shopping-item-price">
+                        <strong>{formatPrice(item.estimatedPricePence)}</strong>
+                        {item.packPriceLabel && (
+                          <small>{item.packPriceLabel}</small>
+                        )}
+                      </span>
+                    )}
                     {item.note && <small>{item.note}</small>}
                   </div>
                   <div className="shopping-quantity">
                     <strong>{item.quantity}</strong>
                     <span>{item.quantityLabel}</span>
                   </div>
-                  {item.sourceUrl && (
-                    <a
-                      className="shopping-link"
-                      href={item.sourceUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`Open ${item.name} on Morrisons`}
-                    >
-                      <ExternalLink aria-hidden="true" size={15} />
-                    </a>
-                  )}
                 </article>
               );
             })}
@@ -241,6 +293,10 @@ export function ShoppingPlanner() {
           <p className="pantry-note">
             Also check your pantry for garlic granules, ginger paste, chilli
             flakes and water or no-added-sugar squash.
+          </p>
+          <p className="shopping-price-note">
+            Prices are estimates and may change with offers, availability and
+            delivery location.
           </p>
         </>
       ) : (

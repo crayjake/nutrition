@@ -1,19 +1,13 @@
 import type { Macros } from "@/types/nutrition";
 
 interface RingDefinition {
-  key: "energy_kcal" | "protein_g" | "carbohydrate_g" | "fat_g";
+  key: "protein_g" | "carbohydrate_g" | "fat_g";
   label: string;
   unit: string;
   spokenUnit: string;
 }
 
 const RINGS: RingDefinition[] = [
-  {
-    key: "energy_kcal",
-    label: "Energy",
-    unit: "kcal",
-    spokenUnit: "kilocalories"
-  },
   { key: "protein_g", label: "Protein", unit: "g", spokenUnit: "grams" },
   {
     key: "carbohydrate_g",
@@ -65,11 +59,10 @@ export function MacroRings({
                 <span className="macro-ring-number">
                   <strong>{current.toLocaleString("en-GB")}</strong>
                   <small>
-                    of {goal.toLocaleString("en-GB")}
+                    of {goal.toLocaleString("en-GB")}{unit}
                   </small>
                 </span>
               </div>
-              <span className="macro-ring-unit">{unit}</span>
             </dd>
           </div>
         );

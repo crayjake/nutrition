@@ -360,7 +360,7 @@ button {
   display: grid;
   min-width: 0;
   margin: 0;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -396,6 +396,7 @@ button {
 
 .macro-ring-item dd {
   display: flex;
+  width: 100%;
   min-width: 0;
   align-items: center;
   margin: 0;
@@ -405,11 +406,10 @@ button {
 .macro-ring {
   position: relative;
   display: grid;
-  width: 100%;
-  max-width: 82px;
+  width: min(92px, 100%);
   aspect-ratio: 1;
   place-items: center;
-  transition: max-width 180ms ease;
+  transition: width 180ms ease;
 }
 
 .macro-ring svg {
@@ -462,19 +462,6 @@ button {
   font-variant-numeric: tabular-nums;
   font-weight: 650;
   white-space: nowrap;
-}
-
-.macro-ring-unit {
-  margin-top: 2px;
-  max-height: 12px;
-  overflow: hidden;
-  color: color-mix(in srgb, var(--bg) 56%, transparent);
-  font-size: 8px;
-  font-weight: 650;
-  transition:
-    max-height 180ms ease,
-    margin 180ms ease,
-    opacity 140ms ease;
 }
 
 .progress-track {
@@ -925,13 +912,9 @@ button {
   gap: 6px;
 }
 
-.daily-summary-card[data-stuck="true"] .macro-ring {
-  max-width: 64px;
-}
-
 .daily-summary-card[data-stuck="true"] .macro-ring-number strong {
-  max-width: 52px;
-  font-size: 14px;
+  max-width: 58px;
+  font-size: 15px;
 }
 
 .daily-summary-card[data-stuck="true"] .macro-ring-number small {
@@ -942,12 +925,6 @@ button {
 .daily-summary-card[data-stuck="true"] .macro-ring-item dt {
   margin-top: 3px;
   font-size: 8px;
-}
-
-.daily-summary-card[data-stuck="true"] .macro-ring-unit {
-  max-height: 0;
-  margin-top: 0;
-  opacity: 0;
 }
 
 .daily-summary-card[data-stuck="true"] .completion-row {
@@ -1268,6 +1245,44 @@ button {
   gap: 8px;
 }
 
+.shopping-estimate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: 14px;
+  background: var(--accent-soft);
+  gap: 12px;
+}
+
+.shopping-estimate > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.shopping-estimate span {
+  font-size: 11px;
+  font-weight: 720;
+}
+
+.shopping-estimate small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.shopping-estimate > strong {
+  color: var(--accent-strong);
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 770;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+
 .shopping-list {
   display: grid;
   margin-top: 10px;
@@ -1283,7 +1298,7 @@ button {
   padding: 9px 7px 9px 8px;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
-  grid-template-columns: 44px minmax(0, 1fr) auto 38px;
+  grid-template-columns: 44px 54px minmax(0, 1fr) auto;
   gap: 6px;
 }
 
@@ -1312,6 +1327,25 @@ button {
   color: #fff;
 }
 
+.shopping-product-image {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--muted);
+}
+
+.shopping-product-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .shopping-item-main {
   display: flex;
   min-width: 0;
@@ -1325,7 +1359,7 @@ button {
   line-height: 1.25;
 }
 
-.shopping-item[data-checked="true"] .shopping-item-main strong {
+.shopping-item[data-checked="true"] .shopping-item-main > strong {
   color: var(--success);
   text-decoration: line-through;
 }
@@ -1340,6 +1374,29 @@ button {
 
 .shopping-item-main small {
   color: var(--warning);
+}
+
+.shopping-item-main .shopping-item-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  color: inherit;
+  gap: 2px 6px;
+}
+
+.shopping-item-price strong {
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 760;
+  white-space: nowrap;
+}
+
+.shopping-item-price small {
+  margin: 0;
+  color: var(--muted);
+  font-size: 8px;
 }
 
 .shopping-quantity {
@@ -1364,19 +1421,16 @@ button {
   text-transform: uppercase;
 }
 
-.shopping-link {
-  display: grid;
-  width: 38px;
-  height: 44px;
-  place-items: center;
-  border-radius: 12px;
-  color: var(--muted);
-}
-
-.pantry-note {
+.pantry-note,
+.shopping-price-note {
   margin: 11px 2px 0;
   color: var(--muted);
   font-size: 10px;
+}
+
+.shopping-price-note {
+  margin-top: 5px;
+  font-size: 9px;
 }
 
 .shopping-empty {
@@ -1759,9 +1813,6 @@ button {
     gap: 4px;
   }
 
-  .macro-ring {
-    width: 58px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

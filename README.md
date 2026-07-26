@@ -6,7 +6,8 @@ for small phone screens and GitHub Pages.
 
 The Plan screen also builds a practical shopping list from any mix of
 climbing/rest and tofu/chicken days. Requirements are rounded up to whole tubs,
-bags, bottles, jars and packs, with copy and plain-text download actions.
+bags, bottles, jars and packs, with estimated Morrisons pricing, official
+product imagery, and copy/plain-text download actions.
 
 ## Start locally
 
@@ -102,7 +103,8 @@ After deployment, test in portrait orientation:
   water, then save/edit/remove weight. Confirm each macro ring advances
   clockwise with completed meals.
 - On Plan, change all four shopping day counters, check that whole-pack
-  quantities update, check off an item, and copy/download the list.
+  quantities and estimated prices update, check off an item, and copy/download
+  the list.
 - Reload while part-way down the page and confirm data persists and no content
   shifts horizontally.
 - Visit yesterday and tomorrow, set different plans, then return to Today.

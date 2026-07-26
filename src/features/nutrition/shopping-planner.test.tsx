@@ -14,6 +14,14 @@ describe("shopping planner", () => {
     expect(fage).not.toBeNull();
     expect(within(fage!).getByText("4")).toBeInTheDocument();
     expect(within(fage!).getByText("tubs")).toBeInTheDocument();
+    expect(within(fage!).getByText("£23.60")).toBeInTheDocument();
+    expect(fage!.querySelector("img")).toHaveAttribute(
+      "src",
+      expect.stringContaining("groceries.morrisons.com/images-v3/")
+    );
+    expect(
+      screen.getByText("Estimated Morrisons total")
+    ).toBeInTheDocument();
 
     const climbing = screen.getByRole("spinbutton", {
       name: "Climbing · Tofu days"

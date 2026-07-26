@@ -7,7 +7,6 @@ import { MealCard } from "@/components/meal-card";
 import { NutritionControls } from "@/components/nutrition-controls";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import {
-  completionPercentage,
   getConsumedMacros,
   getMeals,
   getDailyTotals
@@ -79,10 +78,11 @@ export function TodayPage() {
     meals,
     log?.completedMealIds ?? []
   );
-  const completed = log?.completedMealIds.filter((id) =>
-    meals.some((meal) => meal.meal_instance_id === id)
-  ).length ?? 0;
-  const percentage = completionPercentage(completed, meals.length);
+  const caloriesEaten = Math.round(consumedMacros.energy_kcal);
+  const calorieGoal = Math.round(totals.energy_kcal);
+  const caloriePercentage =
+    calorieGoal > 0 ? (caloriesEaten / calorieGoal) * 100 : 0;
+  const displayedCaloriePercentage = Math.round(caloriePercentage);
   const isToday = date === today;
 
   return (
@@ -154,14 +154,15 @@ export function TodayPage() {
           <MacroRings consumed={consumedMacros} goals={totals} />
           <div className="completion-row">
             <span>
-              <strong>{completed} of {meals.length}</strong> meals complete
+              <strong>{caloriesEaten.toLocaleString("en-GB")}</strong> of{" "}
+              {calorieGoal.toLocaleString("en-GB")} kcal
             </span>
-            <strong>{percentage}%</strong>
+            <strong>{displayedCaloriePercentage}%</strong>
           </div>
           <ProgressBar
-            value={percentage}
-            label={`${completed} of ${meals.length} meals complete`}
-            tone={percentage === 100 ? "success" : "accent"}
+            value={caloriePercentage}
+            label={`Calories eaten: ${caloriesEaten} of ${calorieGoal} kilocalories`}
+            tone={caloriePercentage >= 100 ? "success" : "accent"}
           />
         </section>
       </div>

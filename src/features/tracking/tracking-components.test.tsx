@@ -19,16 +19,16 @@ describe("tracking interactions", () => {
     const checkbox = await screen.findByRole("checkbox", {
       name: /mark complete: fage, granola and banana/i
     });
-    const energyRing = screen.getByRole("progressbar", {
-      name: /energy eaten/i
+    const calorieBar = screen.getByRole("progressbar", {
+      name: /calories eaten/i
     });
-    expect(energyRing).toHaveAttribute("aria-valuenow", "0");
+    expect(calorieBar).toHaveAccessibleName(/calories eaten: 0 of/i);
     await user.click(checkbox);
     expect(checkbox).toHaveAttribute("aria-checked", "true");
-    expect(energyRing).toHaveAttribute("aria-valuenow", "501");
+    expect(calorieBar).toHaveAccessibleName(/calories eaten: 501 of/i);
     await user.click(checkbox);
     expect(checkbox).toHaveAttribute("aria-checked", "false");
-    expect(energyRing).toHaveAttribute("aria-valuenow", "0");
+    expect(calorieBar).toHaveAccessibleName(/calories eaten: 0 of/i);
   });
 
   it("switches plan and variant and quick-adds water", async () => {

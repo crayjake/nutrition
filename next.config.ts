@@ -14,7 +14,14 @@ const nextConfig: NextConfig = {
   basePath,
   assetPrefix: basePath || undefined,
   images: {
-    unoptimized: true
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "groceries.morrisons.com",
+        pathname: "/images-v3/**"
+      }
+    ]
   }
 };
 

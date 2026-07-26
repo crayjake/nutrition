@@ -1,6 +1,10 @@
 import { nutritionPlan } from "@/data/nutrition";
 import { getMeals } from "./selectors";
 import type { DayPlanId, Product, VariantId } from "@/types/nutrition";
+import {
+  MORRISONS_PRODUCT_DETAILS,
+  packKey
+} from "./morrisons-products";
 
 export interface ShoppingDayCounts {
   climbingTofu: number;
@@ -22,6 +26,10 @@ export interface ShoppingItem {
   quantityLabel: string;
   packSelections: PackSelection[];
   sourceUrl?: string;
+  imageUrl?: string;
+  estimatedPricePence?: number;
+  packPriceLabel?: string;
+  priceCheckedOn?: string;
   note?: string;
 }
 
@@ -201,6 +209,34 @@ export function getShoppingList(
         0
       );
       if (!quantity) return [];
+      const retailDetails = MORRISONS_PRODUCT_DETAILS[ingredientId];
+      const pricedSelections = selections.map((selection) => ({
+        selection,
+        details:
+          retailDetails?.packs[packKey(selection.quantity, selection.unit)]
+      }));
+      const hasCompletePrice =
+        pricedSelections.length > 0 &&
+        pricedSelections.every(({ details }) => Boolean(details));
+      const estimatedPricePence = hasCompletePrice
+        ? pricedSelections.reduce(
+            (sum, { selection, details }) =>
+              sum + selection.count * (details?.pricePence ?? 0),
+            0
+          )
+        : undefined;
+      const packPriceLabel = hasCompletePrice
+        ? pricedSelections
+            .map(
+              ({ selection, details }) =>
+                `${formatPrice(details?.pricePence ?? 0)} per ${formatPackSize(
+                  selection.quantity,
+                  selection.unit
+                )}`
+            )
+            .join(" · ")
+        : undefined;
+      const primaryRetailDetails = pricedSelections[0]?.details;
       const nouns = PACK_NOUNS[ingredientId] ?? ["pack", "packs"];
       return [
         {
@@ -209,7 +245,21 @@ export function getShoppingList(
           quantity,
           quantityLabel: quantity === 1 ? nouns[0] : nouns[1],
           packSelections: selections,
-          ...(product.source?.url ? { sourceUrl: product.source.url } : {}),
+          ...(primaryRetailDetails?.productUrl
+            ? { sourceUrl: primaryRetailDetails.productUrl }
+            : product.source?.url
+              ? { sourceUrl: product.source.url }
+              : {}),
+          ...(primaryRetailDetails?.imageUrl
+            ? { imageUrl: primaryRetailDetails.imageUrl }
+            : {}),
+          ...(estimatedPricePence !== undefined
+            ? { estimatedPricePence }
+            : {}),
+          ...(packPriceLabel ? { packPriceLabel } : {}),
+          ...(retailDetails?.checkedOn
+            ? { priceCheckedOn: retailDetails.checkedOn }
+            : {}),
           ...(note ? { note } : {})
         }
       ];
@@ -234,6 +284,20 @@ export function formatPackSize(quantity: number, unit: string): string {
   return `${quantity} ${unit}`;
 }
 
+export function formatPrice(pricePence: number): string {
+  return new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP"
+  }).format(pricePence / 100);
+}
+
+export function estimatedShoppingTotal(items: ShoppingItem[]): number {
+  return items.reduce(
+    (sum, item) => sum + (item.estimatedPricePence ?? 0),
+    0
+  );
+}
+
 export function shoppingListText(
   counts: ShoppingDayCounts,
   items: ShoppingItem[]
@@ -249,7 +313,14 @@ export function shoppingListText(
             `${selection.count} × ${formatPackSize(selection.quantity, selection.unit)}`
         )
         .join(" + ");
-      return `☐ ${item.quantity} ${item.quantityLabel} — ${item.name} (${packs})`;
-    })
+      const price =
+        item.estimatedPricePence !== undefined
+          ? ` · ${formatPrice(item.estimatedPricePence)}`
+          : "";
+      return `☐ ${item.quantity} ${item.quantityLabel} — ${item.name} (${packs})${price}`;
+    }),
+    "",
+    `Estimated Morrisons total: ${formatPrice(estimatedShoppingTotal(items))}`,
+    "Prices are estimates and may change with offers, availability and delivery location."
   ].join("\n");
 }

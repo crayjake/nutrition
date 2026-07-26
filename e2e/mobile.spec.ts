@@ -29,8 +29,8 @@ test("daily interactions persist across reload", async ({ page }) => {
   await page.goto(url("/"));
   await page.getByRole("checkbox", { name: /mark complete/i }).first().click();
   await expect(
-    page.getByRole("progressbar", { name: /energy eaten/i })
-  ).toHaveAttribute("aria-valuenow", "501");
+    page.getByRole("progressbar", { name: /calories eaten: 501 of/i })
+  ).toBeVisible();
   await page.getByRole("button", { name: "+ 250 ml" }).click();
   await page.getByLabel("Weight in kilograms").fill("72.4");
   await page.getByRole("button", { name: "Save" }).click();
@@ -70,6 +70,22 @@ test("shopping list calculates whole packs and supports check-off", async ({
   await expect(restDays).toHaveValue("0");
   const fage = page.getByRole("checkbox", { name: /check off fage/i });
   await expect(fage.locator("..")).toContainText("1tub");
+  await expect(fage.locator("..")).toContainText("£5.90");
+  await expect(page.getByText("Estimated Morrisons total")).toBeVisible();
+  await expect(
+    page.locator(".shopping-product-image img").first()
+  ).toBeVisible();
+  await expect
+    .poll(() =>
+      page
+        .locator(".shopping-product-image img")
+        .first()
+        .evaluate((image) => {
+          const element = image as HTMLImageElement;
+          return element.complete && element.naturalWidth > 0;
+        })
+    )
+    .toBe(true);
   await fage.click();
   await expect(
     page.getByRole("checkbox", { name: /uncheck fage/i })
@@ -96,9 +112,19 @@ test("header scrolls away and daily summary compacts when sticky", async ({
   const compact = await summary.boundingBox();
   const compactSlot = await summarySlot.boundingBox();
   const scrollY = await page.evaluate(() => window.scrollY);
+  const ringBoxes = await summary.locator(".macro-ring").evaluateAll((rings) =>
+    rings.map((ring) => {
+      const { x, width } = ring.getBoundingClientRect();
+      return { x, width };
+    })
+  );
   expect(scrolledHeader).not.toBeNull();
   expect(compact).not.toBeNull();
   expect(compactSlot).not.toBeNull();
+  expect(ringBoxes).toHaveLength(3);
+  expect(new Set(ringBoxes.map(({ width }) => Math.round(width))).size).toBe(1);
+  expect(ringBoxes[0].x + ringBoxes[0].width).toBeLessThanOrEqual(ringBoxes[1].x);
+  expect(ringBoxes[1].x + ringBoxes[1].width).toBeLessThanOrEqual(ringBoxes[2].x);
   expect(scrolledHeader!.y + scrolledHeader!.height).toBeLessThanOrEqual(1);
   expect(compact!.height).toBeLessThan(expanded!.height * 0.8);
   expect(compact!.y).toBeGreaterThanOrEqual(0);
